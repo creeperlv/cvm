@@ -13,5 +13,10 @@ class Program
 		Console.WriteLine($"Instruction:\t{sizeof(Instruction)}");
 		Console.WriteLine($"PartationMetadata:\t{sizeof(PartationMetadata)}");
 		Console.WriteLine($"SFSNodeBlock:\t{sizeof(SFSNodeBlock)}");
+		Display d = new Display();
+		d.Init(800, 600);
+		DisplayManager.InitVideo();
+		DisplayManager.AttachDisplay(d);
+		DisplayManager.SetupVideoMode();
 	}
 }
