@@ -1,0 +1,10 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\cvm.net.core\cvm.net.core.csproj"/>
+    <ProjectReference Include="..\..\core\cvm.net.core.SerialDispatcher\cvm.net.core.SerialDispatcher.csproj"/>
+  </ItemGroup>
+</Project>
