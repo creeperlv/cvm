@@ -1,7 +1,11 @@
-﻿namespace cvm.net.core
+﻿using System;
+
+namespace cvm.net.core
 {
 	public static class InstID
 	{
+		public static readonly Version InstructionVersion = new Version(1, 0, 0, 0);
+
 		public const uint NOP = 0x0000;
 		//ADD [TYPE] [VALUE|REG][VALUE|REG] L R T
 		//00 01 01 01 00 00 01 02
