@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 
 namespace cvm.net.fullvm.core
 {
-	public class DiskImage : IDisposable
+	public class DiskImage : IDisposable, IDisk
 	{
 		public required Stream FD;
 		public int DataOffset;
@@ -59,6 +59,13 @@ namespace cvm.net.fullvm.core
 			FD.Read(buf);
 			return buf.As<LBABlock>();
 		}
+		public void Flush()
+		{
+			lock (FD)
+			{
+				FD.Flush();
+			}
+		}
 		public unsafe void WriteLBA(LBABlock Data, long LBABlockAddress)
 		{
 			var pos = DataOffset + LBABlockAddress * sizeof(LBABlock);
@@ -66,7 +73,10 @@ namespace cvm.net.fullvm.core
 			if (this.FD.Length < requiredLen) this.FD.SetLength(requiredLen);
 			FD.Position = pos;
 			Span<byte> data = new Span<byte>((byte*)&Data, sizeof(LBABlock));
-			FD.Write(data);
+			lock (FD)
+			{
+				FD.Write(data);
+			}
 		}
 		public void Dispose() => FD.Dispose();
 	}
@@ -150,6 +160,8 @@ namespace cvm.net.fullvm.core
 				for (int i = 0; i < EntryCount; i++)
 				{
 					DiskPart dp = new DiskPart(img, this);
+					var data = entPtr + i;
+					dp.SetMetadata(((PartationMetadata*)data)[0]);
 				}
 			}
 		}
@@ -163,42 +175,15 @@ namespace cvm.net.fullvm.core
 
 		}
 	}
-	public class SimpleFS
-	{
-		DiskPart part;
-
-		public SimpleFS(DiskPart part)
-		{
-			this.part = part;
-			Load();
-		}
-		public SFSNode? rootNode;
-		public Dictionary<ulong, SFSItem> items = [];
-		private void Load()
-		{
-			part.Position = 0;
-
-			Span<byte> byte4 = stackalloc byte[4];
-			part.Read(byte4);
-			int ItemCount = byte4.As<int>();
-			part.Read(byte4);
-			int NodeCount = byte4.As<int>();
-			for (int i = 0; i < ItemCount; i++)
-			{
-				SFSItem item = SFSItem.ReadNode(part);
-
-			}
-		}
-	}
 	public class SFSNode
 	{
 		public ulong NodeID;
-		public Dictionary<ulong, SFSNode> Items = [];
+		public List<ulong> Children = [];
 	}
 	[StructLayout(LayoutKind.Sequential)]
 	public unsafe struct SFSNodeBlock
 	{
-		public ulong Parent;
+		public ulong NodeID;
 		public int NodeCount;
 		public fixed ulong Children[62];
 	}

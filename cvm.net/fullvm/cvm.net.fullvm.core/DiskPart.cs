@@ -12,7 +12,7 @@ namespace cvm.net.fullvm.core
 		public ulong Attributes;
 		public fixed byte Name[72];
 	}
-	public class DiskPart : Stream
+	public class DiskPart : IDisk
 	{
 		public DiskImage img;
 		public GPTPartMgr mgr;
@@ -30,25 +30,22 @@ namespace cvm.net.fullvm.core
 		}
 		public long Offset;
 		internal long PartLength;
-		long __pos = 0;
-		public override bool CanRead => img.FD.CanRead;
+		long __LBAAddress = 0;
+		public bool CanRead => img.FD.CanRead;
+		public bool CanSeek => img.FD.CanSeek;
+		public bool CanWrite => img.FD.CanWrite;
+		public long Length => PartLength;
 
-		public override bool CanSeek => img.FD.CanSeek;
-
-		public override bool CanWrite => img.FD.CanWrite;
-
-		public override long Length => PartLength;
-
-		public override long Position
+		public long Position
 		{
 			get
 			{
-				return __pos;
+				return __LBAAddress;
 			}
-			set => __pos = value;
+			set => __LBAAddress = value;
 		}
 
-		public override void Flush()
+		public void Flush()
 		{
 			lock (img.FD)
 			{
@@ -56,46 +53,27 @@ namespace cvm.net.fullvm.core
 			}
 		}
 
-		public override int Read(byte[] buffer, int offset, int count)
-		{
-			lock (img.FD)
-			{
 
-				img.FD.Position = Offset + __pos;
-				return img.FD.Read(buffer, offset, count);
-			}
-		}
-
-		public override long Seek(long offset, SeekOrigin origin)
-		{
-			switch (origin)
-			{
-				case SeekOrigin.Begin:
-					__pos = offset;
-					return __pos;
-				case SeekOrigin.Current:
-					__pos += offset;
-					return __pos;
-				case SeekOrigin.End:
-					return __pos = PartLength - offset;
-				default:
-					return 0;
-			}
-		}
-
-		public override void SetLength(long value)
+		public void SetLength(long value)
 		{
 			mgr.ResizePart(this, value);
 			this.PartLength = value;
 		}
 
-		public override void Write(byte[] buffer, int offset, int count)
+
+		public void SetPosToLBA(long LBABlockAddress)
 		{
-			lock (img.FD)
-			{
-				img.FD.Position = Offset + __pos;
-				img.FD.Write(buffer, offset, count);
-			}
+			__LBAAddress = LBABlockAddress;
+		}
+
+		public void WriteLBA(LBABlock Data, long LBABlockAddress)
+		{
+			img.WriteLBA(Data, Offset + LBABlockAddress);
+		}
+
+		public LBABlock ReadLBA(long LBABlockAddress)
+		{
+			return img.ReadLBA(Offset + LBABlockAddress);
 		}
 	}
 }
