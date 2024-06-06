@@ -6,7 +6,7 @@ namespace cvm.net.fullvm.core.Disk
 	public class DiskImage : IDisposable, IDisk
 	{
 		public required Stream FD;
-		public int DataOffset;
+		public long DataOffset;
 		public DiskMeta metadata;
 		public void ResetPos()
 		{
@@ -24,7 +24,26 @@ namespace cvm.net.fullvm.core.Disk
 		}
 		public static unsafe void CreateNewImage(Stream stream, DiskMeta meta)
 		{
+			stream.Position = 0;
 			byte[] bytes = [(byte)'C', (byte)'V', (byte)'M', (byte)'I', (byte)'M', (byte)'G'];
+			stream.Write(bytes);
+			Span<byte> byte4 = stackalloc byte[4];
+			{
+				fixed (byte* ptr = byte4)
+				{
+					((int*)ptr)[0] = sizeof(DiskMeta);
+				}
+			}
+			stream.Write(byte4);
+			Span<byte> metaDataBytes = stackalloc byte[sizeof(DiskMeta)];
+			{
+				fixed (byte* ptr = metaDataBytes)
+				{
+					((DiskMeta*)ptr)[0] = meta;
+				}
+			}
+			stream.Write(metaDataBytes);
+			stream.Flush();
 		}
 		public unsafe LoadImageResult LoadImageInfo()
 		{
@@ -43,7 +62,7 @@ namespace cvm.net.fullvm.core.Disk
 			Span<byte> DiskMetaBuffer = stackalloc byte[sizeof(DiskMeta)];
 			FD.Read(DiskMetaBuffer);
 			metadata = DiskMetaBuffer.As<DiskMeta>();
-			DataOffset += HeaderLength;
+			DataOffset = FD.Position;
 			return LoadImageResult.Success;
 		}
 		private GPTPartMgr LoadGPT()

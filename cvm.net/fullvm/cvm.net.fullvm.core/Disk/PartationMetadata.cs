@@ -6,7 +6,7 @@ namespace cvm.net.fullvm.core.Disk
     public unsafe struct PartationMetadata
     {
         public Guid PartType;
-        public Guid PardID;
+        public Guid PartID;
         public long FirstLBA;
         public long LastLBA;
         public ulong Attributes;

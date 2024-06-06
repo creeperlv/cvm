@@ -1,6 +1,8 @@
-﻿using cvm.net.fullvm.core.Disk;
+﻿using cvm.net.core.libc;
+using cvm.net.fullvm.core.Disk;
 using LibCLCC.NET.TextProcessing;
 using System.Runtime.CompilerServices;
+using System.Text;
 
 namespace cvm.net.disk.editor
 {
@@ -8,12 +10,11 @@ namespace cvm.net.disk.editor
 	{
 		static void Main(string[] args)
 		{
-			if (args.Length == 0)
+			string? file = null;
+			if (args.Length > 0)
 			{
-				Console.WriteLine("Please specify a file to edit!");
-				return;
+				file = args[0];
 			}
-			var file = args[0];
 			string? script = null;
 			if (args.Length == 2)
 			{
@@ -60,6 +61,7 @@ namespace cvm.net.disk.editor
 	{
 		static DiskImage? currentEditingImage;
 		static string? diskFile;
+		static GPTPartMgr? GPTMgr;
 		public static void StartEdit(string? file, string? scriptfile)
 		{
 			diskFile = file;
@@ -105,14 +107,38 @@ namespace cvm.net.disk.editor
 			}
 		}
 		static CommandLineScanner scanner = new CommandLineScanner();
-		static void Execute(string Line, string scriptName = "runtime")
+		static void CloseCurrentOpenDisk()
+		{
+			if (currentEditingImage != null)
+			{
+				currentEditingImage.Dispose();
+				currentEditingImage = null;
+			}
+			GPTMgr = null;
+		}
+		static unsafe void Execute(string Line, string scriptName = "runtime")
 		{
 			if (Line == "") return;
 			var head = scanner.Scan(Line, false, scriptName);
 			SegmentTravler t = new SegmentTravler(head);
 			switch (head.content)
 			{
-				case "write-disk-info":
+				case "load-disk":
+					{
+						if (diskFile == null)
+						{
+							Console.WriteLine("You must specify a file name first!");
+							return;
+						}
+						CloseCurrentOpenDisk();
+						currentEditingImage = new DiskImage()
+						{
+							FD = File.Open(diskFile, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite)
+						};
+						currentEditingImage.LoadImageInfo();
+					}
+					break;
+				case "create-disk":
 					{
 						t.GoNext();
 						ulong Sectors = 0;
@@ -163,16 +189,14 @@ namespace cvm.net.disk.editor
 						}
 						if (diskFile is not null)
 						{
-							if (currentEditingImage is not null)
-							{
-								currentEditingImage.Dispose();
-							}
+							CloseCurrentOpenDisk();
 							currentEditingImage = new DiskImage()
 							{
-								FD = File.Open(diskFile, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite)
+								FD = File.Open(diskFile, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite)
 							};
 
 							DiskImage.CreateNewImage(currentEditingImage.FD, new DiskMeta() { ImgVersion = DiskDefinitions.CurrentCVMIMGVersion, LBABlockCount = Sectors });
+							currentEditingImage.DataOffset = currentEditingImage.FD.Position;
 						}
 					}
 					break;
@@ -196,11 +220,7 @@ namespace cvm.net.disk.editor
 								});
 
 						}
-						if (currentEditingImage is not null)
-						{
-							currentEditingImage.Dispose();
-							currentEditingImage = null;
-						}
+						CloseCurrentOpenDisk();
 					}
 					break;
 				case "create-gpt":
@@ -210,20 +230,217 @@ namespace cvm.net.disk.editor
 							Console.WriteLine("You must open/create a disk first!");
 							return;
 						}
-						GPTPartMgr gPTPartMgr = new GPTPartMgr(currentEditingImage);
-
+						GPTMgr = new GPTPartMgr(currentEditingImage);
+						GPTMgr.header.CurrentLBA = 1;
+						GPTMgr.header.HEADER = DiskDefinitions.GPTHeader;
+						GPTMgr.header.DiskID = Guid.NewGuid();
 					}
 					break;
+				case "load-gpt":
+					{
+						if (currentEditingImage == null)
+						{
+							Console.WriteLine("You must open/create a disk first!");
+							return;
+						}
+						GPTMgr = new GPTPartMgr(currentEditingImage);
+						GPTMgr.Load();
+					}
+					break;
+				case "save-gpt":
+					{
+
+						if (currentEditingImage == null)
+						{
+							Console.WriteLine("You must open/create a disk first!");
+							return;
+						}
+						if (GPTMgr is null)
+						{
+							Console.WriteLine("You must load/creat GPT table first!");
+							return;
+						}
+						GPTMgr.WriteTableMeta();
+					}
+					break;
+				case "new-part":
+					{
+						NewPartation(t);
+					}
+					break;
+				case "list-part":
+					{
+						if (GPTMgr is null)
+						{
+							Console.WriteLine("You must load/creat GPT table first!");
+							return;
+						}
+						foreach (var item in GPTMgr.Parts)
+						{
+							string name;
+							fixed (byte* ptr = item.metadata.Name)
+							{
+								name = ((IntPtr)ptr).CStr2DotNetStr();
+
+							}
+							Console.WriteLine($"Disk:{name}");
+							Console.WriteLine($"Type:{item.metadata.PartType}");
+							Console.WriteLine($"Start Sector:{item.metadata.FirstLBA}");
+							Console.WriteLine($"End Sector:{item.metadata.LastLBA}");
+						}
+					}
+					break;
+
+				case "exit":
+					Environment.Exit(0);
+					break;
 				default:
+					Console.WriteLine($"Unknown command:{head.content}");
 					break;
 			}
 		}
+
+		private unsafe static void NewPartation(SegmentTravler t)
+		{
+			if (currentEditingImage == null)
+			{
+				Console.WriteLine("You must open/create a disk first!");
+				return;
+			}
+			if (GPTMgr is null)
+			{
+				Console.WriteLine("You must load/creat GPT table first!");
+				return;
+			}
+			//PartationMetadata metadata = new PartationMetadata();
+			PartationMetadata* metadata = (PartationMetadata*)StdLib.malloc(sizeof(PartationMetadata));
+			metadata->PartID = Guid.NewGuid();
+			bool IsFirstLBASet = false;
+			bool IsLastLBASet = false;
+			bool IsPartTypeSet = false;
+			string? Name = null;
+			t.Traverse((s) =>
+			{
+				switch (s.content)
+				{
+					case "--first-lba":
+						if (!t.GoNext())
+						{
+							return;
+						}
+						if (long.TryParse(t.Current.content, out metadata->FirstLBA))
+						{
+							IsFirstLBASet = true;
+						}
+						break;
+					case "--last-lba":
+						if (!t.GoNext())
+						{
+							return;
+						}
+						if (long.TryParse(t.Current.content, out metadata->LastLBA))
+						{
+							IsLastLBASet = true;
+						}
+						break;
+
+					case "--name":
+						if (!t.GoNext())
+						{
+							return;
+						}
+						Name = t.Current.content;
+						break;
+					case "--type":
+						if (!t.GoNext())
+						{
+							return;
+						}
+						var tName = t.Current.content;
+						{
+							if (DiskDefinitions.PartTypeNames.TryGetValue(tName, out var type))
+							{
+								if (DiskDefinitions.PartationTypeIDs.TryGetValue(type, out metadata->PartType))
+								{
+									IsPartTypeSet = true;
+								}
+							}
+						}
+						break;
+					default:
+						break;
+				}
+			});
+			if (!IsFirstLBASet)
+			{
+				RequestValue($"Please specify the start sector: (1 Sector = {DiskDefinitions.LBASectorSize} Bits)",
+					(s) =>
+					{
+						if (long.TryParse(s, out metadata->FirstLBA))
+						{
+							IsFirstLBASet = true;
+							return true;
+						}
+						return false;
+					});
+			}
+			if (!IsLastLBASet)
+			{
+				RequestValue($"Please specify the end sector: (1 Sector = {DiskDefinitions.LBASectorSize} Bits)",
+					(s) =>
+					{
+						if (long.TryParse(s, out metadata->LastLBA))
+						{
+							IsLastLBASet = true;
+							return true;
+						}
+						return false;
+					});
+			}
+			if (!IsPartTypeSet)
+			{
+				RequestValue($"Please specify the a partation type:",
+					(s) =>
+					{
+						if (DiskDefinitions.PartTypeNames.TryGetValue(s, out var type))
+						{
+							if (DiskDefinitions.PartationTypeIDs.TryGetValue(type, out metadata->PartType))
+							{
+								IsPartTypeSet = true;
+								return true;
+							}
+						}
+						return false;
+					});
+			}
+			if (Name == null)
+			{
+				RequestValue($"Please specify the a name for the partation:",
+					(s) =>
+					{
+						Name = s;
+						return Name != null;
+					});
+			}
+			metadata->PartID = Guid.NewGuid();
+			{
+				var nb = Encoding.ASCII.GetBytes(Name ?? "New Partation");
+				fixed (byte* src = nb)
+				{
+					Buffer.MemoryCopy(src, metadata->Name, DiskDefinitions.GPTPartationNameMaxLen, nb.Length);
+				}
+				//metadata->Name[nb.Length] = 0;
+			}
+			GPTMgr.Parts.Add(new DiskPart(currentEditingImage, GPTMgr) { metadata = metadata[0] });
+			StdLib.free(metadata);
+		}
+
 		static void InteractiveEdit()
 		{
 			while (true)
 			{
 				Console.Write("Disk:" + (diskFile ?? "not-specified-disk"));
-				Console.Write(" #");
+				Console.Write("# ");
 				Execute(Console.ReadLine() ?? "");
 			}
 		}

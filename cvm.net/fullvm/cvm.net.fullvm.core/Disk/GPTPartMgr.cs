@@ -46,7 +46,8 @@ namespace cvm.net.fullvm.core.Disk
 				var _EntCRC32 = Crc32.HashToUInt32(Entries);
 				if (header.EnterListCRC != _EntCRC32)
 				{
-					throw new Exception("CRC failed on enteries!");
+					//throw new Exception("CRC failed on enteries!");
+					Console.WriteLine("CRC failed on enteries!");
 				}
 				fixed (byte* _ptr = Entries)
 				{
@@ -65,21 +66,24 @@ namespace cvm.net.fullvm.core.Disk
 			var partCount = Parts.Count;
 			Span<LBABlock> Entries = stackalloc LBABlock[partCount];
 			this.header.PartCount = partCount;
-			fixed (LBABlock* ptr = Entries)
 			{
-				for (int i = 0; i < partCount; i++)
+				fixed (LBABlock* ptr = Entries)
 				{
-					var ptr_ = ptr + i;
-					((PartationMetadata*)ptr_)[0] = Parts[i].metadata;
+					for (int i = 0; i < partCount; i++)
+					{
+						var ptr_ = ptr + i;
+						((PartationMetadata*)ptr_)[0] = Parts[i].metadata;
+					}
+					Span<byte> bytes = new Span<byte>(ptr, partCount * sizeof(LBABlock));
+					var _crc = Crc32.HashToUInt32(bytes);
+					header.EnterListCRC = _crc;
 				}
-				Span<byte> bytes = new Span<byte>(ptr, partCount * sizeof(LBABlock));
-				var _crc = Crc32.HashToUInt32(bytes);
-				header.EnterListCRC = _crc;
 			}
 			{
-				this.header.HEADER_CRC = 0;
+				this.header.HEADER = DiskDefinitions.GPTHeader;
 				LBABlock headerBlock = new LBABlock();
 				var ptr_ = &headerBlock;
+				header.HEADER_CRC = 0;
 				((GPTHeader*)ptr_)[0] = header;
 				var _crc = Crc32.HashToUInt32(new ReadOnlySpan<byte>(ptr_, sizeof(LBABlock)));
 				header.HEADER_CRC = _crc;

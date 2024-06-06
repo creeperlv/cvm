@@ -14,8 +14,10 @@ class Program
 		Console.WriteLine("Options:");
 		Console.WriteLine("--version");
 		Console.WriteLine("\tShow version information.");
-		Console.WriteLine("--create-disk <file>");
-		Console.WriteLine("\tCreate a CVM disk image file.");
+		Console.WriteLine("--disk <file>");
+		Console.WriteLine("\tSpecify disk image to load.");
+		Console.WriteLine("--launch");
+		Console.WriteLine("\tLaunch the virutal machine.");
 		Console.WriteLine("--sectors <sector-count>");
 		Console.WriteLine("\tThe sector count the disk will have. (The size of a sector is 512B)");
 	}
@@ -61,14 +63,6 @@ class Program
 						i++;
 						var name = args[i];
 						options.Append(OptionNames.Disks, name);
-					}
-					break;
-				case "--create-disk":
-					{
-						options.Operation = Operation.CreateDisk;
-						i++;
-						var name = args[i];
-						options.Set(OptionNames.Disk, name);
 					}
 					break;
 				case "--sectors":
