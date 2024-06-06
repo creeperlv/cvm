@@ -34,29 +34,34 @@ namespace cvm.net.fullvm.core.Disk
 			if (header.PartCount > 0)
 			{
 
-				Span<byte> Entries = stackalloc byte[header.PartCount * sizeof(LBABlock)];
-				fixed (byte* _ptr = Entries)
+				Span<LBABlock> Entries = stackalloc LBABlock[header.PartCount];
+
 				{
-					LBABlock* entPtr = (LBABlock*)ptr;
 					for (int i = 0; i < header.PartCount; i++)
 					{
-						entPtr[i] = img.ReadLBA(header.StartingLBAOfPartEnt + i);
+						Entries[i] = img.ReadLBA(header.StartingLBAOfPartEnt + i);
 					}
 				}
-				var _EntCRC32 = Crc32.HashToUInt32(Entries);
-				if (header.EnterListCRC != _EntCRC32)
+				fixed (LBABlock* blkPtr = Entries)
 				{
-					//throw new Exception("CRC failed on enteries!");
-					Console.WriteLine("CRC failed on enteries!");
-				}
-				fixed (byte* _ptr = Entries)
-				{
-					LBABlock* entPtr = (LBABlock*)ptr;
-					for (int i = 0; i < header.PartCount; i++)
+					var _EntCRC32 = Crc32.HashToUInt32(new Span<byte>((byte*)blkPtr, (int)header.PartCount * sizeof(LBABlock)));
+					if (header.EnterListCRC != _EntCRC32)
 					{
-						DiskPart dp = new DiskPart(img, this);
-						var data = entPtr + i;
-						dp.SetMetadata(((PartationMetadata*)data)[0]);
+						throw new Exception("CRC failed on enteries!");
+						//Console.WriteLine("CRC failed on enteries!");
+					}
+				}
+				{
+					fixed (LBABlock* blkPtr = Entries)
+					{
+
+						for (int i = 0; i < header.PartCount; i++)
+						{
+							DiskPart dp = new DiskPart(img, this);
+							var data = blkPtr + i;
+							dp.SetMetadata(((PartationMetadata*)data)[0]);
+							this.Parts.Add(dp);
+						}
 					}
 				}
 			}
@@ -64,6 +69,7 @@ namespace cvm.net.fullvm.core.Disk
 		public unsafe void WriteTableMeta()
 		{
 			var partCount = Parts.Count;
+			this.header.StartingLBAOfPartEnt = 2;
 			Span<LBABlock> Entries = stackalloc LBABlock[partCount];
 			this.header.PartCount = partCount;
 			{
