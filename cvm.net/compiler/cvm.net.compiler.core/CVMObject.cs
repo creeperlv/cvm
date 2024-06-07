@@ -14,5 +14,6 @@ namespace cvm.net.compiler.core
 		public const uint JF_LBL = 0x1011;
 		public const uint JO_LBL = 0x1012;
 		public const uint CALL_LBL = 0x1014;
+		public const uint PJMP_LBL = 0x1016;
 	}
 }

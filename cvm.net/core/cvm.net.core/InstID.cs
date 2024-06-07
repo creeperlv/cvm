@@ -77,6 +77,7 @@ namespace cvm.net.core
 		public const uint CALLOC = 0x0031;
 		public const uint REALLOC = 0x0032;
 		public const uint FREE = 0x0033;
+		public const uint EXIT = 0x0034;
 		//SINT [0|1] TGT PC
 		//00 F0 00 10 00 10
 		//SINT Static SOME_THING LBL (at 10)
