@@ -9,4 +9,8 @@
     <InvariantGlobalization>true</InvariantGlobalization>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\cvm.net.compiler.core\cvm.net.compiler.core.csproj" />
+  </ItemGroup>
+
 </Project>

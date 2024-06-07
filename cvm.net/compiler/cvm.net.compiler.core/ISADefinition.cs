@@ -2,6 +2,11 @@
 
 namespace cvm.net.compiler.core
 {
+	public enum ASMSections
+	{
+		Data, Code, Consts
+	}
+
 	public class ISADefinition
 	{
 		public static ISADefinition CurrentDefinition = new ISADefinition()
@@ -53,8 +58,14 @@ namespace cvm.net.compiler.core
 				{"realloc", InstID.REALLOC},
 				{"free", InstID.FREE},
 				{"exit", InstID.EXIT},
-			}
+			},
+			Sections = new() {
+				{"Data", ASMSections.Data},
+				{"Code", ASMSections.Code},
+				{"Consts", ASMSections.Consts},
+				}
 		};
+		public Dictionary<string, ASMSections> Sections = [];
 		public Dictionary<string, uint> Names = new()
 		{
 
