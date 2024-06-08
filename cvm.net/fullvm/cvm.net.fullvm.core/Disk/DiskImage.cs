@@ -118,35 +118,4 @@ namespace cvm.net.fullvm.core.Disk
 	{
 		Success, WrongHeader
 	}
-	public class SFSNode
-	{
-		public ulong NodeID;
-		public List<ulong> Children = [];
-	}
-	[StructLayout(LayoutKind.Sequential)]
-	public unsafe struct SFSNodeBlock
-	{
-		public ulong NodeID;
-		public int NodeCount;
-		public fixed ulong Children[62];
-	}
-	[StructLayout(LayoutKind.Sequential)]
-	public unsafe struct SFSItem
-	{
-		public ulong ID;
-		public bool IsFolder;
-		public bool IsLink;
-		public uint StartLBA;
-		public long Length;
-		public fixed byte Name[472];
-		public long CreateTime;
-		public long ModifyTime;
-		public static SFSItem ReadNode(Stream stream)
-		{
-			var pos = stream.Position;
-			Span<byte> Buffer = stackalloc byte[sizeof(SFSItem)];
-			stream.Read(Buffer);
-			return Buffer.As<SFSItem>();
-		}
-	}
 }

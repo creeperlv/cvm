@@ -286,9 +286,10 @@ namespace cvm.net.disk.editor
 
 							}
 							Console.WriteLine($"Disk:{name}");
-							Console.WriteLine($"Type:{item.metadata.PartType}");
-							Console.WriteLine($"Start Sector:{item.metadata.FirstLBA}");
-							Console.WriteLine($"End Sector:{item.metadata.LastLBA}");
+							Console.WriteLine($"\tID:{item.metadata.PartID}");
+							Console.WriteLine($"\tType:{item.metadata.PartType}");
+							Console.WriteLine($"\tStart Sector:{item.metadata.FirstLBA}");
+							Console.WriteLine($"\tEnd Sector:{item.metadata.LastLBA}");
 						}
 					}
 					break;
@@ -404,7 +405,8 @@ namespace cvm.net.disk.editor
 				RequestValue($"Please specify the a partation type:",
 					(s) =>
 					{
-						if (DiskDefinitions.PartTypeNames.TryGetValue(s, out var type))
+						if (s == null) return false;
+						if (DiskDefinitions.PartTypeNames.TryGetValue(s.ToUpper(), out var type))
 						{
 							if (DiskDefinitions.PartationTypeIDs.TryGetValue(type, out metadata->PartType))
 							{
@@ -431,7 +433,7 @@ namespace cvm.net.disk.editor
 				{
 					Buffer.MemoryCopy(src, metadata->Name, DiskDefinitions.GPTPartationNameMaxLen, nb.Length);
 				}
-				//metadata->Name[nb.Length] = 0;
+				metadata->Name[nb.Length] = 0;
 			}
 			GPTMgr.Parts.Add(new DiskPart(currentEditingImage, GPTMgr) { metadata = metadata[0] });
 			StdLib.free(metadata);

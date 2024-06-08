@@ -2,6 +2,7 @@
 using cvm.net.core.libc;
 using cvm.net.fullvm.core;
 using cvm.net.fullvm.core.Disk;
+using cvm.net.fullvm.core.Disk.SFS;
 using System.Drawing;
 
 namespace cvm.net.fullvm;
@@ -18,8 +19,6 @@ class Program
 		Console.WriteLine("\tSpecify disk image to load.");
 		Console.WriteLine("--launch");
 		Console.WriteLine("\tLaunch the virutal machine.");
-		Console.WriteLine("--sectors <sector-count>");
-		Console.WriteLine("\tThe sector count the disk will have. (The size of a sector is 512B)");
 	}
 	unsafe static void Main(string[] args)
 	{
@@ -81,8 +80,6 @@ class Program
 				break;
 			case Operation.ShowDataStructureInfo:
 				{
-					{
-					}
 					Console.WriteLine($"LBABlock:\t{sizeof(LBABlock)}");
 					Console.WriteLine($"SFSItem:\t{sizeof(SFSItem)}");
 					Console.WriteLine($"Guid:\t\t{sizeof(Guid)}");
