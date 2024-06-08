@@ -1,4 +1,5 @@
 ﻿using cvm.net.fullvm.core.Data;
+using cvm.net.fullvm.core.Diagnosis;
 using System.Runtime.InteropServices;
 
 namespace cvm.net.fullvm.core.Disk
@@ -94,6 +95,8 @@ namespace cvm.net.fullvm.core.Disk
 			if (FD.Length < requiredLen) FD.SetLength(requiredLen);
 			FD.Position = pos;
 			Span<byte> data = new Span<byte>((byte*)&Data, sizeof(LBABlock));
+			//Console.WriteLine("LBAAddress:" + LBABlockAddress);
+			//DataInspector.InspectLBASector(Data);
 			lock (FD)
 			{
 				FD.Write(data);

@@ -21,23 +21,6 @@ class Program
 		Console.WriteLine("--sectors <sector-count>");
 		Console.WriteLine("\tThe sector count the disk will have. (The size of a sector is 512B)");
 	}
-	static void PrintHexDigit(int i)
-	{
-		if (i < 10)
-		{
-			Console.Write((char)('0' + i));
-		}
-		else
-		{
-			Console.Write((char)('A' + i - 0xA));
-		}
-	}
-	public static void PrintHEX(byte b)
-	{
-		PrintHexDigit(b / 0x10);
-		PrintHexDigit(b & 0x0F);
-		Console.Write(' ');
-	}
 	unsafe static void Main(string[] args)
 	{
 		CLIOptions options = new CLIOptions();
@@ -99,21 +82,6 @@ class Program
 			case Operation.ShowDataStructureInfo:
 				{
 					{
-						LBABlock blk = new LBABlock();
-						{
-							var ptr = &blk;
-							GPTHeader header = new GPTHeader();
-							header.EnterListCRC = uint.MaxValue;
-							((GPTHeader*)ptr)[0] = header;
-							for (int i = 0; i < DiskDefinitions.LBASectorSize; i++)
-							{
-								PrintHEX(blk.Data[i]);
-								if ((i + 1) % 0xF == 0 && i != 0)
-								{
-									Console.WriteLine();
-								}
-							}
-						}
 					}
 					Console.WriteLine($"LBABlock:\t{sizeof(LBABlock)}");
 					Console.WriteLine($"SFSItem:\t{sizeof(SFSItem)}");

@@ -139,6 +139,7 @@ namespace cvm.net.disk.editor
 					}
 					break;
 				case "create-disk":
+				case "new-disk":
 					{
 						t.GoNext();
 						ulong Sectors = 0;
@@ -224,6 +225,7 @@ namespace cvm.net.disk.editor
 					}
 					break;
 				case "create-gpt":
+				case "new-gpt":
 					{
 						if (currentEditingImage == null)
 						{
