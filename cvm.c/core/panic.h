@@ -7,6 +7,8 @@
 
 #define __cvm_panic_calloc_id 0x0002
 #define __cvm_panic_calloc_msg "calloc() failed!"
+#define __cvm_panic_fopen_id 0x0003
+#define __cvm_panic_fopen_msg "fopen() failed!"
 
 #define __cvm_panic_generic_id 0x0000
 #define __cvm_panic_generic_msg "Generic CVM panic!"

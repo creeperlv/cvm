@@ -2,7 +2,7 @@
 #define __cvm_cvm
 #include <stdint.h>
 #include <stdlib.h>
-
+#include "panic.h"
 typedef int8_t Int8;
 typedef uint8_t UInt8;
 typedef int16_t Int16;
@@ -12,7 +12,9 @@ typedef uint32_t UInt32;
 typedef int64_t Int64;
 typedef uint64_t UInt64;
 typedef uint32_t UInt32;
-
+typedef UInt32 CVMRESULT;
+#define __CVM_SUCCESS 0
+#define __CVM_FAIL -1
 #define __CVM_GUID_VER_MASK 0b0100111111111111
 #define __CVM_GUID_VAR_MASK 0b10111111111111111111111111111111
 

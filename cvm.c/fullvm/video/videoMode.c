@@ -1,4 +1,4 @@
-#include "fullvm.h"
+#include "../fullvm.h"
 #include <raylib.h>
 
 UInt8 *Buffer;

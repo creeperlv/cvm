@@ -36,9 +36,9 @@ then
 
 	if [ -z "$LIBS" ]
 	then
-		LIBS="-lraylib"
+		LIBS="-lraylib -lGL -lm -lpthread -ldl -lrt -lX11"
 	fi
-	COMPILE="$CC $C_OPT $SRC/core/*.c $SRC/fullvm/*.c -o $BIN/fullvm $LIBS"
+	COMPILE="$CC $C_OPT $SRC/core/*.c $SRC/fullvm/*.c $SRC/fullvm/*/*.c -o $BIN/fullvm $LIBS"
 	echo "$COMPILE"
 	$COMPILE
 fi

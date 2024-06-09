@@ -1,6 +1,7 @@
 #ifndef __cvm_fullvm_Storage
 #define __cvm_fullvm_Storage
-#include "../core/cvm.h"
+#include "../../core/cvm.h"
+#include <stdio.h>
 
 #define __cvm_fullvm_Storage_EFI_GUID_L 0xC12A7328F81F11D2L
 #define __cvm_fullvm_Storage_EFI_GUID_R 0xBA4B00A0C93EC93BL
@@ -8,6 +9,7 @@
 typedef struct __cvm_fullvm_diskimg{
     
 }_cvm_fullvm_diskimg;
+typedef _cvm_fullvm_diskimg* CVMDiskImg;
 typedef struct __cvm_fullvm_GPT{
     
 }_cvm_fullvm_GPT;
@@ -41,4 +43,6 @@ typedef struct __cvm_fullvm_GPT_Header
     Int8 ReservedBlank[420];
 }cvmGPTHeader;
 
+
+CVMRESULT LoadDisk(char* name, CVMDiskImg* Disk);
 #endif 
