@@ -59,7 +59,7 @@ namespace cvm.net.fullvm.core.Disk
 						{
 							DiskPart dp = new DiskPart(img, this);
 							var data = blkPtr + i;
-							dp.SetMetadata(((PartationMetadata*)data)[0]);
+							dp.SetMetadata(((PartitionMetadata*)data)[0]);
 							this.Parts.Add(dp);
 						}
 					}
@@ -78,7 +78,7 @@ namespace cvm.net.fullvm.core.Disk
 					for (int i = 0; i < partCount; i++)
 					{
 						var ptr_ = ptr + i;
-						((PartationMetadata*)ptr_)[0] = Parts[i].metadata;
+						((PartitionMetadata*)ptr_)[0] = Parts[i].metadata;
 					}
 					Span<byte> bytes = new Span<byte>((byte*)ptr, partCount * sizeof(LBABlock));
 					var _crc = Crc32.HashToUInt32(bytes);

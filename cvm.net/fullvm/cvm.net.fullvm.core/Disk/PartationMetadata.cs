@@ -3,7 +3,7 @@
 namespace cvm.net.fullvm.core.Disk
 {
     [StructLayout(LayoutKind.Sequential)]
-    public unsafe struct PartationMetadata
+    public unsafe struct PartitionMetadata
     {
         public Guid PartType;
         public Guid PartID;

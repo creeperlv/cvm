@@ -9,5 +9,10 @@ namespace cvm.net.fullvm.core.Data
 		public int Minor;
 		public int Build;
 		public int Patch;
+		public static UnmanagedVersion FromVersion(Version v)
+		{
+			return new UnmanagedVersion() { Major = v.Major, Minor = v.Minor, Build = v.Build, Patch = v.Revision };
+		}
+		public Version ToVersion() => new(Major, Minor, Build, Patch);
 	}
 }

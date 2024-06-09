@@ -18,7 +18,7 @@ class Program
 		Console.WriteLine("--disk <file>");
 		Console.WriteLine("\tSpecify disk image to load.");
 		Console.WriteLine("--launch");
-		Console.WriteLine("\tLaunch the virutal machine.");
+		Console.WriteLine("\tLaunch the virtual machine.");
 	}
 	unsafe static void Main(string[] args)
 	{
@@ -85,7 +85,7 @@ class Program
 					Console.WriteLine($"Guid:\t\t{sizeof(Guid)}");
 					Console.WriteLine($"GPTHeader:\t\t{sizeof(GPTHeader)}");
 					Console.WriteLine($"Instruction:\t{sizeof(Instruction)}");
-					Console.WriteLine($"PartMetadata:\t{sizeof(PartationMetadata)}");
+					Console.WriteLine($"PartMetadata:\t{sizeof(PartitionMetadata)}");
 					Console.WriteLine($"SFSNodeBlock:\t{sizeof(SFSNodeBlock)}");
 					return;
 				}

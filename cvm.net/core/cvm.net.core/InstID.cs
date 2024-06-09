@@ -66,10 +66,13 @@ namespace cvm.net.core
 		//Reset Flag
 		public const uint RF = 0x0017;
 		public const uint RO = 0x0018;
-		//FUNC [0|1] [ID]
+		//INT [0|1] [ID]
 		//00 16 00 00 01
-		//FUNC Static WRITE
-		public const uint FUNC = 0x0019;
+		//INT Static WRITE
+		//Interrupt, VM/FW calls.
+		public const uint INT = 0x0019;
+		//Interrupt Globally. Call to system calls.
+		public const uint INTG = 0x001A;
 		//malloc [0|1] [Size|Reg] Target
 		//00 30 00 F0 F0 80
 		//malloc 0xF0F0 $0x80
@@ -77,7 +80,17 @@ namespace cvm.net.core
 		public const uint CALLOC = 0x0031;
 		public const uint REALLOC = 0x0032;
 		public const uint FREE = 0x0033;
+		// Cause INTG.
 		public const uint EXIT = 0x0034;
+		//Start a new process
+		//START [FILE|MEMORY] $PTR_TO_IMG $CONFIGURATION
+		//00 35 00 10 20
+		//CONFIGURATION:
+		//|0|1|
+		//|-|-|
+		//|Kernel Mode|Allow Direct Execution of INT|
+		// Cause INTG.
+		public const uint START = 0x0035;
 		//SINT [0|1] TGT PC
 		//00 F0 00 10 00 10
 		//SINT Static SOME_THING LBL (at 10)
@@ -90,6 +103,11 @@ namespace cvm.net.core
 		//00 F1 01 10
 		//RINT Reg $0x10
 		public const uint RINT = 0x00F1;
+		//GSINT [0|1] TGT PC
+		//Globally Set Interrupt
+		public const uint GSINT = 0x00F2;
+		//GRINT [0|1] TGT PC
+		public const uint GRINT = 0x00F3;
 
 	}
 }

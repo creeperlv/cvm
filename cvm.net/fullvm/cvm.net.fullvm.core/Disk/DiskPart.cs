@@ -4,13 +4,13 @@
     {
         public DiskImage img;
         public GPTPartMgr mgr;
-        public PartationMetadata metadata;
+        public PartitionMetadata metadata;
         public DiskPart(DiskImage img, GPTPartMgr mgr)
         {
             this.img = img;
             this.mgr = mgr;
         }
-        public unsafe void SetMetadata(PartationMetadata metadata)
+        public unsafe void SetMetadata(PartitionMetadata metadata)
         {
             this.metadata = metadata;
             Offset = img.DataOffset + metadata.FirstLBA * sizeof(LBABlock);

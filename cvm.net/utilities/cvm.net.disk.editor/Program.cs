@@ -259,7 +259,7 @@ namespace cvm.net.disk.editor
 						}
 						if (GPTMgr is null)
 						{
-							Console.WriteLine("You must load/creat GPT table first!");
+							Console.WriteLine("You must load/create GPT table first!");
 							return;
 						}
 						GPTMgr.WriteTableMeta();
@@ -267,14 +267,14 @@ namespace cvm.net.disk.editor
 					break;
 				case "new-part":
 					{
-						NewPartation(t);
+						NewPartition(t);
 					}
 					break;
 				case "list-part":
 					{
 						if (GPTMgr is null)
 						{
-							Console.WriteLine("You must load/creat GPT table first!");
+							Console.WriteLine("You must load/create GPT table first!");
 							return;
 						}
 						foreach (var item in GPTMgr.Parts)
@@ -303,7 +303,7 @@ namespace cvm.net.disk.editor
 			}
 		}
 
-		private unsafe static void NewPartation(SegmentTravler t)
+		private unsafe static void NewPartition(SegmentTravler t)
 		{
 			if (currentEditingImage == null)
 			{
@@ -312,11 +312,10 @@ namespace cvm.net.disk.editor
 			}
 			if (GPTMgr is null)
 			{
-				Console.WriteLine("You must load/creat GPT table first!");
+				Console.WriteLine("You must load/create GPT table first!");
 				return;
 			}
-			//PartationMetadata metadata = new PartationMetadata();
-			PartationMetadata* metadata = (PartationMetadata*)StdLib.malloc(sizeof(PartationMetadata));
+			PartitionMetadata* metadata = (PartitionMetadata*)StdLib.malloc(sizeof(PartitionMetadata));
 			metadata->PartID = Guid.NewGuid();
 			bool IsFirstLBASet = false;
 			bool IsLastLBASet = false;
@@ -363,7 +362,7 @@ namespace cvm.net.disk.editor
 						{
 							if (DiskDefinitions.PartTypeNames.TryGetValue(tName, out var type))
 							{
-								if (DiskDefinitions.PartationTypeIDs.TryGetValue(type, out metadata->PartType))
+								if (DiskDefinitions.PartitionTypeIDs.TryGetValue(type, out metadata->PartType))
 								{
 									IsPartTypeSet = true;
 								}
@@ -402,13 +401,13 @@ namespace cvm.net.disk.editor
 			}
 			if (!IsPartTypeSet)
 			{
-				RequestValue($"Please specify the a partation type:",
+				RequestValue($"Please specify the a partition type:",
 					(s) =>
 					{
 						if (s == null) return false;
 						if (DiskDefinitions.PartTypeNames.TryGetValue(s.ToUpper(), out var type))
 						{
-							if (DiskDefinitions.PartationTypeIDs.TryGetValue(type, out metadata->PartType))
+							if (DiskDefinitions.PartitionTypeIDs.TryGetValue(type, out metadata->PartType))
 							{
 								IsPartTypeSet = true;
 								return true;
@@ -419,7 +418,7 @@ namespace cvm.net.disk.editor
 			}
 			if (Name == null)
 			{
-				RequestValue($"Please specify the a name for the partation:",
+				RequestValue($"Please specify the a name for the partition:",
 					(s) =>
 					{
 						Name = s;
@@ -428,10 +427,10 @@ namespace cvm.net.disk.editor
 			}
 			metadata->PartID = Guid.NewGuid();
 			{
-				var nb = Encoding.ASCII.GetBytes(Name ?? "New Partation");
+				var nb = Encoding.ASCII.GetBytes(Name ?? "New Partition");
 				fixed (byte* src = nb)
 				{
-					Buffer.MemoryCopy(src, metadata->Name, DiskDefinitions.GPTPartationNameMaxLen, nb.Length);
+					Buffer.MemoryCopy(src, metadata->Name, DiskDefinitions.GPTPartitionNameMaxLen, nb.Length);
 				}
 				metadata->Name[nb.Length] = 0;
 			}
