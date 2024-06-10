@@ -7,12 +7,12 @@ namespace cvm.net.core.MTDispatcher
     {
         public List<SDispatcher> Dispatchers = new List<SDispatcher>();
 
-        public void Dispatch(CPUCore core)
+        public void Dispatch(ExecuteContext core)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<CPUCore>? GetCPUCores()
+        public IEnumerable<ExecuteContext>? GetCPUCores()
         {
             foreach (var core in Dispatchers)
             {

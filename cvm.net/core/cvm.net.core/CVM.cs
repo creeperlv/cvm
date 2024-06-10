@@ -4,10 +4,10 @@ namespace cvm.net.core
 {
 	public static unsafe class CVM
 	{
-		public static void Execute(CPUCore core, IDispatcher dispatcher)
+		public static void Execute(ExecuteContext core, IDispatcher dispatcher)
 		{
 			Callframe frame = default;
-			core.GetLatestCallframe(&frame);
+			core.GetLatestCallFrame(&frame);
 			var inst = core.Machine.Programs[frame.ID].module.Instructions[frame.PC];
 			uint Inst = inst.As<Instruction, uint>(0);
 

@@ -8,7 +8,22 @@ namespace cvm.net.core
 		public List<MemoryBlock> MemoryBlocks = new List<MemoryBlock>();
 		public CVMModule module;
 		public List<IDisposable?> Resources = new List<IDisposable?>();
-
+		public Machine machine;
+		public List<ExecuteContext> ExecuteContexts = new List<ExecuteContext>();
+		public RuntimeProgram(Machine machine)
+		{
+			this.machine = machine;
+		}
+		public void Exit()
+		{
+			lock (ExecuteContexts)
+			{
+				foreach (var item in ExecuteContexts)
+				{
+					item.WillRun = false;
+				}
+			}
+		}
 		public void Dispose()
 		{
 			for (int i = 0; i < Resources.Count; i++)
@@ -20,7 +35,7 @@ namespace cvm.net.core
 			Resources.Clear();
 		}
 	}
-	public unsafe struct CVMModule:IDisposable
+	public unsafe struct CVMModule : IDisposable
 	{
 		public Instruction* Instructions;
 		public int InstructionCount;

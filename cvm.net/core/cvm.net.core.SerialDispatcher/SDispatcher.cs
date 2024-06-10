@@ -11,8 +11,8 @@ namespace cvm.net.core.SerialDispatcher
 	{
 		bool __run = true;
 		public bool StartInThread = false;
-		List<CPUCore> Cores = new List<CPUCore>();
-		public void Dispatch(CPUCore core)
+		List<ExecuteContext> Cores = new List<ExecuteContext>();
+		public void Dispatch(ExecuteContext core)
 		{
 			Monitor.PulseAll(this);
 
@@ -31,7 +31,7 @@ namespace cvm.net.core.SerialDispatcher
 			__IsPlaying = true;
 			Monitor.PulseAll(this);
 		}
-		public IEnumerable<CPUCore>? GetCPUCores()
+		public IEnumerable<ExecuteContext>? GetCPUCores()
 		{
 			return Cores;
 		}
@@ -44,10 +44,12 @@ namespace cvm.net.core.SerialDispatcher
 					Monitor.Wait(this);
 					continue;
 				}
-				for (int i = 0; i < Cores.Count; i++)
+				for (int i = Cores.Count - 1; i >= 0; i--)
 				{
-					CPUCore core = Cores[i];
-					CVM.Execute(core, this);
+					ExecuteContext core = Cores[i];
+					if (core.WillRun)
+						CVM.Execute(core, this);
+					else Cores.RemoveAt(i);
 				}
 			}
 		}
