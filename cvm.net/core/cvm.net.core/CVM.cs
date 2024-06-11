@@ -9,65 +9,82 @@ namespace cvm.net.core
 			Callframe frame = default;
 			core.GetLatestCallFrame(&frame);
 			var inst = core.Machine.Programs[frame.ID].module.Instructions[frame.PC];
-			uint Inst = inst.As<Instruction, uint>(0);
-
-			switch (Inst)
+			uint Inst = inst.As<Instruction, ushort>(0);
+			uint ADVSEG = inst.As<Instruction, byte>(0);
+			if (ADVSEG >= 0xF0)
 			{
-				case InstID.NOP:
-					break;
-				case InstID.ADD:
-					var type = inst.As<Instruction, byte>(2);
-					var IsRegister = inst.As<Instruction, byte>(3) == 1;
-					switch (type)
-					{
-						case BaseDataType.BU:
-							{
-								byte L = inst.As<Instruction, byte>(4);
-								byte R;
-								byte T = inst.As<Instruction, byte>(7);
-								if (IsRegister)
+				uint ADVOP = inst.As<Instruction, byte>(1);
+				switch (ADVSEG)
+				{
+					case InstID.ADV0:
+
+
+						break;
+					default:
+						break;
+				}
+			}
+			else
+			{
+
+				switch (Inst)
+				{
+					case InstID.NOP:
+						break;
+					case InstID.ADD:
+						var type = inst.As<Instruction, byte>(2);
+						var IsRegister = inst.As<Instruction, byte>(3) == 1;
+						switch (type)
+						{
+							case BaseDataType.BU:
 								{
-									R = core.GetData<byte>(inst.As<Instruction, Int32>(5));
+									byte L = inst.As<Instruction, byte>(4);
+									byte R;
+									byte T = inst.As<Instruction, byte>(7);
+									if (IsRegister)
+									{
+										R = core.GetData<byte>(inst.As<Instruction, Int32>(5));
+									}
+									else
+									{
+										R = inst.As<Instruction, byte>(6);
+									}
+									unchecked
+									{
+										var d = (byte)(L + R);
+										core.OF = d < L || d < R;
+										core.SetData(T, d);
+									}
 								}
-								else
+								break;
+							case BaseDataType.I:
 								{
-									R = inst.As<Instruction, byte>(6);
+									int L = inst.As<Instruction, byte>(4);
+									int R;
+									int T = inst.As<Instruction, byte>(7);
+									if (IsRegister)
+									{
+										R = core.GetData<byte>(inst.As<Instruction, Int32>(5));
+									}
+									else
+									{
+										R = inst.As<Instruction, int>(5);
+									}
+									unchecked
+									{
+										var d = (int)(L + R);
+										core.OF = d < L || d < R;
+										core.SetData(T, d);
+									}
 								}
-								unchecked
-								{
-									var d = (byte)(L + R);
-									core.OF = d < L || d < R;
-									core.SetData(T, d);
-								}
-							}
-							break;
-						case BaseDataType.I:
-							{
-								int L = inst.As<Instruction, byte>(4);
-								int R;
-								int T = inst.As<Instruction, byte>(7);
-								if (IsRegister)
-								{
-									R = core.GetData<byte>(inst.As<Instruction, Int32>(5));
-								}
-								else
-								{
-									R = inst.As<Instruction, int>(5);
-								}
-								unchecked
-								{
-									var d = (int)(L + R);
-									core.OF = d < L || d < R;
-									core.SetData(T, d);
-								}
-							}
-							break;
-						default:
-							break;
-					}
-					break;
-				default:
-					break;
+								break;
+							default:
+								break;
+						}
+						break;
+					default:
+						break;
+				}
 			}
 		}
 	}
