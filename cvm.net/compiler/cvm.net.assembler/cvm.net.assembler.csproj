@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\cvm.net.compiler.core\cvm.net.compiler.core.csproj" />
+    <ProjectReference Include="..\..\core\cvm.net.tools.core\cvm.net.tools.core.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,6 @@
 ﻿using LibCLCC.NET.TextProcessing;
 
-namespace cvm.net.disk.editor
+namespace cvm.net.tools.core
 {
 	public class SegmentTraveler
 	{

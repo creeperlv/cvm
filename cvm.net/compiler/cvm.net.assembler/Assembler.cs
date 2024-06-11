@@ -1,24 +1,10 @@
 ﻿using cvm.net.compiler.core;
+using cvm.net.compiler.core.Errors;
 using cvm.net.core;
 using LibCLCC.NET.Operations;
-using LibCLCC.NET.TextProcessing;
 
 namespace cvm.net.assembler
 {
-	public static unsafe class AssemlerFunctions
-	{
-		public static Dictionary<uint, Func<Segment, OperationResult<CVMObject>, IntPtr, int, bool>> AssembleFunctions =
-			new(){
-				{InstID.EXIT,Assemble_Exit },
-				};
-		public unsafe static bool Assemble_Exit(Segment s, OperationResult<CVMObject> result, IntPtr instPtr, int PC)
-		{
-			Instruction inst = default;
-			inst.Set(InstID.EXIT);
-			((Instruction*)instPtr)[0] = inst;
-			return true;
-		}
-	}
 	public class Assembler
 	{
 		public unsafe OperationResult<CVMObject> Assemble(Stream stream, string FileName)
@@ -27,6 +13,7 @@ namespace cvm.net.assembler
 			StreamReader streamReader = new StreamReader(stream);
 			AssemblyScanner scanner = new AssemblyScanner();
 			int PC = 0;
+			ASMSections section = ASMSections.Code;
 			while (true)
 			{
 				var line = streamReader.ReadLine();
@@ -35,18 +22,47 @@ namespace cvm.net.assembler
 					break;
 				}
 				var HEAD = scanner.Scan(line, false, FileName);
-				if (ISADefinition.CurrentDefinition.Names.TryGetValue(HEAD.content, out var instID))
+				var Next = HEAD.Next;
+				var HEAD_NAME = HEAD.content;
+				if (ISADefinition.CurrentDefinition.Sections.TryGetValue(HEAD_NAME, out ASMSections value))
 				{
-					if (AssemlerFunctions.AssembleFunctions.TryGetValue(instID, out var assemble))
-					{
-						Instruction inst = default;
-						if (assemble(HEAD, OResult, (IntPtr)(&inst), PC))
+					section = value;
+					continue;
+				}
+				switch (section)
+				{
+					case ASMSections.Data:
+						break;
+					case ASMSections.Code:
+						if (ISADefinition.CurrentDefinition.Names.TryGetValue(HEAD_NAME, out var instID))
 						{
-							OResult.Result.instructions.Add(inst);
-							PC++;
+							if (AssemlerFunctions.AssembleFunctions.TryGetValue(instID, out var assemble))
+							{
+								Instruction inst = default;
+								if (assemble(HEAD, OResult, (IntPtr)(&inst), PC))
+								{
+									OResult.Result.instructions.Add(inst);
+									PC++;
+								}
+							}
+							else
+							{
+								if (Next != null)
+								{
+									if (Next.content == ":")
+									{
+										OResult.Result.Labels.Add(HEAD_NAME, PC);
+										continue;
+									}
+								}
+								OResult.AddError(new UnimplementedInstructionError(HEAD_NAME, HEAD));
+							}
 						}
-
-					}
+						break;
+					case ASMSections.Consts:
+						break;
+					default:
+						break;
 				}
 			}
 			return OResult;

@@ -63,7 +63,30 @@ namespace cvm.net.compiler.core
 				{"Data", ASMSections.Data},
 				{"Code", ASMSections.Code},
 				{"Consts", ASMSections.Consts},
-				}
+				},
+			Types = new() {
+				{"byte",BaseDataType.BU },
+				{"sbyte",BaseDataType.BS},
+				{"int16",BaseDataType.S},
+				{"short",BaseDataType.S},
+				{"uint16",BaseDataType.SU},
+				{"ushort",BaseDataType.SU},
+				{"int64",BaseDataType.L},
+				{"long",BaseDataType.L},
+				{"uint64",BaseDataType.LU},
+				{"ulong",BaseDataType.LU},
+				{"float",BaseDataType.F},
+				{"single",BaseDataType.F},
+				{"double",BaseDataType.D},
+				{"int",BaseDataType.I},
+				{"int32",BaseDataType.I},
+				{"uint",BaseDataType.IU},
+				{"uint32",BaseDataType.IU},
+			}
+		};
+		public Dictionary<string, byte> Types = new Dictionary<string, byte>()
+		{
+
 		};
 		public Dictionary<string, ASMSections> Sections = [];
 		public Dictionary<string, uint> Names = new()

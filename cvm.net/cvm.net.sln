@@ -27,9 +27,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cvm.net.disk.editor", "util
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "compiler", "compiler", "{1880D064-E326-44C9-8C60-BFE3E3E5621A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cvm.net.assembler", "compiler\cvm.net.assembler\cvm.net.assembler.csproj", "{EBFD7F50-D1D5-4EC6-9CBA-94D05A9A1CDA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cvm.net.assembler", "compiler\cvm.net.assembler\cvm.net.assembler.csproj", "{EBFD7F50-D1D5-4EC6-9CBA-94D05A9A1CDA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cvm.net.compiler.core", "compiler\cvm.net.compiler.core\cvm.net.compiler.core.csproj", "{F68D6DAA-5232-4AEE-90BA-B7D42E74E719}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cvm.net.compiler.core", "compiler\cvm.net.compiler.core\cvm.net.compiler.core.csproj", "{F68D6DAA-5232-4AEE-90BA-B7D42E74E719}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cvm.net.tools.core", "core\cvm.net.tools.core\cvm.net.tools.core.csproj", "{B1B008BD-DB8A-4060-90F0-0C03831560D3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -73,6 +75,10 @@ Global
 		{F68D6DAA-5232-4AEE-90BA-B7D42E74E719}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F68D6DAA-5232-4AEE-90BA-B7D42E74E719}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F68D6DAA-5232-4AEE-90BA-B7D42E74E719}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1B008BD-DB8A-4060-90F0-0C03831560D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1B008BD-DB8A-4060-90F0-0C03831560D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1B008BD-DB8A-4060-90F0-0C03831560D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1B008BD-DB8A-4060-90F0-0C03831560D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -87,6 +93,7 @@ Global
 		{0B061CA1-BB10-4F0B-85B1-0843BDD51324} = {E1BA8D9E-12BD-407B-9069-EF1D619B0440}
 		{EBFD7F50-D1D5-4EC6-9CBA-94D05A9A1CDA} = {1880D064-E326-44C9-8C60-BFE3E3E5621A}
 		{F68D6DAA-5232-4AEE-90BA-B7D42E74E719} = {1880D064-E326-44C9-8C60-BFE3E3E5621A}
+		{B1B008BD-DB8A-4060-90F0-0C03831560D3} = {A3F95A0C-5340-475F-A7AA-274B499707FF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7413A240-505A-4826-BA86-ED2C3BDDA36A}

@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\core\cvm.net.tools.core\cvm.net.tools.core.csproj" />
     <ProjectReference Include="..\..\fullvm\cvm.net.fullvm.core\cvm.net.fullvm.core.csproj" />
   </ItemGroup>
 

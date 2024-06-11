@@ -10,9 +10,4 @@
     <PackageReference Include="LibCLCC.NET" Version="1.29.30" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\core\cvm.net.core\cvm.net.core.csproj" />
-    <ProjectReference Include="..\..\core\cvm.net.tools.core\cvm.net.tools.core.csproj" />
-  </ItemGroup>
-
 </Project>
