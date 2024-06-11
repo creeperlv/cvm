@@ -1,5 +1,6 @@
 ﻿using cvm.net.core.libc;
 using cvm.net.fullvm.core.Disk;
+using cvm.net.tools.core;
 using LibCLCC.NET.TextProcessing;
 using System.Text;
 

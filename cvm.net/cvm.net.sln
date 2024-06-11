@@ -33,6 +33,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cvm.net.compiler.core", "co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cvm.net.tools.core", "core\cvm.net.tools.core\cvm.net.tools.core.csproj", "{B1B008BD-DB8A-4060-90F0-0C03831560D3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cvm.net.cli.core", "core\cvm.net.cli.core\cvm.net.cli.core.csproj", "{102B3FBF-3D3D-4668-9B6F-98D062B888B1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -79,6 +81,10 @@ Global
 		{B1B008BD-DB8A-4060-90F0-0C03831560D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1B008BD-DB8A-4060-90F0-0C03831560D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B1B008BD-DB8A-4060-90F0-0C03831560D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{102B3FBF-3D3D-4668-9B6F-98D062B888B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{102B3FBF-3D3D-4668-9B6F-98D062B888B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{102B3FBF-3D3D-4668-9B6F-98D062B888B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{102B3FBF-3D3D-4668-9B6F-98D062B888B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -94,6 +100,7 @@ Global
 		{EBFD7F50-D1D5-4EC6-9CBA-94D05A9A1CDA} = {1880D064-E326-44C9-8C60-BFE3E3E5621A}
 		{F68D6DAA-5232-4AEE-90BA-B7D42E74E719} = {1880D064-E326-44C9-8C60-BFE3E3E5621A}
 		{B1B008BD-DB8A-4060-90F0-0C03831560D3} = {A3F95A0C-5340-475F-A7AA-274B499707FF}
+		{102B3FBF-3D3D-4668-9B6F-98D062B888B1} = {A3F95A0C-5340-475F-A7AA-274B499707FF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7413A240-505A-4826-BA86-ED2C3BDDA36A}

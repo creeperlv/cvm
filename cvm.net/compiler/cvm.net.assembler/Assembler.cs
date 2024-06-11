@@ -7,9 +7,9 @@ namespace cvm.net.assembler
 {
 	public class Assembler
 	{
-		public unsafe OperationResult<CVMObject> Assemble(Stream stream, string FileName)
+		public unsafe OperationResult<CVMObject> Assemble(Stream stream, string FileName, OperationResult<CVMObject>? previousCompile)
 		{
-			OperationResult<CVMObject> OResult = new CVMObject();
+			OperationResult<CVMObject> OResult = previousCompile ?? new CVMObject();
 			StreamReader streamReader = new StreamReader(stream);
 			AssemblyScanner scanner = new AssemblyScanner();
 			int PC = 0;
