@@ -3,6 +3,7 @@ using cvm.net.core.libc;
 using cvm.net.fullvm.core;
 using cvm.net.fullvm.core.Disk;
 using cvm.net.fullvm.core.Disk.SFS;
+using cvm.net.fullvm.core.Firmware;
 using cvm.net.fullvm.core.Output;
 using System.Diagnostics;
 using System.Drawing;
@@ -69,17 +70,20 @@ class Program
 				PrintHelp();
 				return;
 			case Operation.Version:
-				{
+				{ 
 					Console.WriteLine($"CVM Inst Ver:{InstID.InstructionVersion}");
 					return;
 				}
 			case Operation.Launch:
 				{
-					Display d = new Display();
-					d.Init(800, 600);
-					DisplayManager.InitVideo();
-					DisplayManager.AttachDisplay(d);
-					DisplayManager.SetupVideoMode();
+					Terminal.currentUsingTerminal=new ConsoleBasedVT();
+					FullVMFirmware fw=new FullVMFirmware();
+					fw.Init(false);
+					//Display d = new Display();
+					//d.Init(800, 600);
+					//DisplayManager.InitVideo();
+					//DisplayManager.AttachDisplay(d);
+					//DisplayManager.SetupVideoMode();
 				}
 				break;
 			case Operation.ShowDataStructureInfo:
