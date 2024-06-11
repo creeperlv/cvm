@@ -44,6 +44,11 @@ namespace cvm.net.core
 		//LG [AND|OR|NOT|XOR|NOR] Size L R T
 		//00 30 10 10 11 12
 		public const uint LG = 0x0023;
+		//Memory Copy
+		//MCP [0|1] $SRC $Target [$Length|Length]
+		//00 24 01 10 12 10 00 [ 00 <-- Unused
+		//MCP $0x10 $0x12 0x1000
+		public const uint MCP = 0x0024;
 		//JMP [0|1] [Address|Register]
 		//00 10 00 00 10 00
 		//JMP 0 LBL (at 0x1000)
@@ -108,6 +113,12 @@ namespace cvm.net.core
 		public const uint GSINT = 0x00F2;
 		//GRINT [0|1] TGT PC
 		public const uint GRINT = 0x00F3;
+		//GINFO INFO_ID $RECIVER
+		//Get Info.
+		public const uint GINFO = 0x00F4;
+		//ADV OP L R T
+
+		public const uint ADV0=0xF0;
 
 	}
 }

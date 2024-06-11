@@ -26,7 +26,7 @@ class Program
 	unsafe static void Main(string[] args)
 	{
 		var stdin = Console.OpenStandardInput();
-		
+
 		using var reader = new StreamReader(stdin);
 		CLIOptions options = new CLIOptions();
 		for (int i = 0; i < args.Length; i++)
@@ -70,14 +70,20 @@ class Program
 				PrintHelp();
 				return;
 			case Operation.Version:
-				{ 
+				{
 					Console.WriteLine($"CVM Inst Ver:{InstID.InstructionVersion}");
 					return;
 				}
 			case Operation.Launch:
 				{
-					Terminal.currentUsingTerminal=new ConsoleBasedVT();
-					FullVMFirmware fw=new FullVMFirmware();
+					Terminal.currentUsingTerminal = new ConsoleBasedVT();
+					var imgFiles = options.GetList(OptionNames.Disks);
+					FullVMFirmware fw = new FullVMFirmware();
+					foreach (var item in imgFiles)
+					{
+						DiskImage diskImage = new DiskImage() { FD = File.Open(item, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite) };
+						fw.imgs.Add(diskImage);
+					}
 					fw.Init(false);
 					//Display d = new Display();
 					//d.Init(800, 600);
