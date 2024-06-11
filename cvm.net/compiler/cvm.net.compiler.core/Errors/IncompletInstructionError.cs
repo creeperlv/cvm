@@ -14,7 +14,18 @@ namespace cvm.net.compiler.core.Errors
 			return "Incomplete Instruction!";
 		}
 	}
-	public class AssemblerError:Error
+	public class UnknownBaseTypeError : AssemblerError
+	{
+		public UnknownBaseTypeError(Segment errorSegment) : base(errorSegment)
+		{
+		}
+
+		public override string ToString()
+		{
+			return "Unknown Base Type!";
+		}
+	}
+	public class AssemblerError : Error
 	{
 		public Segment ErrorSegment;
 

@@ -7,10 +7,11 @@ namespace cvm.net.core
 		public static readonly Version InstructionVersion = new Version(1, 0, 0, 0);
 
 		public const ushort NOP = 0x0000;
-		//ADD [TYPE] [VALUE|REG][VALUE|REG] L R T
+		//ADD [TYPE] [VALUE|REG][VALUE|REG] T L R
 		//00 01 01 01 00 00 01 02
 		//00 01 02 03 04 05 06 07
-		// ADD S reg $0 $1 $2
+		// ADD S $0 $1 $2
+		//REG is determined by R.
 		public const ushort ADD = 0x0001;
 		public const ushort SUB = 0x0002;
 		public const ushort MUL = 0x0003;

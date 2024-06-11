@@ -22,7 +22,24 @@ namespace cvm.net.assembler
 			if (!st.GoNext())
 			{
 				result.AddError(new IncompletInstructionError(st.Current));
+				return false;
 			}
+			var current = st.Current;
+			if (ISADefinition.CurrentDefinition.Types.TryGetValue(current.content, out var type))
+			{
+				instruction.Set(type, 2);
+			}
+			else
+			{
+				result.AddError(new UnknownBaseTypeError(current));
+				return false;
+			}
+			if (!st.GoNext())
+			{
+				result.AddError(new IncompletInstructionError(st.Current));
+				return false;
+			}
+			current = st.Current;
 			((Instruction*)InstPtr)[0] = instruction;
 			return true;
 		}
