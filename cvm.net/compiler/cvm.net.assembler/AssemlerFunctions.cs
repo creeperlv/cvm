@@ -40,9 +40,31 @@ namespace cvm.net.assembler
 				return false;
 			}
 			current = st.Current;
+			var T = current;
+			if (!st.GoNext())
+			{
+				result.AddError(new IncompletInstructionError(st.Current));
+				return false;
+			}
+			current = st.Current;
+			var L = current;
+			if (!st.GoNext())
+			{
+				result.AddError(new IncompletInstructionError(st.Current));
+				return false;
+			}
+			current = st.Current;
+			var R = current;
+			bool IsRegister = false;
+			if (R.content.StartsWith("$"))
+			{
+				IsRegister = true;
+			}
+			
 			((Instruction*)InstPtr)[0] = instruction;
 			return true;
 		}
+
 		public unsafe static bool Assemble_Exit(Segment s, OperationResult<CVMObject> result, IntPtr instPtr, int PC)
 		{
 			Instruction inst = default;

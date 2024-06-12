@@ -82,8 +82,40 @@ namespace cvm.net.compiler.core
 				{"int32",BaseDataType.I},
 				{"uint",BaseDataType.IU},
 				{"uint32",BaseDataType.IU},
-			}
+			},
 		};
+		unsafe static ISADefinition()
+		{
+			var RegisterCount = ExecuteContext.RegisterLimit / sizeof(MemoryPtr);
+			for (int i = 0; i < RegisterCount; i++)
+			{
+				CurrentDefinition.RegisterNames.Add($"x{i}", (byte)(i * sizeof(MemoryPtr)));
+			}
+			Dictionary<string, string> regNameAlias = new()
+			{
+				{"ra","x1" },
+				{"sp","x2" },
+				{"gp","x3" },
+				{"t0","x5" },
+				{"t1","x6" },
+				{"t2","x7" },
+				{"a0","x10" },
+				{"a1","x11" },
+				{"a2","x12" },
+				{"a3","x13" },
+				{"a4","x14" },
+				{"a5","x15" },
+				{"a6","x16" },
+				{"a7","x17" },
+			};
+			foreach (var item in regNameAlias)
+			{
+				if (CurrentDefinition.RegisterNames.TryGetValue(item.Value, out var RegisterDefinition))
+				{
+					CurrentDefinition.RegisterNames.Add(item.Key, RegisterDefinition);
+				}
+			}
+		}
 		public Dictionary<string, byte> Types = new Dictionary<string, byte>()
 		{
 
@@ -93,5 +125,6 @@ namespace cvm.net.compiler.core
 		{
 
 		};
+		public Dictionary<string, byte> RegisterNames = [];
 	}
 }
