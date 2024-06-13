@@ -6,7 +6,6 @@ namespace cvm.net.compiler.core
 	{
 		Data, Code, Consts
 	}
-
 	public class ISADefinition
 	{
 		public static ISADefinition CurrentDefinition = new ISADefinition()

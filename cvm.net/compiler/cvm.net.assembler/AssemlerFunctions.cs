@@ -60,7 +60,19 @@ namespace cvm.net.assembler
 			{
 				IsRegister = true;
 			}
-			
+			byte _T;
+			byte _L;
+			if (DataConversion.TryParseRegister(T.content, out _T))
+			{
+
+			}
+			if (DataConversion.TryParseRegister(L.content, out _L))
+			{
+
+			}
+			if (IsRegister)
+			{
+			}
 			((Instruction*)InstPtr)[0] = instruction;
 			return true;
 		}
