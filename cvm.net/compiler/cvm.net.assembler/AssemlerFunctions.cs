@@ -56,7 +56,7 @@ namespace cvm.net.assembler
 			current = st.Current;
 			var R = current;
 			bool IsRegister = false;
-			if (R.content.StartsWith("$"))
+			if (R.content.StartsWith('$'))
 			{
 				IsRegister = true;
 			}
@@ -64,14 +64,40 @@ namespace cvm.net.assembler
 			byte _L;
 			if (DataConversion.TryParseRegister(T.content, out _T))
 			{
-
+				result.AddError(new TypeMismatchError(T, TypeNames.Register));
+				return false;
 			}
 			if (DataConversion.TryParseRegister(L.content, out _L))
 			{
-
+				result.AddError(new TypeMismatchError(L, TypeNames.Register));
+				return false;
 			}
+			instruction.Set((byte)(IsRegister ? 1 : 0), 3);
+			instruction.Set(_T, 4);
+			instruction.Set(_L, 5);
 			if (IsRegister)
 			{
+				byte _R;
+
+				if (DataConversion.TryParseRegister(R.content, out _R))
+				{
+					result.AddError(new TypeMismatchError(R, TypeNames.Register));
+					return false;
+				}
+				instruction.Set(_R, 6);
+			}
+			else
+			{
+				switch (type)
+				{
+					case BaseDataType.BU:
+						{
+
+						}
+						break;
+					default:
+						break;
+				}
 			}
 			((Instruction*)InstPtr)[0] = instruction;
 			return true;

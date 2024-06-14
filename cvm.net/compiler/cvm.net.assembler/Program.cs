@@ -1,5 +1,6 @@
 ﻿using cvm.net.cli.core;
 using cvm.net.compiler.core;
+using cvm.net.fullvm.core.Diagnosis;
 using LibCLCC.NET.Operations;
 
 namespace cvm.net.assembler
@@ -8,6 +9,21 @@ namespace cvm.net.assembler
 	{
 		static void Main(string[] args)
 		{
+			unsafe
+			{
+				int i = 0;
+				var r = DataConversion.ParseByteDataFromBinaryString("1_0000_0000", (byte*)&i, sizeof(int));
+				Console.WriteLine($"{r}:{i}");
+				i=0;
+				r = DataConversion.ParseByteDataFromHexString("1F", (byte*)&i, sizeof(int));
+				Console.WriteLine($"{r}:{i}");
+				DataInspector.InspectData(i);
+				Console.WriteLine();
+				r = DataConversion.ParseByteDataFromHexString("F0F", (byte*)&i, sizeof(int));
+				Console.WriteLine($"{r}:{i}");
+				DataInspector.InspectData(i);
+				Console.WriteLine();
+			}
 			CLIOptions options = new();
 			for (int i = 0; i < args.Length; i++)
 			{
@@ -41,7 +57,7 @@ namespace cvm.net.assembler
 				if (!(result?.HasError() ?? true))
 				{
 					var obj = result.Result;
-					
+
 				}
 			}
 		}

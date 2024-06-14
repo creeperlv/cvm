@@ -6,6 +6,10 @@ namespace cvm.net.compiler.core
 	{
 		Data, Code, Consts
 	}
+	public static class TypeNames
+	{
+		public readonly static string Register = "Register";
+	}
 	public class ISADefinition
 	{
 		public static ISADefinition CurrentDefinition = new ISADefinition()

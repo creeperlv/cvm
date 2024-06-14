@@ -26,8 +26,6 @@ class Program
 	unsafe static void Main(string[] args)
 	{
 		var stdin = Console.OpenStandardInput();
-
-		using var reader = new StreamReader(stdin);
 		CLIOptions options = new CLIOptions();
 		for (int i = 0; i < args.Length; i++)
 		{

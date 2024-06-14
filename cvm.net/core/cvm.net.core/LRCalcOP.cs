@@ -7,6 +7,7 @@
 		public const byte MIN = 0x02;
 		public const byte MAX = 0x03;
 	}
+
 	public static class Advanced0OP
 	{
 		public const byte CRC32 = 0x00;

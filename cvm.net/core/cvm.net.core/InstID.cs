@@ -7,9 +7,9 @@ namespace cvm.net.core
 		public static readonly Version InstructionVersion = new Version(1, 0, 0, 0);
 
 		public const ushort NOP = 0x0000;
-		//ADD [TYPE] [VALUE|REG][VALUE|REG] T L R
-		//00 01 01 01 00 00 01 02
-		//00 01 02 03 04 05 06 07
+		//ADD [TYPE] [VALUE|REG] T L R
+		//00 01 01 01 00 01 02 xx xx 00
+		//00 01 02 03 04 05 06 07 .. 0F
 		// ADD S $0 $1 $2
 		//REG is determined by R.
 		public const ushort ADD = 0x0001;
@@ -56,7 +56,7 @@ namespace cvm.net.core
 		//JMP 1 $R0
 		public const ushort JMP = 0x0010;
 		//Jump if flag
-		//JF 
+		//JF <FlagID> <PC>
 		public const ushort JF = 0x0011;
 		//Jump is overflow
 		public const ushort JO = 0x0012;
@@ -70,6 +70,7 @@ namespace cvm.net.core
 		//Copy register file then run.
 		public const ushort PJMP = 0x0016;
 		//Reset Flag
+		//RF <FlagID>
 		public const ushort RF = 0x0017;
 		public const ushort RO = 0x0018;
 		//INT [0|1] [ID]
@@ -119,7 +120,7 @@ namespace cvm.net.core
 		public const ushort GINFO = 0x00F4;
 		//ADV OP L R T
 
-		public const ushort ADV0=0xF0;
+		public const ushort ADV0 = 0xF0;
 
 	}
 }

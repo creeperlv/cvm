@@ -1,4 +1,6 @@
-﻿using System.Numerics;
+﻿using System;
+using System.Numerics;
+using System.Reflection;
 
 namespace cvm.net.compiler.core
 {
@@ -15,7 +17,7 @@ namespace cvm.net.compiler.core
 			{
 				return true;
 			}
-			if (TryParseLong(name, out var r))
+			if (TryParseULong(name, out var r))
 			{
 				register = (byte)(r);
 				return true;
@@ -46,7 +48,105 @@ namespace cvm.net.compiler.core
 			b = 0xFF;
 			return false;
 		}
-		public static bool TryParseLong(string name, out ulong data)
+
+		/// <summary>
+		/// Usage:ParseByteDataFromHexString("1F3",(byte*)ptr,sizeof(long));
+		/// </summary>
+		/// <param name="str"></param>
+		/// <param name="ptr"></param>
+		/// <param name="MaxLen"></param>
+		/// <returns></returns>
+		public unsafe static bool ParseByteDataFromHexString(string str, byte* ptr, int MaxLen, bool IsLittleEndian = true)
+		{
+			//MaxLen -= 1;
+			int index = 0;
+			byte b = 0;
+			int _i = 1;
+			for (int i = str.Length - 1; i >= 0; i--)
+			{
+				char item = str[i];
+				if (!HexChar2Byte(item, out var _b))
+				{
+					return false;
+				}
+				if (_i % 2 == 0)
+				{
+					b += (byte)(_b << 4);
+				}
+				else
+				{
+					b = _b;
+				}
+				if (index > MaxLen)
+				{
+					return false;
+				}
+				if (_i % 2 == 0 && _i != 0)
+				{
+					if (IsLittleEndian)
+						ptr[index] = b;
+					else
+						ptr[MaxLen - index - 1] = b;
+					index++;
+					b = 0;
+				}
+				_i++;
+			}
+			if (index <= MaxLen)
+			{
+				if (IsLittleEndian)
+					ptr[index] = b;
+				else
+					ptr[MaxLen - index - 1] = b;
+			}
+			return true;
+		}
+		public unsafe static bool ParseByteDataFromBinaryString(string str, byte* ptr, int MaxLen, bool IsLittleEndian = true)
+		{
+			byte b = 0;
+			int _i = 0;
+			int __i = 1;
+			for (int i = str.Length - 1; i >= 0; i--)
+			{
+				char item = str[i];
+				if (item == '0')
+				{
+					b = (byte)(b | 0 << (__i - 1) % 8);
+				}
+				else if (item == '1')
+				{
+					b = (byte)(b | 1 << (__i - 1) % 8);
+
+				}
+				else if (item == '_')
+				{
+					continue;
+				}
+				else
+				{
+					return false;
+				}
+				if (__i % 8 == 0 && __i != 0)
+				{
+					if (IsLittleEndian)
+						ptr[_i] = b;
+					else
+						ptr[MaxLen - _i - 1] = b;
+					_i++;
+					b = 0;
+				}
+				__i++;
+			}
+			if (_i <= MaxLen)
+			{
+				if (IsLittleEndian)
+					ptr[_i] = b;
+				else
+					ptr[MaxLen - _i - 1] = b;
+			}
+			return true;
+		}
+		public static bool TryParseULong(string name, out ulong data)
 		{
 			if (ulong.TryParse(name, null, out data))
 			{
