@@ -1,4 +1,3 @@
-﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
@@ -31,9 +30,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cvm.net.assembler", "compil
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cvm.net.compiler.core", "compiler\cvm.net.compiler.core\cvm.net.compiler.core.csproj", "{F68D6DAA-5232-4AEE-90BA-B7D42E74E719}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cvm.net.tools.core", "core\cvm.net.tools.core\cvm.net.tools.core.csproj", "{B1B008BD-DB8A-4060-90F0-0C03831560D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cvm.net.tools.core", "core\cvm.net.tools.core\cvm.net.tools.core.csproj", "{B1B008BD-DB8A-4060-90F0-0C03831560D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cvm.net.cli.core", "core\cvm.net.cli.core\cvm.net.cli.core.csproj", "{102B3FBF-3D3D-4668-9B6F-98D062B888B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cvm.net.cli.core", "core\cvm.net.cli.core\cvm.net.cli.core.csproj", "{102B3FBF-3D3D-4668-9B6F-98D062B888B1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cvm.net.linker", "compiler\cvm.net.linker\cvm.net.linker.csproj", "{126C7611-78B1-4037-9670-E0B848675C19}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cvm.net.linker.core", "compiler\cvm.net.linker.core\cvm.net.linker.core.csproj", "{DB294A3E-2835-4D0D-8761-50D2001655C1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +44,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{126C7611-78B1-4037-9670-E0B848675C19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{126C7611-78B1-4037-9670-E0B848675C19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{126C7611-78B1-4037-9670-E0B848675C19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{126C7611-78B1-4037-9670-E0B848675C19}.Release|Any CPU.Build.0 = Release|Any CPU
 		{853FDA08-5DEA-41B7-A955-EDF5F0BEDB71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{853FDA08-5DEA-41B7-A955-EDF5F0BEDB71}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{853FDA08-5DEA-41B7-A955-EDF5F0BEDB71}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -69,6 +76,10 @@ Global
 		{0B061CA1-BB10-4F0B-85B1-0843BDD51324}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B061CA1-BB10-4F0B-85B1-0843BDD51324}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B061CA1-BB10-4F0B-85B1-0843BDD51324}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB294A3E-2835-4D0D-8761-50D2001655C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB294A3E-2835-4D0D-8761-50D2001655C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB294A3E-2835-4D0D-8761-50D2001655C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB294A3E-2835-4D0D-8761-50D2001655C1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EBFD7F50-D1D5-4EC6-9CBA-94D05A9A1CDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EBFD7F50-D1D5-4EC6-9CBA-94D05A9A1CDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EBFD7F50-D1D5-4EC6-9CBA-94D05A9A1CDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -90,6 +101,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{126C7611-78B1-4037-9670-E0B848675C19} = {1880D064-E326-44C9-8C60-BFE3E3E5621A}
 		{853FDA08-5DEA-41B7-A955-EDF5F0BEDB71} = {A3F95A0C-5340-475F-A7AA-274B499707FF}
 		{137F7B3A-37AE-4892-84E6-9F47397A1187} = {D19EDD82-A945-4ECC-9B96-A3948BE27A62}
 		{54BE1715-8DD2-4076-AB17-3DA537CB771C} = {E9046316-3A52-4ACA-B1D0-B152D77CEB16}
@@ -97,6 +109,7 @@ Global
 		{3BFB9100-2F58-44C3-961D-49ADA6857B25} = {A3F95A0C-5340-475F-A7AA-274B499707FF}
 		{1001C59D-C6C3-49A5-8CED-AD9BD2F82376} = {D19EDD82-A945-4ECC-9B96-A3948BE27A62}
 		{0B061CA1-BB10-4F0B-85B1-0843BDD51324} = {E1BA8D9E-12BD-407B-9069-EF1D619B0440}
+		{DB294A3E-2835-4D0D-8761-50D2001655C1} = {1880D064-E326-44C9-8C60-BFE3E3E5621A}
 		{EBFD7F50-D1D5-4EC6-9CBA-94D05A9A1CDA} = {1880D064-E326-44C9-8C60-BFE3E3E5621A}
 		{F68D6DAA-5232-4AEE-90BA-B7D42E74E719} = {1880D064-E326-44C9-8C60-BFE3E3E5621A}
 		{B1B008BD-DB8A-4060-90F0-0C03831560D3} = {A3F95A0C-5340-475F-A7AA-274B499707FF}

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Runtime.CompilerServices;
 using static cvm.net.core.libc.StdLib;
 namespace cvm.net.core
@@ -10,12 +11,55 @@ namespace cvm.net.core
 	{
 		public List<RuntimeProgram> Programs = new List<RuntimeProgram>();
 		public IDispatcher dispatcher;
-
+		public Dictionary<int, int> ModuleCounts = new Dictionary<int, int>();
+		public Dictionary<int, CVMModule> LoadedModules = new Dictionary<int, CVMModule>();
 		public Machine(IDispatcher dispatcher)
 		{
 			this.dispatcher = dispatcher;
 		}
+		public void UseModule(int ID)
+		{
+			if (LoadedModules.ContainsKey(ID))
+			{
+				if (ModuleCounts.ContainsKey(ID)) { ModuleCounts[ID]++; }
+				else
+				{
+					ModuleCounts.Add(ID, 1);
+				}
+			}
+			else
+			{
 
+			}
+		}
+		public void ReleaseModule(int ID)
+		{
+			if (LoadedModules.ContainsKey(ID))
+			{
+				if (ModuleCounts.ContainsKey(ID))
+				{
+					ModuleCounts[ID]--;
+					if (ModuleCounts[ID] <= 0)
+					{
+						LoadedModules[ID].Dispose();
+						LoadedModules.Remove(ID);
+					}
+				}
+				else
+				{
+					LoadedModules[ID].Dispose();
+					LoadedModules.Remove(ID);
+				}
+			}
+			else
+			{
+				if (!ModuleCounts.ContainsKey(ID))
+				{
+					ModuleCounts.Remove(ID);
+				}
+			}
+		}
+		public Dictionary<uint, Callframe> GlobalInterrupts = new Dictionary<uint, Callframe>();
 		public Dictionary<int, FuncCall> Calls = new Dictionary<int, FuncCall>();
 		//public List<ExecuteContext> Contexts = new List<ExecuteContext>();
 	}
@@ -26,7 +70,7 @@ namespace cvm.net.core
 		public const int CallstackBlock = 16;
 		public Machine Machine;
 		public RuntimeProgram program;
-		public bool WillRun=true;
+		public bool WillRun = true;
 		public Callframe* Callstack;
 		public int CallstackSize;
 		public int CallstackIndex;

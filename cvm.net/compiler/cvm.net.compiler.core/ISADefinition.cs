@@ -124,10 +124,10 @@ namespace cvm.net.compiler.core
 
 		};
 		public Dictionary<string, ASMSections> Sections = [];
-		public Dictionary<string, uint> Names = new()
+		public Dictionary<string, ushort> Names = new ()
 		{
 
 		};
-		public Dictionary<string, byte> RegisterNames = [];
-	}
+	public Dictionary<string, byte> RegisterNames = [];
+}
 }

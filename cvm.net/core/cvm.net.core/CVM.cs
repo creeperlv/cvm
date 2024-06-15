@@ -8,7 +8,7 @@ namespace cvm.net.core
 		{
 			Callframe frame = default;
 			core.GetLatestCallFrame(&frame);
-			var inst = core.Machine.Programs[frame.ID].module.Instructions[frame.PC];
+			var inst = core.program.LoadedModule[frame.ID].Instructions[frame.PC];
 			uint Inst = inst.As<Instruction, ushort>(0);
 			uint ADVSEG = inst.As<Instruction, byte>(0);
 			if (ADVSEG >= 0xF0)

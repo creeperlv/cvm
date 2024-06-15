@@ -39,7 +39,7 @@ namespace cvm.net.assembler
 							if (AssemlerFunctions.AssembleFunctions.TryGetValue(instID, out var assemble))
 							{
 								Instruction inst = default;
-								if (assemble(HEAD, OResult, (IntPtr)(&inst), PC))
+								if (assemble(instID, HEAD, OResult, (IntPtr)(&inst), PC))
 								{
 									OResult.Result.instructions.Add(inst);
 									PC++;

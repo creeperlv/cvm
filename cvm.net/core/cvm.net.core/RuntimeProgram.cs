@@ -6,7 +6,8 @@ namespace cvm.net.core
 	public sealed unsafe class RuntimeProgram : IDisposable
 	{
 		public List<MemoryBlock> MemoryBlocks = new List<MemoryBlock>();
-		public CVMModule module;
+		public List<int> GlobalDataMemoryIDs = new List<int>();
+		public List<CVMModule> LoadedModule = new List<CVMModule>();
 		public List<IDisposable?> Resources = new List<IDisposable?>();
 		public Machine machine;
 		public List<ExecuteContext> ExecuteContexts = new List<ExecuteContext>();
@@ -27,6 +28,7 @@ namespace cvm.net.core
 		}
 		public void Dispose()
 		{
+			machine.UseModule
 			for (int i = 0; i < Resources.Count; i++)
 			{
 				IDisposable? res = Resources[i];
@@ -38,9 +40,14 @@ namespace cvm.net.core
 	}
 	public unsafe struct CVMModule : IDisposable
 	{
+		public byte* DataSegment;
+		public int Length;
 		public Instruction* Instructions;
 		public int InstructionCount;
-		public int RefCount;
+		public int GlobalID;
+		public void StartToUse()
+		{
+		}
 
 		public void Dispose()
 		{
