@@ -10,6 +10,7 @@ namespace cvm.net.core
 		public List<IDisposable?> Resources = new List<IDisposable?>();
 		public Machine machine;
 		public List<ExecuteContext> ExecuteContexts = new List<ExecuteContext>();
+		public bool IsKernelMode;
 		public RuntimeProgram(Machine machine)
 		{
 			this.machine = machine;

@@ -80,6 +80,12 @@ namespace cvm.net.core
 		public const ushort INT = 0x0019;
 		//Interrupt Globally. Call to system calls.
 		public const ushort INTG = 0x001A;
+		//CALLM
+		//Call Method in module.
+		//CALLM [VALUE|REG] [($)MODULEID] [PCinModule]
+		public const ushort CALLM = 0x001B;
+		//Request Global Pointer
+		public const ushort RGP = 0x001C;
 		//malloc [0|1] [Size|Reg] Target
 		//00 30 00 F0 F0 80
 		//malloc 0xF0F0 $0x80
@@ -98,6 +104,9 @@ namespace cvm.net.core
 		//|Kernel Mode|Allow Direct Execution of INT|
 		// Cause INTG.
 		public const ushort START = 0x0035;
+		//Resize Stack Memory
+		//RSM [int|reg] <length/$length>
+		public const ushort RSM = 0x0036;
 		//SINT [0|1] TGT PC
 		//00 F0 00 10 00 10
 		//SINT Static SOME_THING LBL (at 10)
@@ -119,8 +128,8 @@ namespace cvm.net.core
 		//Get Info.
 		public const ushort GINFO = 0x00F4;
 		//ADV OP L R T
+		public const ushort ADV0 = 0xF000;
 
-		public const ushort ADV0 = 0xF0;
 
 	}
 }

@@ -9,15 +9,25 @@ namespace cvm.net.assembler
 {
 	public static unsafe class AssemlerFunctions
 	{
-		public static Dictionary<uint, Func<Segment, OperationResult<CVMObject>, IntPtr, int, bool>> AssembleFunctions =
+		public static Dictionary<uint, Func<ushort, Segment, OperationResult<CVMObject>, IntPtr, int, bool>> AssembleFunctions =
 			new(){
 				{InstID.EXIT,Assemble_Exit },
-				{InstID.ADD,Assemble_Exit },
+				{InstID.ADD,Assemble_BasicMath },
 				};
-		public unsafe static bool Assemble_Add(Segment s, OperationResult<CVMObject> result, IntPtr InstPtr, int PC)
+		public unsafe static bool Assemble_BasicMath(ushort instID, Segment s, OperationResult<CVMObject> result, IntPtr InstPtr, int PC)
 		{
+			switch (instID)
+			{
+				case InstID.ADD:
+				case InstID.SUB:
+				case InstID.MUL:
+				case InstID.DIV:
+					break;
+				default:
+					return false;
+			}
 			Instruction instruction = default;
-			instruction.Set(InstID.ADD);
+			instruction.Set(instID);
 			SegmentTraveler st = new(s);
 			if (!st.GoNext())
 			{
@@ -92,7 +102,6 @@ namespace cvm.net.assembler
 				{
 					case BaseDataType.BU:
 						{
-
 						}
 						break;
 					default:
@@ -103,8 +112,12 @@ namespace cvm.net.assembler
 			return true;
 		}
 
-		public unsafe static bool Assemble_Exit(Segment s, OperationResult<CVMObject> result, IntPtr instPtr, int PC)
+		public unsafe static bool Assemble_Exit(ushort instID, Segment s, OperationResult<CVMObject> result, IntPtr instPtr, int PC)
 		{
+			if (instID != InstID.EXIT)
+			{
+				return false;
+			}
 			Instruction inst = default;
 			inst.Set(InstID.EXIT);
 			((Instruction*)instPtr)[0] = inst;
