@@ -38,12 +38,13 @@ namespace cvm.net.core
 						{
 							case BaseDataType.BU:
 								{
-									byte L = inst.As<Instruction, byte>(4);
+									byte LR = inst.As<Instruction, byte>(4);
 									byte R;
-									byte T = inst.As<Instruction, byte>(7);
+									byte TR = inst.As<Instruction, byte>(7);
+									byte L = core.GetData<byte>(LR);
 									if (IsRegister)
 									{
-										R = core.GetData<byte>(inst.As<Instruction, Int32>(5));
+										R = core.GetData<byte>(inst.As<Instruction, byte>(5));
 									}
 									else
 									{
@@ -53,18 +54,19 @@ namespace cvm.net.core
 									{
 										var d = (byte)(L + R);
 										core.OF = d < L || d < R;
-										core.SetData(T, d);
+										core.SetData(TR, d);
 									}
 								}
 								break;
 							case BaseDataType.I:
 								{
-									int L = inst.As<Instruction, byte>(4);
+									byte LR = inst.As<Instruction, byte>(4);
 									int R;
 									int T = inst.As<Instruction, byte>(7);
+									int L = core.GetData<int>(LR);
 									if (IsRegister)
 									{
-										R = core.GetData<byte>(inst.As<Instruction, Int32>(5));
+										R = core.GetData<int>(inst.As<Instruction, byte>(5));
 									}
 									else
 									{
@@ -73,7 +75,7 @@ namespace cvm.net.core
 									unchecked
 									{
 										var d = (int)(L + R);
-										core.OF = d < L || d < R;
+										core.OF = ((L < 0 && R < 0) && d >= 0) || ((L > 0 && R > 0) && d <= 0);
 										core.SetData(T, d);
 									}
 								}

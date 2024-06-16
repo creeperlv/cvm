@@ -28,7 +28,10 @@ namespace cvm.net.core
 		}
 		public void Dispose()
 		{
-			machine.UseModule
+			foreach (var item in this.LoadedModule)
+			{
+				machine.ReleaseModule(item.GlobalID);
+			}
 			for (int i = 0; i < Resources.Count; i++)
 			{
 				IDisposable? res = Resources[i];
