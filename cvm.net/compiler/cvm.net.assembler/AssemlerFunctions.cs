@@ -102,6 +102,16 @@ namespace cvm.net.assembler
 				{
 					case BaseDataType.BU:
 						{
+							if (!DataConversion.TryParse<byte>(R.content, out var RData))
+							{
+								result.AddError(new TypeMismatchError(R, TypeNames.Byte));
+								return false;
+							}
+						}
+						break;
+					case BaseDataType.I:
+						{
+
 						}
 						break;
 					default:

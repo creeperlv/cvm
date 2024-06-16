@@ -6,6 +6,29 @@ namespace cvm.net.compiler.core
 {
 	public class DataConversion
 	{
+		public unsafe static bool TryParse<T>(string input, out T result) where T : unmanaged, IParsable<T>
+		{
+			if (T.TryParse(input, null, out result)) return true;
+			T data = default;
+			if (input.StartsWith("0x"))
+			{
+				if (ParseByteDataFromHexString(input[2..], (byte*)&data, sizeof(T)))
+				{
+					result = data;
+					return true;
+				}
+			}
+			if (input.StartsWith("0b"))
+			{
+				if (ParseByteDataFromBinaryString(input[2..], (byte*)&data, sizeof(T)))
+				{
+					result = data;
+					return true;
+				}
+			}
+			result = default;
+			return false;
+		}
 		public static bool TryParseRegister(string name, out byte register)
 		{
 			if (!name.StartsWith('$'))

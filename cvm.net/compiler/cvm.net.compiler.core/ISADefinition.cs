@@ -9,6 +9,7 @@ namespace cvm.net.compiler.core
 	public static class TypeNames
 	{
 		public readonly static string Register = "Register";
+		public readonly static string Byte = "byte";
 	}
 	public class ISADefinition
 	{

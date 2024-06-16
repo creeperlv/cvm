@@ -86,7 +86,10 @@ namespace cvm.net.core
 		public const ushort CALLM = 0x001B;
 		//Request Global Pointer
 		public const ushort RGP = 0x001C;
-		//malloc [0|1] [Size|Reg] Target
+		//Test If an interrupt exists.
+		//TEST [KENEL|GLOBL] [ID]
+		public const ushort TESTINT= 0x001D;
+		//malloc [0|1] [Size|Reg] Target 
 		//00 30 00 F0 F0 80
 		//malloc 0xF0F0 $0x80
 		public const ushort MALLOC = 0x0030;
