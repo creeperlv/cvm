@@ -16,11 +16,11 @@ namespace cvm.net.core
 		public const ushort SUB = 0x0002;
 		public const ushort MUL = 0x0003;
 		public const ushort DIV = 0x0004;
-		//LRCalc [OP] [Type] L R T
+		//LRCalc [OP] [Type] T L R
 		//00 05 02 01 10 18 20
 		//LRCalc pow int $X2 $X3 $X4
 		public const ushort LR_CALC = 0x0005;
-		//Self_calc [OP] [TYPE] L T
+		//Self_calc [OP] [TYPE] T L
 		//00 07 02 01 08 00
 		//SelfCalc Exp Int32 $8 $0
 		public const ushort SELF_CALC = 0x0007;
@@ -28,7 +28,7 @@ namespace cvm.net.core
 		//00 09 03 10 FF FF FF FF
 		//SET LONG $X2 0xFF_FF_FF_FF
 		public const ushort SET = 0x0009;
-		//CVT SRC_TYPE TGT_TYPE L R
+		//CVT SRC_TYPE TGT_TYPE S T
 		//00 20 05 02 01 02
 		// CVT float int $1 $2
 		public const ushort CVT = 0x0020;

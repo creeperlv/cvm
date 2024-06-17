@@ -10,6 +10,15 @@ namespace cvm.net.compiler.core
 	{
 		public readonly static string Register = "Register";
 		public readonly static string Byte = "byte";
+		public readonly static string SByte = "sbyte";
+		public readonly static string Int = "int";
+		public readonly static string UInt = "uint";
+		public readonly static string Short = "short";
+		public readonly static string UShort = "ushort";
+		public readonly static string Long = "long";
+		public readonly static string ULong = "ulong";
+		public readonly static string Single = "float";
+		public readonly static string Double = "double";
 	}
 	public class ISADefinition
 	{
@@ -62,6 +71,14 @@ namespace cvm.net.compiler.core
 				{"realloc", InstID.REALLOC},
 				{"free", InstID.FREE},
 				{"exit", InstID.EXIT},
+			},
+			LROps = new()
+			{
+				{"mod",LRCalcOP.MOD },
+				{"modulo ",LRCalcOP.MOD },
+				{"pow",LRCalcOP.POW },
+				{"min",LRCalcOP.MIN },
+				{"max",LRCalcOP.MAX },
 			},
 			Sections = new() {
 				{"Data", ASMSections.Data},
@@ -124,11 +141,15 @@ namespace cvm.net.compiler.core
 		{
 
 		};
-		public Dictionary<string, ASMSections> Sections = [];
-		public Dictionary<string, ushort> Names = new ()
+		public Dictionary<string, byte> LROps = new Dictionary<string, byte>()
 		{
 
 		};
-	public Dictionary<string, byte> RegisterNames = [];
-}
+		public Dictionary<string, ASMSections> Sections = [];
+		public Dictionary<string, ushort> Names = new()
+		{
+
+		};
+		public Dictionary<string, byte> RegisterNames = [];
+	}
 }

@@ -21,6 +21,13 @@ namespace cvm.net.compiler.core.Errors
 			return "Unknown Base Type!";
 		}
 	}
+	public class UnknownLRCalcOperationError(Segment errorSegment) : AssemblerError(errorSegment)
+	{
+		public override string ToString()
+		{
+			return "Unknown LRCalc Operation!";
+		}
+	}
 	public class TypeMismatchError : AssemblerError
 	{
 		private string targetType;
