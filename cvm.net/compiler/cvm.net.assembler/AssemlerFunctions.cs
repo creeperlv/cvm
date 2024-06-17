@@ -98,20 +98,32 @@ namespace cvm.net.assembler
 			}
 			else
 			{
+				nint ptr = (nint)(&instruction);
 				switch (type)
 				{
 					case BaseDataType.BU:
 						{
-							if (!DataConversion.TryParse<byte>(R.content, out var RData))
-							{
-								result.AddError(new TypeMismatchError(R, TypeNames.Byte));
-								return false;
-							}
+							InstructionArgumentUtility.ParseAndSetArgument<byte>(R, result, 6,ptr);
 						}
 						break;
 					case BaseDataType.I:
 						{
-
+							InstructionArgumentUtility.ParseAndSetArgument<int>(R, result, 6, ptr);
+						}
+						break;
+					case BaseDataType.BS:
+						{
+							InstructionArgumentUtility.ParseAndSetArgument<sbyte>(R, result, 6, ptr);
+						}
+						break;
+					case BaseDataType.S:
+						{
+							InstructionArgumentUtility.ParseAndSetArgument<short>(R, result, 6, ptr);
+						}
+						break;
+					case BaseDataType.SU:
+						{
+							InstructionArgumentUtility.ParseAndSetArgument<ushort>(R, result, 6, ptr);
 						}
 						break;
 					default:
