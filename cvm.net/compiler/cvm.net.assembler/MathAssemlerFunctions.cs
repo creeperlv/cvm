@@ -65,17 +65,17 @@ namespace cvm.net.assembler
 			instruction.Set(lrop, 2);
 			instruction.Set(type, 3);
 
-			if (DataConversion.TryParseRegister(TSeg.content, out var _T))
+			if (DataConversion.TryParseRegister(TSeg.content, result, out var _T))
 			{
 				result.AddError(new TypeMismatchError(TSeg, TypeNames.Register));
 				return false;
 			}
-			if (DataConversion.TryParseRegister(LSeg.content, out var _L))
+			if (DataConversion.TryParseRegister(LSeg.content, result, out var _L))
 			{
 				result.AddError(new TypeMismatchError(LSeg, TypeNames.Register));
 				return false;
 			}
-			if (DataConversion.TryParseRegister(RSeg.content, out var _R))
+			if (DataConversion.TryParseRegister(RSeg.content, result, out var _R))
 			{
 				result.AddError(new TypeMismatchError(RSeg, TypeNames.Register));
 				return false;
@@ -84,6 +84,71 @@ namespace cvm.net.assembler
 			instruction.Set(_T, 4);
 			instruction.Set(_L, 5);
 			instruction.Set(_R, 6);
+			((Instruction*)InstPtr)[0] = instruction;
+			return true;
+		}
+		public unsafe static bool Assemble_CVT(ushort instID, Segment s, OperationResult<CVMObject> result, IntPtr InstPtr, int PC)
+		{
+			if (instID != InstID.CVT)
+			{
+				return false;
+			}
+			Instruction instruction = default;
+			instruction.Set(InstID.LR_CALC, 0);
+			SegmentTraveler st = new(s);
+			if (!st.GoNext())
+			{
+				result.AddError(new IncompletInstructionError(st.Current));
+				return false;
+			}
+			var SrcTypeSeg = st.Current;
+
+			if (!st.GoNext())
+			{
+				result.AddError(new IncompletInstructionError(st.Current));
+				return false;
+			}
+			var TargetTypeSeg = st.Current;
+
+			if (!st.GoNext())
+			{
+				result.AddError(new IncompletInstructionError(st.Current));
+				return false;
+			}
+			var SrcSeg = st.Current;
+
+			if (!st.GoNext())
+			{
+				result.AddError(new IncompletInstructionError(st.Current));
+				return false;
+			}
+			var TargetSeg = st.Current;
+
+			if (!ISADefinition.CurrentDefinition.Types.TryGetValue(SrcTypeSeg.content.ToLower(), out var lrop))
+			{
+				result.AddError(new UnknownBaseTypeError(SrcTypeSeg));
+				return false;
+			}
+			if (!ISADefinition.CurrentDefinition.Types.TryGetValue(TargetTypeSeg.content.ToLower(), out var type))
+			{
+				result.AddError(new UnknownBaseTypeError(TargetTypeSeg));
+				return false;
+			}
+			instruction.Set(lrop, 2);
+			instruction.Set(type, 3);
+
+			if (DataConversion.TryParseRegister(SrcSeg.content, result, out var _T))
+			{
+				result.AddError(new TypeMismatchError(SrcSeg, TypeNames.Register));
+				return false;
+			}
+			if (DataConversion.TryParseRegister(TargetSeg.content, result, out var _L))
+			{
+				result.AddError(new TypeMismatchError(TargetSeg, TypeNames.Register));
+				return false;
+			}
+			instruction.Set(_T, 4);
+			instruction.Set(_L, 5);
 			((Instruction*)InstPtr)[0] = instruction;
 			return true;
 		}
@@ -145,12 +210,12 @@ namespace cvm.net.assembler
 			}
 			byte _T;
 			byte _L;
-			if (DataConversion.TryParseRegister(T.content, out _T))
+			if (DataConversion.TryParseRegister(T.content, result, out _T))
 			{
 				result.AddError(new TypeMismatchError(T, TypeNames.Register));
 				return false;
 			}
-			if (DataConversion.TryParseRegister(L.content, out _L))
+			if (DataConversion.TryParseRegister(L.content, result, out _L))
 			{
 				result.AddError(new TypeMismatchError(L, TypeNames.Register));
 				return false;
@@ -162,7 +227,7 @@ namespace cvm.net.assembler
 			{
 				byte _R;
 
-				if (DataConversion.TryParseRegister(R.content, out _R))
+				if (DataConversion.TryParseRegister(R.content, result, out _R))
 				{
 					result.AddError(new TypeMismatchError(R, TypeNames.Register));
 					return false;

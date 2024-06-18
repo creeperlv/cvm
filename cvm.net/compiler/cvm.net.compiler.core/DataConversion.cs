@@ -1,11 +1,24 @@
-﻿using System;
+﻿using LibCLCC.NET.Operations;
+using Microsoft.Win32;
+using System;
 using System.Numerics;
 using System.Reflection;
+using System.Xml.Linq;
 
 namespace cvm.net.compiler.core
 {
 	public class DataConversion
 	{
+		public unsafe static bool TryParse<T>(string input, OperationResult<CVMObject> obj, out T result) where T : unmanaged, IParsable<T>
+		{
+
+			if (TryParse(input, out result)) return true;
+			if (obj.Result.Consts.TryGetValue(input, out var value))
+			{
+				return TryParse(value, obj, out result);
+			}
+			return false;
+		}
 		public unsafe static bool TryParse<T>(string input, out T result) where T : unmanaged, IParsable<T>
 		{
 			if (T.TryParse(input, null, out result)) return true;
@@ -27,6 +40,15 @@ namespace cvm.net.compiler.core
 				}
 			}
 			result = default;
+			return false;
+		}
+		public static bool TryParseRegister(string name, OperationResult<CVMObject> obj, out byte register)
+		{
+			if (TryParseRegister(name, out register)) return true;
+			if (obj.Result.Consts.TryGetValue(name, out var value))
+			{
+				return TryParseRegister(value, obj, out register);
+			}
 			return false;
 		}
 		public static bool TryParseRegister(string name, out byte register)

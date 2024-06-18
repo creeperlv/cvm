@@ -7,10 +7,10 @@ namespace cvm.net.compiler.core
 {
 	public static class InstructionArgumentUtility
 	{
-		public static bool ParseAndSetArgument<T>(Segment R, OperationResult<CVMObject> result, int Offset, nint inst,string TypeName) where T : unmanaged, IParsable<T>
+		public static bool ParseAndSetArgument<T>(Segment R, OperationResult<CVMObject> result, int Offset, nint inst, string TypeName) where T : unmanaged, IParsable<T>
 		{
 
-			if (!DataConversion.TryParse(R.content, out T RData))
+			if (!DataConversion.TryParse(R.content, result, out T RData))
 			{
 				result.AddError(new TypeMismatchError(R, TypeName));
 				return false;
