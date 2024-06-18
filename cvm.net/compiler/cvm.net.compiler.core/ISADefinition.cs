@@ -71,6 +71,13 @@ namespace cvm.net.compiler.core
 				{"realloc", InstID.REALLOC},
 				{"free", InstID.FREE},
 				{"exit", InstID.EXIT},
+				{"intg", InstID.INTG},
+				{"sint", InstID.SINT},
+				{"gsint", InstID.GSINT},
+				{"rint", InstID.RINT},
+				{"grint", InstID.GRINT},
+				{"adv0", InstID.ADV0},
+				{"dump", InstID.DUMP},
 			},
 			LROps = new()
 			{

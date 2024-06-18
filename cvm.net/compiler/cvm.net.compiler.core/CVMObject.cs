@@ -2,8 +2,10 @@
 
 namespace cvm.net.compiler.core
 {
+	[Serializable]
 	public class CVMObject
 	{
+		public Version ObjectVersion = Constants.CurrentCVMObjectVersion;
 		public Dictionary<string, int> Labels = [];
 		public Dictionary<string, string> Consts = [];
 		public Dictionary<int, string> Data = [];

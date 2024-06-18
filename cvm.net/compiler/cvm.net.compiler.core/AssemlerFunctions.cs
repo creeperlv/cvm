@@ -3,7 +3,7 @@ using cvm.net.core;
 using LibCLCC.NET.Operations;
 using LibCLCC.NET.TextProcessing;
 
-namespace cvm.net.assembler
+namespace cvm.net.assembler.core
 {
 
 	public static unsafe class AssemlerFunctions

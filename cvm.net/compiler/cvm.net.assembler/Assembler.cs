@@ -1,4 +1,5 @@
-﻿using cvm.net.compiler.core;
+﻿using cvm.net.assembler.core;
+using cvm.net.compiler.core;
 using cvm.net.compiler.core.Errors;
 using cvm.net.core;
 using LibCLCC.NET.Operations;

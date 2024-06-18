@@ -88,7 +88,7 @@ namespace cvm.net.core
 		public const ushort RGP = 0x001C;
 		//Test If an interrupt exists.
 		//TEST [KENEL|GLOBL] [ID]
-		public const ushort TESTINT= 0x001D;
+		public const ushort TESTINT = 0x001D;
 		//malloc [0|1] [Size|Reg] Target 
 		//00 30 00 F0 F0 80
 		//malloc 0xF0F0 $0x80
@@ -130,9 +130,9 @@ namespace cvm.net.core
 		//GINFO INFO_ID $RECIVER
 		//Get Info.
 		public const ushort GINFO = 0x00F4;
+		//DUMP [REG|MEMORY|ALL]
+		public const ushort DUMP = 0x00F5;
 		//ADV OP L R T
 		public const ushort ADV0 = 0xF000;
-
-
 	}
 }
