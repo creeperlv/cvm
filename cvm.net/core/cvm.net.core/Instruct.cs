@@ -2,6 +2,7 @@ using System;
 using System.Runtime.InteropServices;
 namespace cvm.net.core
 {
+    [Serializable]
     [StructLayout(LayoutKind.Sequential)]
     public struct Instruction
     {

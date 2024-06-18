@@ -15,8 +15,7 @@ namespace cvm.net.assembler.core
 			{
 				return false;
 			}
-			Instruction instruction = default;
-			instruction.Set(InstID.LR_CALC, 0);
+			InstPtr.Set(InstID.LR_CALC, 0);
 			SegmentTraveler st = new(s);
 			if (!st.GoNext())
 			{
@@ -62,8 +61,8 @@ namespace cvm.net.assembler.core
 				result.AddError(new UnknownBaseTypeError(TypeSeg));
 				return false;
 			}
-			instruction.Set(lrop, 2);
-			instruction.Set(type, 3);
+			InstPtr.Set(lrop, 2);
+			InstPtr.Set(type, 3);
 
 			if (!DataConversion.TryParseRegister(TSeg.content, result, out var _T))
 			{
@@ -81,10 +80,9 @@ namespace cvm.net.assembler.core
 				return false;
 			}
 
-			instruction.Set(_T, 4);
-			instruction.Set(_L, 5);
-			instruction.Set(_R, 6);
-			((Instruction*)InstPtr)[0] = instruction;
+			InstPtr.Set(_T, 4);
+			InstPtr.Set(_L, 5);
+			InstPtr.Set(_R, 6);
 			return true;
 		}
 		public unsafe static bool Assemble_CVT(ushort instID, Segment s, OperationResult<CVMObject> result, IntPtr InstPtr, int PC)
@@ -93,8 +91,7 @@ namespace cvm.net.assembler.core
 			{
 				return false;
 			}
-			Instruction instruction = default;
-			instruction.Set(InstID.CVT, 0);
+			InstPtr.Set(InstID.CVT, 0);
 			SegmentTraveler st = new(s);
 			if (!st.GoNext())
 			{
@@ -134,8 +131,8 @@ namespace cvm.net.assembler.core
 				result.AddError(new UnknownBaseTypeError(TargetTypeSeg));
 				return false;
 			}
-			instruction.Set(lrop, 2);
-			instruction.Set(type, 3);
+			InstPtr.Set(lrop, 2);
+			InstPtr.Set(type, 3);
 
 			if (!DataConversion.TryParseRegister(SrcSeg.content, result, out var _T))
 			{
@@ -147,9 +144,8 @@ namespace cvm.net.assembler.core
 				result.AddError(new TypeMismatchError(TargetSeg, TypeNames.Register));
 				return false;
 			}
-			instruction.Set(_T, 4);
-			instruction.Set(_L, 5);
-			((Instruction*)InstPtr)[0] = instruction;
+			InstPtr.Set(_T, 4);
+			InstPtr.Set(_L, 5);
 			return true;
 		}
 		public unsafe static bool Assemble_BasicMath(ushort instID, Segment s, OperationResult<CVMObject> result, IntPtr InstPtr, int PC)
@@ -164,8 +160,7 @@ namespace cvm.net.assembler.core
 				default:
 					return false;
 			}
-			Instruction instruction = default;
-			instruction.Set(instID);
+			InstPtr.Set(instID);
 			SegmentTraveler st = new(s);
 			if (!st.GoNext())
 			{
@@ -175,7 +170,7 @@ namespace cvm.net.assembler.core
 			var current = st.Current;
 			if (ISADefinition.CurrentDefinition.Types.TryGetValue(current.content.ToLower(), out var type))
 			{
-				instruction.Set(type, 2);
+				InstPtr.Set(type, 2);
 			}
 			else
 			{
@@ -220,9 +215,9 @@ namespace cvm.net.assembler.core
 				result.AddError(new TypeMismatchError(L, TypeNames.Register));
 				return false;
 			}
-			instruction.Set((byte)(IsRegister ? 1 : 0), 3);
-			instruction.Set(_T, 4);
-			instruction.Set(_L, 5);
+			InstPtr.Set((byte)(IsRegister ? 1 : 0), 3);
+			InstPtr.Set(_T, 4);
+			InstPtr.Set(_L, 5);
 			if (IsRegister)
 			{
 				byte _R;
@@ -232,68 +227,68 @@ namespace cvm.net.assembler.core
 					result.AddError(new TypeMismatchError(R, TypeNames.Register));
 					return false;
 				}
-				instruction.Set(_R, 6);
+				InstPtr.Set(_R, 6);
 			}
 			else
 			{
-				nint ptr = (nint)(&instruction);
+				//nint ptr = (nint)(&InstPtr);
 				switch (type)
 				{
 					case BaseDataType.BU:
 						{
-							InstructionArgumentUtility.ParseAndSetArgument<byte>(R, result, 6, ptr, TypeNames.Byte);
+							InstructionArgumentUtility.ParseAndSetArgument<byte>(R, result, 6, InstPtr, TypeNames.Byte);
 						}
 						break;
 					case BaseDataType.I:
 						{
-							InstructionArgumentUtility.ParseAndSetArgument<int>(R, result, 6, ptr, TypeNames.Int);
+							InstructionArgumentUtility.ParseAndSetArgument<int>(R, result, 6, InstPtr, TypeNames.Int);
 						}
 						break;
 					case BaseDataType.BS:
 						{
-							InstructionArgumentUtility.ParseAndSetArgument<sbyte>(R, result, 6, ptr, TypeNames.SByte);
+							InstructionArgumentUtility.ParseAndSetArgument<sbyte>(R, result, 6, InstPtr, TypeNames.SByte);
 						}
 						break;
 					case BaseDataType.S:
 						{
-							InstructionArgumentUtility.ParseAndSetArgument<short>(R, result, 6, ptr, TypeNames.Short);
+							InstructionArgumentUtility.ParseAndSetArgument<short>(R, result, 6, InstPtr, TypeNames.Short);
 						}
 						break;
 					case BaseDataType.SU:
 						{
-							InstructionArgumentUtility.ParseAndSetArgument<ushort>(R, result, 6, ptr, TypeNames.UShort);
+							InstructionArgumentUtility.ParseAndSetArgument<ushort>(R, result, 6, InstPtr, TypeNames.UShort);
 						}
 						break;
 					case BaseDataType.L:
 						{
-							InstructionArgumentUtility.ParseAndSetArgument<long>(R, result, 6, ptr, TypeNames.Long);
+							InstructionArgumentUtility.ParseAndSetArgument<long>(R, result, 6, InstPtr, TypeNames.Long);
 						}
 						break;
 					case BaseDataType.LU:
 						{
-							InstructionArgumentUtility.ParseAndSetArgument<ulong>(R, result, 6, ptr, TypeNames.ULong);
+							InstructionArgumentUtility.ParseAndSetArgument<ulong>(R, result, 6, InstPtr, TypeNames.ULong);
 						}
 						break;
 					case BaseDataType.IU:
 						{
-							InstructionArgumentUtility.ParseAndSetArgument<uint>(R, result, 6, ptr, TypeNames.UInt);
+							InstructionArgumentUtility.ParseAndSetArgument<uint>(R, result, 6, InstPtr, TypeNames.UInt);
 						}
 						break;
 					case BaseDataType.F:
 						{
-							InstructionArgumentUtility.ParseAndSetArgument<float>(R, result, 6, ptr, TypeNames.Single);
+							InstructionArgumentUtility.ParseAndSetArgument<float>(R, result, 6, InstPtr, TypeNames.Single);
 						}
 						break;
 					case BaseDataType.D:
 						{
-							InstructionArgumentUtility.ParseAndSetArgument<double>(R, result, 6, ptr, TypeNames.Double);
+							InstructionArgumentUtility.ParseAndSetArgument<double>(R, result, 6, InstPtr, TypeNames.Double);
 						}
 						break;
 					default:
 						break;
 				}
 			}
-			((Instruction*)InstPtr)[0] = instruction;
+			//((Instruction*)InstPtr)[0] = InstPtr;
 			return true;
 		}
 	}

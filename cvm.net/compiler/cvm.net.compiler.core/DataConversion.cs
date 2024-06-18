@@ -58,6 +58,7 @@ namespace cvm.net.compiler.core
 				register = 0;
 				return false;
 			}
+			name = name.Substring(1);
 			if (ISADefinition.CurrentDefinition.RegisterNames.TryGetValue(name, out register))
 			{
 				return true;

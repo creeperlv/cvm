@@ -21,9 +21,7 @@ namespace cvm.net.assembler.core
 				};
 		public unsafe static bool Assemble_NoArgs(ushort instID, Segment s, OperationResult<CVMObject> result, IntPtr instPtr, int PC)
 		{
-			Instruction inst = default;
-			inst.Set(instID);
-			((Instruction*)instPtr)[0] = inst;
+			instPtr.Set(instID);
 			return true;
 		}
 	}

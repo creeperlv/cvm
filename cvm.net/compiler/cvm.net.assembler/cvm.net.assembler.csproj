@@ -8,6 +8,7 @@
     <PublishAot>true</PublishAot>
     <InvariantGlobalization>true</InvariantGlobalization>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AssemblyName>cvmasm</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
