@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using static cvm.net.core.libc.StdLib;
 namespace cvm.net.core
 {
 	public sealed unsafe class RuntimeProgram : IDisposable
@@ -39,22 +38,6 @@ namespace cvm.net.core
 				Resources[i] = null;
 			}
 			Resources.Clear();
-		}
-	}
-	public unsafe struct CVMModule : IDisposable
-	{
-		public byte* DataSegment;
-		public int Length;
-		public Instruction* Instructions;
-		public int InstructionCount;
-		public int GlobalID;
-		public void StartToUse()
-		{
-		}
-
-		public void Dispose()
-		{
-			free(Instructions);
 		}
 	}
 }
