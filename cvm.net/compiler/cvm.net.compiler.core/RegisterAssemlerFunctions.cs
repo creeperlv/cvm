@@ -9,8 +9,10 @@ namespace cvm.net.assembler.core
 {
 	public static unsafe class RegisterAssemlerFunctions
 	{
+
 		public unsafe static bool Assemble_SET(ushort instID, Segment s, OperationResult<CVMObject> result, IntPtr InstPtr, int PC)
 		{
+			int Offset = 4;
 			switch (instID)
 			{
 				case InstID.SET:
@@ -39,6 +41,78 @@ namespace cvm.net.assembler.core
 			}
 			var DataSeg = st.Current;
 
+			if (ISADefinition.CurrentDefinition.Types.TryGetValue(TypeSeg.content.ToLower(), out var type))
+			{
+				InstPtr.Set(type, 2);
+			}
+			else
+			{
+				result.AddError(new UnknownBaseTypeError(TypeSeg));
+				return false;
+			}
+
+			if (!DataConversion.TryParseRegister(TargetSeg.content, result, out var register))
+			{
+				result.AddError(new TypeMismatchError(TargetSeg, TypeNames.Register));
+				return false;
+			}
+
+			InstPtr.Set(register, 3);
+			switch (type)
+			{
+				case BaseDataType.BU:
+					{
+						InstructionArgumentUtility.ParseAndSetArgument<byte>(DataSeg, result, Offset, InstPtr, TypeNames.Byte);
+					}
+					break;
+				case BaseDataType.I:
+					{
+						InstructionArgumentUtility.ParseAndSetArgument<int>(DataSeg, result, Offset, InstPtr, TypeNames.Int);
+					}
+					break;
+				case BaseDataType.BS:
+					{
+						InstructionArgumentUtility.ParseAndSetArgument<sbyte>(DataSeg, result, Offset, InstPtr, TypeNames.SByte);
+					}
+					break;
+				case BaseDataType.S:
+					{
+						InstructionArgumentUtility.ParseAndSetArgument<short>(DataSeg, result, Offset, InstPtr, TypeNames.Short);
+					}
+					break;
+				case BaseDataType.SU:
+					{
+						InstructionArgumentUtility.ParseAndSetArgument<ushort>(DataSeg, result, Offset, InstPtr, TypeNames.UShort);
+					}
+					break;
+				case BaseDataType.L:
+					{
+						InstructionArgumentUtility.ParseAndSetArgument<long>(DataSeg, result, Offset, InstPtr, TypeNames.Long);
+					}
+					break;
+				case BaseDataType.LU:
+					{
+						InstructionArgumentUtility.ParseAndSetArgument<ulong>(DataSeg, result, Offset, InstPtr, TypeNames.ULong);
+					}
+					break;
+				case BaseDataType.IU:
+					{
+						InstructionArgumentUtility.ParseAndSetArgument<uint>(DataSeg, result, Offset, InstPtr, TypeNames.UInt);
+					}
+					break;
+				case BaseDataType.F:
+					{
+						InstructionArgumentUtility.ParseAndSetArgument<float>(DataSeg, result, Offset, InstPtr, TypeNames.Single);
+					}
+					break;
+				case BaseDataType.D:
+					{
+						InstructionArgumentUtility.ParseAndSetArgument<double>(DataSeg, result, Offset, InstPtr, TypeNames.Double);
+					}
+					break;
+				default:
+					break;
+			}
 			return true;
 		}
 
