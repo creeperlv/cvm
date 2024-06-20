@@ -6,20 +6,6 @@ namespace cvm.net.compiler.core
 	{
 		Data, Code, Consts
 	}
-	public static class TypeNames
-	{
-		public readonly static string Register = "Register";
-		public readonly static string Byte = "byte";
-		public readonly static string SByte = "sbyte";
-		public readonly static string Int = "int";
-		public readonly static string UInt = "uint";
-		public readonly static string Short = "short";
-		public readonly static string UShort = "ushort";
-		public readonly static string Long = "long";
-		public readonly static string ULong = "ulong";
-		public readonly static string Single = "float";
-		public readonly static string Double = "double";
-	}
 	public class ISADefinition
 	{
 		public static ISADefinition CurrentDefinition = new ISADefinition()
@@ -109,6 +95,16 @@ namespace cvm.net.compiler.core
 				{"uint",BaseDataType.IU},
 				{"uint32",BaseDataType.IU},
 			},
+			SHOps = new()
+			{
+				{"left",0 },
+				{"l",0 },
+				{"r",1 },
+				{"right",1 },
+			},
+			LogicOps = new() {
+				{'xor' }
+				},
 		};
 		unsafe static ISADefinition()
 		{
@@ -156,5 +152,7 @@ namespace cvm.net.compiler.core
 
 		};
 		public Dictionary<string, byte> RegisterNames = [];
+		public Dictionary<string, byte> SHOps = [];
+		public Dictionary<string, byte> LogicOps = [];
 	}
 }

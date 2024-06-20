@@ -21,6 +21,20 @@ namespace cvm.net.compiler.core.Errors
 			return "Unknown Base Type!";
 		}
 	}
+	public class UnsupportedBaseTypeError(Segment errorSegment) : AssemblerError(errorSegment)
+	{
+		public override string ToString()
+		{
+			return "Unsupported Base Type!";
+		}
+	}
+	public class UnknownOperationError(string instructionName, Segment errorSegment) : AssemblerError(errorSegment)
+	{
+		public override string ToString()
+		{
+			return $"Unknown operation for instruction \"{instructionName}\"!";
+		}
+	}
 	public class UnknownLRCalcOperationError(Segment errorSegment) : AssemblerError(errorSegment)
 	{
 		public override string ToString()

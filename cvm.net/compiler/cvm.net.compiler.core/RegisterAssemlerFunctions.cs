@@ -4,12 +4,87 @@ using cvm.net.core;
 using cvm.net.tools.core;
 using LibCLCC.NET.Operations;
 using LibCLCC.NET.TextProcessing;
+using System.Data;
 
 namespace cvm.net.assembler.core
 {
 	public static unsafe class RegisterAssemlerFunctions
 	{
 
+		public unsafe static bool Assemble_SH(ushort instID, Segment s, OperationResult<CVMObject> result, IntPtr InstPtr, int PC)
+		{
+			switch (instID)
+			{
+				case InstID.SH:
+					break;
+				default:
+					return false;
+			}
+			InstPtr.SetData(InstID.SH);
+
+			SegmentTraveler st = new(s);
+			if (!st.GoNext())
+			{
+				result.AddError(new IncompletInstructionError(st.Current));
+				return false;
+			}
+			var DirectionSeg = st.Current;
+			if (!st.GoNext())
+			{
+				result.AddError(new IncompletInstructionError(st.Current));
+				return false;
+			}
+			var TypeSeg = st.Current;
+			if (!st.GoNext())
+			{
+				result.AddError(new IncompletInstructionError(st.Current));
+				return false;
+			}
+			var TargetSeg = st.Current;
+
+			if (!st.GoNext())
+			{
+				result.AddError(new IncompletInstructionError(st.Current));
+				return false;
+			}
+			var LengthSeg = st.Current;
+
+			if (ISADefinition.CurrentDefinition.SHOps.TryGetValue(DirectionSeg.content.ToLower(), out var op))
+			{
+				result.AddError(new UnknownOperationError(InstructionNames.SH, TypeSeg));
+				return false;
+			}
+			InstPtr.Set(op, 2);
+			if (ISADefinition.CurrentDefinition.Types.TryGetValue(TypeSeg.content.ToLower(), out var type))
+			{
+				switch (type)
+				{
+					case BaseDataType.I:
+					case BaseDataType.IU:
+					case BaseDataType.L:
+					case BaseDataType.LU:
+						InstPtr.Set(type, 3);
+						break;
+					default:
+						result.AddError(new UnsupportedBaseTypeError(TypeSeg));
+						return false;
+				}
+			}
+			else
+			{
+				result.AddError(new UnknownBaseTypeError(TypeSeg));
+				return false;
+			}
+
+			if (!DataConversion.TryParseRegister(TargetSeg.content, result, out var register))
+			{
+				result.AddError(new TypeMismatchError(TargetSeg, TypeNames.Register));
+				return false;
+			}
+			InstPtr.Set(register, 4);
+			InstructionArgumentUtility.ParseAndSetArgument<int>(LengthSeg, result, 5, InstPtr, TypeNames.Int);
+			return true;
+		}
 		public unsafe static bool Assemble_SET(ushort instID, Segment s, OperationResult<CVMObject> result, IntPtr InstPtr, int PC)
 		{
 			int Offset = 4;
@@ -18,7 +93,7 @@ namespace cvm.net.assembler.core
 				case InstID.SET:
 					break;
 				default:
-					return true;
+					return false;
 			}
 			InstPtr.SetData(InstID.SET);
 			SegmentTraveler st = new(s);

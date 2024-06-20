@@ -20,6 +20,8 @@ namespace cvm.net.assembler.core
 				{ InstID.SD, MemoryAssemlerFunctions.Assemble_SDLD},
 				{ InstID.LD, MemoryAssemlerFunctions.Assemble_SDLD},
 				{ InstID.LR_CALC , MathAssemlerFunctions.Assemble_LRCalc },
+				{ InstID.SET, RegisterAssemlerFunctions.Assemble_SET },
+				{ InstID.SH, RegisterAssemlerFunctions.Assemble_SH },
 				};
 		public unsafe static bool Assemble_NoArgs(ushort instID, Segment s, OperationResult<CVMObject> result, IntPtr instPtr, int PC)
 		{

@@ -37,9 +37,9 @@ namespace cvm.net.core
 		//SD 16 $2 $1
 		public const ushort SD = 0x0020;
 		public const ushort LD = 0x0021;
-		//SH [L|R] Size Reg
-		//00 22 00 10 10
-		//SH L 16 $16
+		//SH [L|R] [Type] Reg Count
+		//00 22 00 10 10 Count
+		//SH L int $16 16
 		public const ushort SH = 0x0022;
 		//Logic Operations
 		//LG [AND|OR|NOT|XOR|NOR] Size L R T
