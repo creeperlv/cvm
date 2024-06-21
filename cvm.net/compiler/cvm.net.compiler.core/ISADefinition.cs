@@ -103,8 +103,12 @@ namespace cvm.net.compiler.core
 				{"right",1 },
 			},
 			LogicOps = new() {
-				{'xor' }
-				},
+				{ "and", 0 },
+				{ "or", 1 },
+				{ "not", 2 },
+				{ "xor", 3 },
+				{ "nor", 4 },
+			},
 		};
 		unsafe static ISADefinition()
 		{
