@@ -42,11 +42,11 @@ namespace cvm.net.core
 		//SH L int $16 16
 		public const ushort SH = 0x0022;
 		//Logic Operations
-		//LG [AND|OR|NOT|XOR|NOR] Size L R T
+		//LG [AND|OR|NOT|XOR|NOR] [Type] L R T
 		//00 30 10 10 11 12
 		public const ushort LG = 0x0023;
 		//Memory Copy
-		//MCP [0|1] $SRC $Target [$Length|Length]
+		//MCP [0|1:IsRegister] $SRC $Target [$Length|Length]
 		//00 24 01 10 12 10 00 [ 00 <-- Unused
 		//MCP $0x10 $0x12 0x1000
 		public const ushort MCP = 0x0024;
@@ -58,7 +58,8 @@ namespace cvm.net.core
 		//Jump if flag
 		//JF <FlagID> <PC>
 		public const ushort JF = 0x0011;
-		//Jump is overflow
+		//Jump if overflow or not
+		//JO [TRUE|FALSE] PC
 		public const ushort JO = 0x0012;
 		//COMP [LT|LE|EQ|NE|RT|RE] [B|S|I|L|S|D] L R
 		public const ushort COMP = 0x0013;

@@ -50,7 +50,37 @@ namespace cvm.net.assembler.core
 				return false;
 			}
 			var TSeg = st.Current;
+			if (!ISADefinition.CurrentDefinition.LogicOps.TryGetValue(OpSeg.content.ToLower(), out var op))
+			{
+				result.AddError(new UnknownOperationError(InstructionNames.LG, OpSeg));
+				return false;
+			}
 
+			if (!ISADefinition.CurrentDefinition.Types.TryGetValue(TypeSeg.content.ToLower(), out var type))
+			{
+				result.AddError(new UnknownBaseTypeError(TypeSeg));
+				return false;
+			}
+			if (!DataConversion.TryParseRegister(LSeg.content, result, out var L))
+			{
+				result.AddError(new TypeMismatchError(LSeg, TypeNames.Register));
+				return false;
+			}
+			if (!DataConversion.TryParseRegister(RSeg.content, result, out var R))
+			{
+				result.AddError(new TypeMismatchError(RSeg, TypeNames.Register));
+				return false;
+			}
+			if (!DataConversion.TryParseRegister(TSeg.content, result, out var T))
+			{
+				result.AddError(new TypeMismatchError(TSeg, TypeNames.Register));
+				return false;
+			}
+			InstPtr.SetData(op, 2);
+			InstPtr.SetData(type, 3);
+			InstPtr.SetData(L, 4);
+			InstPtr.SetData(R, 5);
+			InstPtr.SetData(T, 6);
 			return true;
 		}
 
