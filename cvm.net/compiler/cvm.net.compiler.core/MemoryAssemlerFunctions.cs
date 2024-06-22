@@ -19,8 +19,6 @@ namespace cvm.net.assembler.core
 					return false;
 			}
 			InstPtr.SetData(InstID.MCP);
-
-
 			SegmentTraveler st = new(s);
 			if (!st.GoNext())
 			{

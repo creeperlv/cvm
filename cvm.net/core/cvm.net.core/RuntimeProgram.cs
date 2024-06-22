@@ -6,7 +6,7 @@ namespace cvm.net.core
 	{
 		public List<MemoryBlock> MemoryBlocks = new List<MemoryBlock>();
 		public List<int> GlobalDataMemoryIDs = new List<int>();
-		public List<CVMModule> LoadedModule = new List<CVMModule>();
+		public List<RuntimeModule> LoadedModule = new List<RuntimeModule>();
 		public List<IDisposable?> Resources = new List<IDisposable?>();
 		public Machine machine;
 		public List<ExecuteContext> ExecuteContexts = new List<ExecuteContext>();
@@ -29,7 +29,7 @@ namespace cvm.net.core
 		{
 			foreach (var item in this.LoadedModule)
 			{
-				machine.ReleaseModule(item.GlobalID);
+				machine.ReleaseModule(item.GlobalModuleID);
 			}
 			for (int i = 0; i < Resources.Count; i++)
 			{

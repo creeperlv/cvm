@@ -6,8 +6,19 @@ namespace cvm.net.core
 	[StructLayout(LayoutKind.Sequential)]
 	public unsafe struct CVMModule : IDisposable
 	{
-		public byte* DataSegment;
 		public int Length;
+		public int DataSegLength;
+		public byte* DataSegment;
+		public int LibCount;
+		/*
+		 * [StrLen][NameStr]
+		 */
+		public byte* LibTable;
+		public int SymbolCount;
+		/*
+		 * [StrLen][NameStr][PC:int, <0 = Undefined] 
+		 */
+		public byte* SymbolTable;
 		public Instruction* Instructions;
 		public int InstructionCount;
 		public int GlobalID;

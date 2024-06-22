@@ -17,6 +17,7 @@ namespace cvm.net.core
 		public byte* Registers;
 		public bool OF;
 		public bool JF;
+		public int WaitingInterrupt = -1;
 		public T GetData<T>(int offset) where T : unmanaged
 		{
 			if (offset + sizeof(T) > RegisterLimit) return default;

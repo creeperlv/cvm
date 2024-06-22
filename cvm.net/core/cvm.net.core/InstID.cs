@@ -50,6 +50,9 @@ namespace cvm.net.core
 		//00 24 01 10 12 10 00 [ 00 <-- Unused
 		//MCP $0x10 $0x12 0x1000
 		public const ushort MCP = 0x0024;
+		//Reference Symbol
+		//Put the name byte* to an memory allocation, get the pointer to it.
+		public const ushort REFS= 0x0025;
 		//JMP [0|1] [Address|Register]
 		//00 10 00 00 10 00
 		//JMP 0 LBL (at 0x1000)
@@ -82,9 +85,9 @@ namespace cvm.net.core
 		//Interrupt Globally. Call to system calls.
 		public const ushort INTG = 0x001A;
 		//CALLM
-		//Call Method in module.
-		//CALLM [VALUE|REG] [($)MODULEID] [PCinModule]
-		public const ushort CALLM = 0x001B;
+		//Call A Symbol.
+		//CALLM [VALUE|REG] [SymbolID]
+		public const ushort CALLS = 0x001B;
 		//Request Global Pointer
 		public const ushort RGP = 0x001C;
 		//Test If an interrupt exists.
