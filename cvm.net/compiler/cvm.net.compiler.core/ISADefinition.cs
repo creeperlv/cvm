@@ -4,7 +4,11 @@ namespace cvm.net.compiler.core
 {
 	public enum ASMSections
 	{
-		Data, Code, Consts
+		Data, Code, Definitions
+	}
+	public enum ASMDefinition
+	{
+		Const, Lib, Symbol
 	}
 	public class ISADefinition
 	{
@@ -62,6 +66,8 @@ namespace cvm.net.compiler.core
 				{"grint", InstID.GRINT},
 				{"adv0", InstID.ADV0},
 				{"dump", InstID.DUMP},
+				{"mcp", InstID.MCP},
+				{"refs", InstID.REFS},
 			},
 			LROps = new()
 			{
@@ -72,10 +78,12 @@ namespace cvm.net.compiler.core
 				{"max",LRCalcOP.MAX },
 			},
 			Sections = new() {
-				{"Data", ASMSections.Data},
-				{"Code", ASMSections.Code},
-				{"Consts", ASMSections.Consts},
-				},
+				{"data", ASMSections.Data},
+				{"code", ASMSections.Code},
+				{"definitions", ASMSections.Definitions},
+				{"definition", ASMSections.Definitions},
+				{"def", ASMSections.Definitions},
+			},
 			Types = new() {
 				{"byte",BaseDataType.BU },
 				{"sbyte",BaseDataType.BS},
@@ -101,6 +109,16 @@ namespace cvm.net.compiler.core
 				{"l",0 },
 				{"r",1 },
 				{"right",1 },
+			},
+			Definitions = new()
+			{
+				{"C", ASMDefinition.Const },
+				{"Const", ASMDefinition.Const },
+				{"L", ASMDefinition.Lib},
+				{"Lib", ASMDefinition.Lib},
+				{"S", ASMDefinition.Symbol },
+				{"Sym", ASMDefinition.Symbol },
+				{"Symbol", ASMDefinition.Symbol },
 			},
 			LogicOps = new() {
 				{ "and", 0 },
@@ -151,6 +169,7 @@ namespace cvm.net.compiler.core
 
 		};
 		public Dictionary<string, ASMSections> Sections = [];
+		public Dictionary<string, ASMDefinition> Definitions = [];
 		public Dictionary<string, ushort> Names = new()
 		{
 

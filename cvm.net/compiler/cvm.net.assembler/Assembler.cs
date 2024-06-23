@@ -60,7 +60,7 @@ namespace cvm.net.assembler
 							}
 						}
 						break;
-					case ASMSections.Consts:
+					case ASMSections.Definitions:
 						break;
 					default:
 						break;
