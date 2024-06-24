@@ -120,6 +120,38 @@ namespace cvm.net.compiler.core
 				{"Sym", ASMDefinition.Symbol },
 				{"Symbol", ASMDefinition.Symbol },
 			},
+			SCalcOps = new()
+			{
+				{"abs", SelfCalcOP.ABS },
+				{"acos", SelfCalcOP.ACOS },
+				{"acosh", SelfCalcOP.ACOSH},
+				{"asin", SelfCalcOP.ASIN},
+				{"asinh", SelfCalcOP.ASINH},
+				{"atan", SelfCalcOP.ATAN},
+				{"atan2", SelfCalcOP.ATAN2},
+				{"atan2h", SelfCalcOP.ATAN2H},
+				{"atanh", SelfCalcOP.ATANH},
+				{"cbrt", SelfCalcOP.CBRT},
+				{"cel", SelfCalcOP.CEL},
+				{"ceil", SelfCalcOP.CEL},
+				{"cos", SelfCalcOP.COS},
+				{"cosh", SelfCalcOP.COSH},
+				{"exp", SelfCalcOP.EXP},
+				{"flr", SelfCalcOP.FLR},
+				{"floor", SelfCalcOP.FLR},
+				{"log", SelfCalcOP.LOG},
+				{"log10", SelfCalcOP.LOG10},
+				{"rnd", SelfCalcOP.RND},
+				{"rand", SelfCalcOP.RND},
+				{"random", SelfCalcOP.RND},
+				{"sign", SelfCalcOP.SIGN},
+				{"sin", SelfCalcOP.SIN},
+				{"sinh", SelfCalcOP.SINH},
+				{"sqrt", SelfCalcOP.SQRT},
+				{"tan", SelfCalcOP.TAN},
+				{"tanh", SelfCalcOP.TANH},
+				{"tun", SelfCalcOP.TUN},
+			},
 			LogicOps = new() {
 				{ "and", 0 },
 				{ "or", 1 },
@@ -177,5 +209,6 @@ namespace cvm.net.compiler.core
 		public Dictionary<string, byte> RegisterNames = [];
 		public Dictionary<string, byte> SHOps = [];
 		public Dictionary<string, byte> LogicOps = [];
+		public Dictionary<string, byte> SCalcOps = [];
 	}
 }

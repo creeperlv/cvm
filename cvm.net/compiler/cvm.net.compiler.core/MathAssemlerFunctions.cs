@@ -85,6 +85,61 @@ namespace cvm.net.assembler.core
 			InstPtr.Set(_R, 6);
 			return true;
 		}
+		public unsafe static bool Assemble_SCalc(ushort instID, Segment s, OperationResult<CVMObject> result, IntPtr InstPtr, int PC)
+		{
+			if (instID != InstID.SELF_CALC) return false;
+			InstPtr.SetData(instID);
+			SegmentTraveler st = new(s);
+			if (!st.GoNext())
+			{
+				result.AddError(new IncompletInstructionError(st.Current));
+				return false;
+			}
+			var OPSeg = st.Current;
+			if (!st.GoNext())
+			{
+				result.AddError(new IncompletInstructionError(st.Current));
+				return false;
+			}
+			var TypeSeg = st.Current;
+			if (!st.GoNext())
+			{
+				result.AddError(new IncompletInstructionError(st.Current));
+				return false;
+			}
+			var SrcSeg = st.Current;
+
+			if (!st.GoNext())
+			{
+				result.AddError(new IncompletInstructionError(st.Current));
+				return false;
+			}
+			var TgtSeg = st.Current;
+
+			if (!ISADefinition.CurrentDefinition.SCalcOps.TryGetValue(OPSeg.content.ToLower(), out var op))
+			{
+				result.AddError(new UnknownOperationError(InstructionNames.SCALC, OPSeg));
+				return false;
+			}
+			if (!ISADefinition.CurrentDefinition.Types.TryGetValue(OPSeg.content.ToLower(), out var type))
+			{
+				result.AddError(new UnknownBaseTypeError(TypeSeg));
+				return false;
+			}
+			if (!DataConversion.TryParseRegister(SrcSeg.content, out var src))
+			{
+				return false;
+			}
+			if (!DataConversion.TryParseRegister(TgtSeg.content, out var tgt))
+			{
+				return false;
+			}
+			InstPtr.SetData(op, 2);
+			InstPtr.SetData(type, 3);
+			InstPtr.SetData(src, 4);
+			InstPtr.SetData(tgt, 5);
+			return true;
+		}
 		public unsafe static bool Assemble_CVT(ushort instID, Segment s, OperationResult<CVMObject> result, IntPtr InstPtr, int PC)
 		{
 			if (instID != InstID.CVT)

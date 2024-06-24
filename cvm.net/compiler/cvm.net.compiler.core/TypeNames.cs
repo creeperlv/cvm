@@ -16,6 +16,7 @@
 	}
 	public static class InstructionNames
 	{
+		public readonly static string SCALC = "self_calc";
 		public readonly static string SH = "sh";
 		public readonly static string LG = "lg";
 	}
