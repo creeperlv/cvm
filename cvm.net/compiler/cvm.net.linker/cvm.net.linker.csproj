@@ -7,6 +7,18 @@
     <Nullable>enable</Nullable>
     <PublishAot>true</PublishAot>
     <InvariantGlobalization>true</InvariantGlobalization>
+    <AssemblyName>cvmld</AssemblyName>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <OptimizationPreference>Size</OptimizationPreference>
+    <DebuggerSupport>false</DebuggerSupport>
+    <UseSystemResourceKeys>true</UseSystemResourceKeys>
+    <StackTraceSupport>false</StackTraceSupport>
+    <EventSourceSupport>false</EventSourceSupport>
+    <HttpActivityPropagationSupport>false</HttpActivityPropagationSupport>
+    <MetadataUpdaterSupport>false</MetadataUpdaterSupport>
+    <DebuggerSupport>false</DebuggerSupport>
+    <PublishTrimmed>true</PublishTrimmed>
   </PropertyGroup>
 
   <ItemGroup>
