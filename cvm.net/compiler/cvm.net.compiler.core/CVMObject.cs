@@ -8,6 +8,8 @@ namespace cvm.net.compiler.core
 	{
 		public Version ObjectVersion { get; set; } = Constants.CurrentCVMObjectVersion;
 		public Dictionary<string, int> Labels { get; set; } = [];
+		public Dictionary<string, int> Symbols { get; set; } = [];
+		public Dictionary<string, int> Libs { get; set; } = [];
 		public List<string> UndefinedLabels { get; set; } = [];
 		public Dictionary<string, string> Consts { get; set; } = [];
 		public Dictionary<int, string> Data { get; set; } = [];

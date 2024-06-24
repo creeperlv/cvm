@@ -61,6 +61,22 @@ namespace cvm.net.assembler
 						}
 						break;
 					case ASMSections.Definitions:
+						{
+							if (ISADefinition.CurrentDefinition.Definitions.TryGetValue(HEAD_NAME.ToLower(), out var defType))
+							{
+								switch (defType)
+								{
+									case ASMDefinition.Const:
+										break;
+									case ASMDefinition.Lib:
+										break;
+									case ASMDefinition.Symbol:
+										break;
+									default:
+										break;
+								}
+							}
+						}
 						break;
 					default:
 						break;

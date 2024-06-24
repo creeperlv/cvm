@@ -31,7 +31,7 @@ namespace cvm.net.core
 		//CVT SRC_TYPE TGT_TYPE S T
 		//00 20 05 02 01 02
 		// CVT float int $1 $2
-		public const ushort CVT = 0x0020;
+		public const ushort CVT = 0x000A;
 		//SD LEN SRC_REG TGT_ADDR
 		//00 21 10 02 01
 		//SD 16 $2 $1
