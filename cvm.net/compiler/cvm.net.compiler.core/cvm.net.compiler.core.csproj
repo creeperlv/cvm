@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <PackageReference Include="LibCLCC.NET" Version="1.29.30" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
   <ItemGroup>

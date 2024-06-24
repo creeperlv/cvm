@@ -3,7 +3,6 @@ using cvm.net.compiler.core;
 using cvm.net.compiler.core.Errors;
 using cvm.net.fullvm.core.Diagnosis;
 using LibCLCC.NET.Operations;
-using Newtonsoft.Json;
 using System.Text.Json;
 
 namespace cvm.net.assembler
@@ -52,7 +51,8 @@ namespace cvm.net.assembler
 					if (!(result.HasError()))
 					{
 						var obj = result.Result;
-						Console.WriteLine(JsonConvert.SerializeObject(obj));
+						CVMObjectContext context = new CVMObjectContext();
+						Console.WriteLine(JsonSerializer.Serialize(obj, context.CVMObject));
 					}
 					else
 					{
