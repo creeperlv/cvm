@@ -10,6 +10,10 @@ namespace cvm.net.core.libc
 		{
 			return (void*)Marshal.AllocHGlobal(size);
 		}
+		public static T* malloc<T>(int size) where T : unmanaged
+		{
+			return (T*)Marshal.AllocHGlobal(size);
+		}
 		public static void* realloc(void* ptr, int size)
 		{
 			return (void*)Marshal.ReAllocHGlobal((IntPtr)ptr, (IntPtr)size);

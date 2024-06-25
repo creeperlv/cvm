@@ -16,7 +16,7 @@ namespace cvm.net.core
 		public byte* LibTable;
 		public int SymbolCount;
 		/*
-		 * [StrLen][NameStr][PC:int, <0 = Undefined] 
+		 * [StrLen][NameStr][0x00:byte][PC:int, <0 = Undefined] 
 		 */
 		public byte* SymbolTable;
 		public Instruction* Instructions;

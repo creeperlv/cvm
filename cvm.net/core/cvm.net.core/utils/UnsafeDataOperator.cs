@@ -7,7 +7,7 @@ public static class UnsafeDataOperator
 		byte* ptr = ((byte*)t) + OffsetInBytes;
 		((V*)ptr)[0] = v;
 	}
-	public static unsafe void SetData< V>(this IntPtr t, V v, int OffsetInBytes = 0) where V : unmanaged
+	public static unsafe void SetData<V>(this IntPtr t, V v, int OffsetInBytes = 0) where V : unmanaged
 	{
 		byte* ptr = ((byte*)t) + OffsetInBytes;
 		((V*)ptr)[0] = v;
