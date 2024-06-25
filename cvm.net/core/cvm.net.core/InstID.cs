@@ -52,7 +52,8 @@ namespace cvm.net.core
 		public const ushort MCP = 0x0024;
 		//Reference Symbol
 		//Put the name byte* to an memory allocation, get the pointer to it.
-		public const ushort REFS= 0x0025;
+		//REFS $PTR [SymbolID]
+		public const ushort REFS = 0x0025;
 		//JMP [0|1] [Address|Register]
 		//00 10 00 00 10 00
 		//JMP 0 LBL (at 0x1000)

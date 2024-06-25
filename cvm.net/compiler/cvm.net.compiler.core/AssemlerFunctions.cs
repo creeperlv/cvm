@@ -17,11 +17,14 @@ namespace cvm.net.assembler.core
 				{ InstID.MUL , MathAssemlerFunctions.Assemble_BasicMath },
 				{ InstID.DIV , MathAssemlerFunctions.Assemble_BasicMath },
 				{ InstID.CVT , MathAssemlerFunctions.Assemble_CVT },
-				{ InstID.SD, MemoryAssemlerFunctions.Assemble_SDLD},
-				{ InstID.LD, MemoryAssemlerFunctions.Assemble_SDLD},
+				{ InstID.SD , MemoryAssemlerFunctions.Assemble_SDLD},
+				{ InstID.LD , MemoryAssemlerFunctions.Assemble_SDLD},
 				{ InstID.LR_CALC , MathAssemlerFunctions.Assemble_LRCalc },
-				{ InstID.SET, RegisterAssemlerFunctions.Assemble_SET },
-				{ InstID.SH, RegisterAssemlerFunctions.Assemble_SH },
+				{ InstID.SELF_CALC , MathAssemlerFunctions.Assemble_SCalc},
+				{ InstID.LG , LogicAssemlerFunctions.Assemble_LG},
+				{ InstID.SET , RegisterAssemlerFunctions.Assemble_SET },
+				{ InstID.SH , RegisterAssemlerFunctions.Assemble_SH },
+				{ InstID.REFS , MemoryAssemlerFunctions.Assemble_REFS },
 				};
 		public unsafe static bool Assemble_NoArgs(ushort instID, Segment s, OperationResult<CVMObject> result, IntPtr instPtr, int PC)
 		{

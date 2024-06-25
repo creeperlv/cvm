@@ -56,12 +56,48 @@ namespace cvm.net.assembler.core
 			}
 			else if (DataConversion.TryParse<UInt32>(LenSeg.content, result, out var Len))
 			{
-				IsRegister=false;
+				IsRegister = false;
 				InstPtr.SetData(Len, 5);
 			}
 			InstPtr.SetData(IsRegister ? 1 : 0, 2);
 			InstPtr.SetData(Src, 3);
 			InstPtr.SetData(Tgt, 4);
+			return true;
+		}
+		public unsafe static bool Assemble_REFS(ushort instID, Segment s, OperationResult<CVMObject> result, IntPtr InstPtr, int PC)
+		{
+			if (instID != InstID.REFS)
+			{
+				return false;
+			}
+			InstPtr.SetData(instID);
+
+			SegmentTraveler st = new(s);
+			if (!st.GoNext())
+			{
+				result.AddError(new IncompletInstructionError(st.Current));
+				return false;
+			}
+			var ptrRegSeg = st.Current;
+			if (!st.GoNext())
+			{
+				result.AddError(new IncompletInstructionError(st.Current));
+				return false;
+			}
+			var SymbolSeg = st.Current;
+			if (!DataConversion.TryParseRegister(ptrRegSeg.content.ToLower(), out var Register))
+			{
+				return false;
+			}
+			InstPtr.SetData(Register, 2);
+			{
+				if (!result.Result.Symbols.ContainsKey(SymbolSeg.content))
+				{
+					result.Result.Symbols.Add(SymbolSeg.content, -1);
+				}
+				InstPtr.SetData(result.Result.Symbols[SymbolSeg.content], 3);
+			}
+
 			return true;
 		}
 		public unsafe static bool Assemble_SDLD(ushort instID, Segment s, OperationResult<CVMObject> result, IntPtr InstPtr, int PC)
