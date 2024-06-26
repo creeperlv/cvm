@@ -166,6 +166,13 @@ namespace cvm.net.compiler.core
 				{"relative",1},
 				{"true",1},
 			},
+			Booleans = new()
+			{
+				{"true",1},
+				{"on",1},
+				{"false",0},
+				{"off",0},
+			}
 		};
 		unsafe static ISADefinition()
 		{
@@ -218,5 +225,6 @@ namespace cvm.net.compiler.core
 		public Dictionary<string, byte> LogicOps = [];
 		public Dictionary<string, byte> SCalcOps = [];
 		public Dictionary<string, byte> JumpOps = [];
+		public Dictionary<string, byte> Booleans = [];
 	}
 }

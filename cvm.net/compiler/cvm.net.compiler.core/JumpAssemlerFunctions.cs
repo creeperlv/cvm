@@ -137,5 +137,76 @@ namespace cvm.net.assembler.core
 			return true;
 		}
 
+		public unsafe static bool Assemble_JO(ushort instID, Segment s, OperationResult<CVMObject> result, IntPtr InstPtr, int PC)
+		{
+			if (instID != InstID.JO)
+			{
+				return false;
+			}
+			InstPtr.Set(InstID.JO, 0);
+			SegmentTraveler st = new(s);
+			if (!st.GoNext())
+			{
+				result.AddError(new IncompletInstructionError(st.Current));
+				return false;
+			}
+			var FlagID = st.Current;
+
+			if (!ISADefinition.CurrentDefinition.Booleans.TryGetValue(FlagID.content.ToLower(), out var _IsOn))
+			{
+				return false;
+			}
+			InstPtr.SetData(_IsOn, 3);
+			if (!st.GoNext())
+			{
+				result.AddError(new IncompletInstructionError(st.Current));
+				return false;
+			}
+
+			var IsRelativeSeg = st.Current;
+
+			if (!ISADefinition.CurrentDefinition.JumpOps.TryGetValue(IsRelativeSeg.content.ToLower(), out var jump))
+			{
+				result.AddError(new UnknownOperationError(InstructionNames.JF, IsRelativeSeg));
+				return false;
+			}
+			InstPtr.SetData(jump, 4);
+			if (!st.GoNext())
+			{
+				result.AddError(new IncompletInstructionError(st.Current));
+				return false;
+			}
+
+			var ValueSeg = st.Current;
+
+			if (DataConversion.TryParseRegister(ValueSeg.content, result, out var _T))
+			{
+				InstPtr.Set(1, 2);
+				InstPtr.Set(_T, 5);
+
+			}
+			else
+			{
+				InstPtr.Set(0, 2);
+				if (result.Result.Labels.TryGetValue(ValueSeg.content, out var lbl))
+				{
+					if (lbl >= 0)
+					{
+						InstPtr.Set(lbl, 5);
+						return true;
+					}
+				}
+				{
+					if (!result.Result.UndefinedLabels.Contains(ValueSeg.content))
+					{
+						result.Result.UndefinedLabels.Add(ValueSeg.content);
+					}
+					InstPtr.Set(result.Result.UndefinedLabels.IndexOf(ValueSeg.content), 3);
+					InstPtr.Set(IntermediateInstructions.JF_LBL, 0);
+				}
+			}
+			return true;
+		}
+
 	}
 }
