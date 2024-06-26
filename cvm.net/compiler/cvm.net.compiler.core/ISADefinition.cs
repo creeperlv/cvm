@@ -159,6 +159,13 @@ namespace cvm.net.compiler.core
 				{ "xor", 3 },
 				{ "nor", 4 },
 			},
+			JumpOps = new()
+			{
+				{"absolute",0},
+				{"false",0},
+				{"relative",1},
+				{"true",1},
+			},
 		};
 		unsafe static ISADefinition()
 		{
@@ -210,5 +217,6 @@ namespace cvm.net.compiler.core
 		public Dictionary<string, byte> SHOps = [];
 		public Dictionary<string, byte> LogicOps = [];
 		public Dictionary<string, byte> SCalcOps = [];
+		public Dictionary<string, byte> JumpOps = [];
 	}
 }

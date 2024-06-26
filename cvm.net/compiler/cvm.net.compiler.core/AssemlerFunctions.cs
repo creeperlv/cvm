@@ -25,6 +25,8 @@ namespace cvm.net.assembler.core
 				{ InstID.SET , RegisterAssemlerFunctions.Assemble_SET },
 				{ InstID.SH , RegisterAssemlerFunctions.Assemble_SH },
 				{ InstID.REFS , MemoryAssemlerFunctions.Assemble_REFS },
+				{ InstID.JMP , JumpAssemlerFunctions.Assemble_JMP},
+				{ InstID.JF , JumpAssemlerFunctions.Assemble_JF},
 				};
 		public unsafe static bool Assemble_NoArgs(ushort instID, Segment s, OperationResult<CVMObject> result, IntPtr instPtr, int PC)
 		{

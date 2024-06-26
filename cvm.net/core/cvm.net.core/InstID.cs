@@ -54,9 +54,9 @@ namespace cvm.net.core
 		//Put the name byte* to an memory allocation, get the pointer to it.
 		//REFS $PTR [SymbolID]
 		public const ushort REFS = 0x0025;
-		//JMP [0|1] [Address|Register]
-		//00 10 00 00 10 00
-		//JMP 0 LBL (at 0x1000)
+		//JMP [0|1:IsRegister] [0|1:IsRelative] [Address|Register]
+		//00 10 00 00 00 10 00
+		//JMP LBL (at 0x1000)
 		//JMP 1 $R0
 		public const ushort JMP = 0x0010;
 		//Jump if flag
