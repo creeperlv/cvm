@@ -41,13 +41,36 @@ namespace cvm.net.assembler.core
 				result.AddError(new IncompletInstructionError(st.Current));
 				return false;
 			}
-			var LReg = st.Current;
+			var LSeg = st.Current;
 			if (!st.GoNext())
 			{
 				result.AddError(new IncompletInstructionError(st.Current));
 				return false;
 			}
-			var RSeg= st.Current; 
+			var RSeg = st.Current;
+			if (!DataConversion.TryParseRegister(LSeg.content, out var l))
+			{
+				return false;
+			}
+			if (!DataConversion.TryParseRegister(RSeg.content, out var r))
+			{
+				return false;
+			}
+			if (!ISADefinition.CurrentDefinition.CompOps.TryGetValue(CompOpSeg.content.ToLower(), out var op))
+			{
+				result.AddError(new UnknownOperationError(InstructionNames.COMP, CompOpSeg));
+				return false;
+			}
+
+			if (!ISADefinition.CurrentDefinition.Types.TryGetValue(TypeSeg.content.ToLower(), out var type))
+			{
+				result.AddError(new UnknownBaseTypeError(TypeSeg));
+				return false;
+			}
+			InstPtr.SetData(op, 2);
+			InstPtr.SetData(type, 3);
+			InstPtr.SetData(l, 4);
+			InstPtr.SetData(r, 5);
 			return true;
 		}
 		public unsafe static bool Assemble_SH(ushort instID, Segment s, OperationResult<CVMObject> result, IntPtr InstPtr, int PC)

@@ -20,7 +20,9 @@
 		public readonly static string SH = "sh";
 		public readonly static string LG = "lg";
 
-		public readonly static string JMP="jmp";
-		public readonly static string JF="jf";
+		public readonly static string JMP = "jmp";
+		public readonly static string JF = "jf";
+
+		public readonly static string COMP = "comp";
 	}
 }
