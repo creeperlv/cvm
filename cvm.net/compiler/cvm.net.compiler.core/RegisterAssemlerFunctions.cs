@@ -11,6 +11,45 @@ namespace cvm.net.assembler.core
 	public static unsafe class RegisterAssemlerFunctions
 	{
 
+		public unsafe static bool Assemble_COMP(ushort instID, Segment s, OperationResult<CVMObject> result, IntPtr InstPtr, int PC)
+		{
+
+			switch (instID)
+			{
+				case InstID.COMP:
+					break;
+				default:
+					return false;
+			}
+			InstPtr.SetData(instID);
+
+			SegmentTraveler st = new(s);
+			if (!st.GoNext())
+			{
+				result.AddError(new IncompletInstructionError(st.Current));
+				return false;
+			}
+			var CompOpSeg = st.Current;
+			if (!st.GoNext())
+			{
+				result.AddError(new IncompletInstructionError(st.Current));
+				return false;
+			}
+			var TypeSeg = st.Current;
+			if (!st.GoNext())
+			{
+				result.AddError(new IncompletInstructionError(st.Current));
+				return false;
+			}
+			var LReg = st.Current;
+			if (!st.GoNext())
+			{
+				result.AddError(new IncompletInstructionError(st.Current));
+				return false;
+			}
+			var RSeg= st.Current; 
+			return true;
+		}
 		public unsafe static bool Assemble_SH(ushort instID, Segment s, OperationResult<CVMObject> result, IntPtr InstPtr, int PC)
 		{
 			switch (instID)
