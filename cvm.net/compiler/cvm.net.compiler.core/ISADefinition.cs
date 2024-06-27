@@ -166,6 +166,9 @@ namespace cvm.net.compiler.core
 				{"relative",1},
 				{"true",1},
 			},
+			CompOps = new() {
+
+			},
 			Booleans = new()
 			{
 				{"true",1},
@@ -225,6 +228,7 @@ namespace cvm.net.compiler.core
 		public Dictionary<string, byte> LogicOps = [];
 		public Dictionary<string, byte> SCalcOps = [];
 		public Dictionary<string, byte> JumpOps = [];
+		public Dictionary<string, byte> CompOps = [];
 		public Dictionary<string, byte> Booleans = [];
 	}
 }
