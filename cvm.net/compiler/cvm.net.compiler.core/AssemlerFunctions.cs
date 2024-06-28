@@ -20,14 +20,16 @@ namespace cvm.net.assembler.core
 				{ InstID.SD , MemoryAssemlerFunctions.Assemble_SDLD},
 				{ InstID.LD , MemoryAssemlerFunctions.Assemble_SDLD},
 				{ InstID.LR_CALC , MathAssemlerFunctions.Assemble_LRCalc },
-				{ InstID.SELF_CALC , MathAssemlerFunctions.Assemble_SCalc},
-				{ InstID.LG , LogicAssemlerFunctions.Assemble_LG},
+				{ InstID.SELF_CALC , MathAssemlerFunctions.Assemble_SCalc },
+				{ InstID.LG , LogicAssemlerFunctions.Assemble_LG },
 				{ InstID.SET , RegisterAssemlerFunctions.Assemble_SET },
 				{ InstID.SH , RegisterAssemlerFunctions.Assemble_SH },
 				{ InstID.REFS , MemoryAssemlerFunctions.Assemble_REFS },
-				{ InstID.JMP , JumpAssemlerFunctions.Assemble_JMP},
-				{ InstID.JF , JumpAssemlerFunctions.Assemble_JF},
-				{ InstID.JO , JumpAssemlerFunctions.Assemble_JO},
+				{ InstID.JMP , JumpAssemlerFunctions.Assemble_JMP },
+				{ InstID.JF , JumpAssemlerFunctions.Assemble_JF },
+				{ InstID.JO , JumpAssemlerFunctions.Assemble_JO },
+				{ InstID.CALL , JumpAssemlerFunctions.Assemble_CALL },
+				{ InstID.PJMP , JumpAssemlerFunctions.Assemble_PJMP },
 				};
 		public unsafe static bool Assemble_NoArgs(ushort instID, Segment s, OperationResult<CVMObject> result, IntPtr instPtr, int PC)
 		{
