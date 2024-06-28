@@ -5,3 +5,5 @@ obj/
 .ccls-cache/
 pkg/
 build/
+.kdev4/
+*.kdev4
