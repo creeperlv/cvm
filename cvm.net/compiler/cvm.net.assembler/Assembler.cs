@@ -2,6 +2,7 @@
 using cvm.net.compiler.core;
 using cvm.net.compiler.core.Errors;
 using cvm.net.core;
+using cvm.net.tools.core;
 using LibCLCC.NET.Operations;
 
 namespace cvm.net.assembler
@@ -33,6 +34,23 @@ namespace cvm.net.assembler
 				switch (section)
 				{
 					case ASMSections.Data:
+						{
+							SegmentTraveler st = new SegmentTraveler(HEAD);
+							var Name = st.Current;
+							if (!st.GoNext())
+							{
+								OResult.AddError(new UnexpectedEndError(st.Current));
+								continue;
+							}
+							var DataType = st.Current;
+
+							if (!st.GoNext())
+							{
+								OResult.AddError(new UnexpectedEndError(st.Current));
+								continue;
+							}
+							var Data = st.Current;
+						}
 						break;
 					case ASMSections.Code:
 						if (ISADefinition.CurrentDefinition.Names.TryGetValue(HEAD_NAME, out var instID))

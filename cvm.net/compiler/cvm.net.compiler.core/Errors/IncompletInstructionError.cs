@@ -14,6 +14,17 @@ namespace cvm.net.compiler.core.Errors
 			return "Incomplete Instruction!";
 		}
 	}
+	public class UnexpectedEndError : AssemblerError
+	{
+		public UnexpectedEndError(Segment errorSegment) : base(errorSegment)
+		{
+		}
+
+		public override string ToString()
+		{
+			return "Unexpected End!";
+		}
+	}
 	public class UnknownBaseTypeError(Segment errorSegment) : AssemblerError(errorSegment)
 	{
 		public override string ToString()
