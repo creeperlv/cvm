@@ -1,4 +1,5 @@
-﻿using cvm.net.core;
+﻿using cvm.net.assembler.core;
+using cvm.net.core;
 
 namespace cvm.net.compiler.core
 {
@@ -166,7 +167,8 @@ namespace cvm.net.compiler.core
 				{"relative",1},
 				{"true",1},
 			},
-			CompOps = new() {
+			CompOps = new()
+			{
 
 			},
 			Booleans = new()
@@ -175,6 +177,15 @@ namespace cvm.net.compiler.core
 				{"on",1},
 				{"false",0},
 				{"off",0},
+			},
+			DataProcessMethods = new()
+			{
+				{"cstring", DataProcessMethod.CChar },
+				{"cchar", DataProcessMethod.CChar },
+				{"base64", DataProcessMethod.Base64 },
+				{"extfile", DataProcessMethod.extfile},
+				{"externalfile", DataProcessMethod.extfile},
+				{"hex", DataProcessMethod.hex},
 			}
 		};
 		unsafe static ISADefinition()
@@ -230,5 +241,7 @@ namespace cvm.net.compiler.core
 		public Dictionary<string, byte> JumpOps = [];
 		public Dictionary<string, byte> CompOps = [];
 		public Dictionary<string, byte> Booleans = [];
+		public Dictionary<string, DataProcessMethod> DataProcessMethods = [];
+		public Dictionary<DataProcessMethod, IDataProcessor> Processors = [];
 	}
 }
