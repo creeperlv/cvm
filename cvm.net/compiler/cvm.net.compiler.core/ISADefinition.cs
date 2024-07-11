@@ -1,4 +1,5 @@
 ﻿using cvm.net.assembler.core;
+using cvm.net.compiler.core.DataProcessors;
 using cvm.net.core;
 
 namespace cvm.net.compiler.core
@@ -186,6 +187,15 @@ namespace cvm.net.compiler.core
 				{"extfile", DataProcessMethod.extfile},
 				{"externalfile", DataProcessMethod.extfile},
 				{"hex", DataProcessMethod.hex},
+			},
+			Processors = new()
+			{
+				{
+					DataProcessMethod.CChar,new CStringProcessor()
+				},
+				{
+					DataProcessMethod.Base64,new Base64Processor()
+				}
 			}
 		};
 		unsafe static ISADefinition()
