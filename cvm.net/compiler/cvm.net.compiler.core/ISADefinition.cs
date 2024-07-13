@@ -195,6 +195,9 @@ namespace cvm.net.compiler.core
 				},
 				{
 					DataProcessMethod.Base64,new Base64Processor()
+				},
+				{
+					DataProcessMethod.hex, new HEXProcessor()
 				}
 			}
 		};

@@ -1,9 +1,4 @@
 ﻿using LibCLCC.NET.Operations;
-using Microsoft.Win32;
-using System;
-using System.Numerics;
-using System.Reflection;
-using System.Xml.Linq;
 
 namespace cvm.net.compiler.core
 {
@@ -100,7 +95,7 @@ namespace cvm.net.compiler.core
 		/// </summary>
 		/// <param name="str"></param>
 		/// <param name="ptr"></param>
-		/// <param name="MaxLen"></param>
+		/// <param name="MaxLen">The maximum length of the data.</param>
 		/// <returns></returns>
 		public unsafe static bool ParseByteDataFromHexString(string str, byte* ptr, int MaxLen, bool IsLittleEndian = true)
 		{
