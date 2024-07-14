@@ -2,6 +2,6 @@
 {
 	public interface IDataProcessor
 	{
-		byte[] Process(string str);
+		byte[] Process(string str, string? baseSearchPath = null);
 	}
 }

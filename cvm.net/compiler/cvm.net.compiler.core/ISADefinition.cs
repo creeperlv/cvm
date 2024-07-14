@@ -198,6 +198,9 @@ namespace cvm.net.compiler.core
 				},
 				{
 					DataProcessMethod.hex, new HEXProcessor()
+				},
+				{
+					DataProcessMethod.extfile, new ExternalFileProcessor()
 				}
 			}
 		};
