@@ -38,8 +38,9 @@ namespace cvm.net.assembler
 				OperationResult<CVMObject>? result = null;
 				foreach (var item in sourceList)
 				{
+					FileInfo fileInfo = new FileInfo(item);
 					using var stream = File.Open(item, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
-					result = assembler.Assemble(stream, item, result);
+					result = assembler.Assemble(stream, fileInfo.DirectoryName, item, result);
 				}
 				{
 					if (result is null)

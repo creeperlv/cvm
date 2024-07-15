@@ -25,6 +25,28 @@ namespace cvm.net.compiler.core.Errors
 			return "Unexpected End!";
 		}
 	}
+	public class UnknownDataProcessMethodError : AssemblerError
+	{
+		public UnknownDataProcessMethodError(Segment errorSegment) : base(errorSegment)
+		{
+		}
+
+		public override string ToString()
+		{
+			return $"Unknown Data Process Method: \"{ErrorSegment.content}\"";
+		}
+	}
+	public class UnimplementedDataProcessMethodError : AssemblerError
+	{
+		public UnimplementedDataProcessMethodError(Segment errorSegment) : base(errorSegment)
+		{
+		}
+
+		public override string ToString()
+		{
+			return $"Unimplemented Data Process Method: \"{ErrorSegment.content}\"";
+		}
+	}
 	public class UnknownBaseTypeError(Segment errorSegment) : AssemblerError(errorSegment)
 	{
 		public override string ToString()

@@ -9,7 +9,7 @@ namespace cvm.net.assembler
 {
 	public class Assembler
 	{
-		public unsafe OperationResult<CVMObject> Assemble(Stream stream, string FileName, OperationResult<CVMObject>? previousCompile)
+		public unsafe OperationResult<CVMObject> Assemble(Stream stream, string? FileFolder, string FileName, OperationResult<CVMObject>? previousCompile)
 		{
 			OperationResult<CVMObject> OResult = previousCompile ?? new CVMObject();
 			StreamReader streamReader = new StreamReader(stream);
@@ -50,6 +50,18 @@ namespace cvm.net.assembler
 								continue;
 							}
 							var Data = st.Current;
+							if (!ISADefinition.CurrentDefinition.DataProcessMethods.TryGetValue(DataType.content, out var m))
+							{
+								OResult.AddError(new UnknownDataProcessMethodError(st.Current));
+								continue;
+							}
+							if (!ISADefinition.CurrentDefinition.Processors.TryGetValue(m, out var processor))
+							{
+								OResult.AddError(new UnimplementedDataProcessMethodError(st.Current));
+								continue;
+							}
+							var data = processor.Process(Data.content, FileFolder);
+							OResult.Result.Data.Add(Name.content, data);
 						}
 						break;
 					case ASMSections.Code:

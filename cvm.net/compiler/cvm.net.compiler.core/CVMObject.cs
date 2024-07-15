@@ -11,7 +11,7 @@ namespace cvm.net.compiler.core
 		public Dictionary<string, int> Libs { get; set; } = [];
 		public List<string> UndefinedLabels { get; set; } = [];
 		public Dictionary<string, string> Consts { get; set; } = [];
-		public Dictionary<int, byte[]> Data { get; set; } = [];
+		public Dictionary<string, byte[]> Data { get; set; } = [];
 		public List<Instruction> instructions { get; set; } = [];
 	}
 }
