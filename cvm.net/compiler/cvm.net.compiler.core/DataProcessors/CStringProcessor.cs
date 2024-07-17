@@ -5,7 +5,7 @@ namespace cvm.net.compiler.core.DataProcessors
 {
 	public class CStringProcessor : IDataProcessor
 	{
-		public byte[] Process(string str, string baseSearchPath? = null)
+		public byte[] Process(string str, string? baseSearchPath = null)
 		{
 			return Encoding.ASCII.GetBytes(str);
 		}
