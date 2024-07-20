@@ -25,4 +25,5 @@
 
 		public readonly static string COMP = "comp";
 	}
+
 }
