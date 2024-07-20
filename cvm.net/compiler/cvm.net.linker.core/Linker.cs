@@ -14,10 +14,10 @@ namespace cvm.net.linker.core
 			result.Result = true;
 			return result;
 		}
-		public unsafe void FinalizeBinary(CVMObject obj, Ptr<CVMModule> modulePtr)
+		public unsafe void FinalizeBinary(CVMObject obj, Ptr<CVMBaseModule> modulePtr)
 		{
 			int len = obj.instructions.Count;
-			CVMModule module = default;
+			CVMBaseModule module = default;
 			module.InstructionCount = len;
 			module.Instructions = malloc<Instruction>(sizeof(Instruction) * len);
 			{

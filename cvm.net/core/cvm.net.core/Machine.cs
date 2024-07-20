@@ -9,7 +9,7 @@ namespace cvm.net.core
 		public List<RuntimeProgram> Programs = new List<RuntimeProgram>();
 		public IDispatcher dispatcher;
 		public Dictionary<int, int> ModuleCounts = new Dictionary<int, int>();
-		public Dictionary<int, CVMModule> LoadedModules = new Dictionary<int, CVMModule>();
+		public Dictionary<int, CVMBaseModule> LoadedModules = new Dictionary<int, CVMBaseModule>();
 		public Machine(IDispatcher dispatcher)
 		{
 			this.dispatcher = dispatcher;
