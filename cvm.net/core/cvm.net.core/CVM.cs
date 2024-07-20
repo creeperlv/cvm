@@ -80,6 +80,72 @@ namespace cvm.net.core
 									}
 								}
 								break;
+							case BaseDataType.IU:
+								{
+									byte LR = inst.As<Instruction, byte>(4);
+									uint R;
+									int T = inst.As<Instruction, byte>(7);
+									uint L = core.GetData<uint>(LR);
+									if (IsRegister)
+									{
+										R = core.GetData<uint>(inst.As<Instruction, byte>(5));
+									}
+									else
+									{
+										R = inst.As<Instruction, uint>(5);
+									}
+									unchecked
+									{
+										var d = (int)(L + R);
+										core.OF = ((L < 0 && R < 0) && d >= 0) || ((L > 0 && R > 0) && d <= 0);
+										core.SetData(T, d);
+									}
+								}
+								break;
+							case BaseDataType.S:
+								{
+									byte LR = inst.As<Instruction, byte>(4);
+									short R;
+									int T = inst.As<Instruction, byte>(7);
+									short L = core.GetData<short>(LR);
+									if (IsRegister)
+									{
+										R = core.GetData<short>(inst.As<Instruction, byte>(5));
+									}
+									else
+									{
+										R = inst.As<Instruction, short>(5);
+									}
+									unchecked
+									{
+										var d = (int)(L + R);
+										core.OF = ((L < 0 && R < 0) && d >= 0) || ((L > 0 && R > 0) && d <= 0);
+										core.SetData(T, d);
+									}
+								}
+								break;
+							case BaseDataType.SU:
+								{
+									byte LR = inst.As<Instruction, byte>(4);
+									ushort R;
+									int T = inst.As<Instruction, byte>(7);
+									ushort L = core.GetData<ushort>(LR);
+									if (IsRegister)
+									{
+										R = core.GetData<ushort>(inst.As<Instruction, byte>(5));
+									}
+									else
+									{
+										R = inst.As<Instruction, ushort>(5);
+									}
+									unchecked
+									{
+										var d = (int)(L + R);
+										core.OF = ((L < 0 && R < 0) && d >= 0) || ((L > 0 && R > 0) && d <= 0);
+										core.SetData(T, d);
+									}
+								}
+								break;
 							default:
 								break;
 						}
