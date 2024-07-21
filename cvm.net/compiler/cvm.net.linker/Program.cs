@@ -20,6 +20,14 @@ namespace cvm.net.linker
 							options.Set(OptionNames.OutputFile, item);
 						}
 						break;
+					case "-a":
+					case "--artifact":
+						{
+							i++;
+							item = args[i];
+							options.Set(OptionNames.ArtifactType, item);
+						}
+						break;
 					default:
 						{
 							options.Append(OptionNames.SourceFile, item);
