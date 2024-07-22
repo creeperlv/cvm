@@ -96,8 +96,8 @@ namespace cvm.net.core
 									}
 									unchecked
 									{
-										var d = (int)(L + R);
-										core.OF = ((L < 0 && R < 0) && d >= 0) || ((L > 0 && R > 0) && d <= 0);
+										var d = (uint)(L + R);
+										core.OF = d < L || d < R;
 										core.SetData(T, d);
 									}
 								}
@@ -118,7 +118,7 @@ namespace cvm.net.core
 									}
 									unchecked
 									{
-										var d = (int)(L + R);
+										var d = (short)(L + R);
 										core.OF = ((L < 0 && R < 0) && d >= 0) || ((L > 0 && R > 0) && d <= 0);
 										core.SetData(T, d);
 									}
@@ -140,8 +140,52 @@ namespace cvm.net.core
 									}
 									unchecked
 									{
-										var d = (int)(L + R);
+										var d = (ushort)(L + R);
+										core.OF = d < L || d < R;
+										core.SetData(T, d);
+									}
+								}
+								break;
+							case BaseDataType.L:
+								{
+									byte LR = inst.As<Instruction, byte>(4);
+									long R;
+									int T = inst.As<Instruction, byte>(7);
+									long L = core.GetData<long>(LR);
+									if (IsRegister)
+									{
+										R = core.GetData<long>(inst.As<Instruction, byte>(5));
+									}
+									else
+									{
+										R = inst.As<Instruction, long>(5);
+									}
+									unchecked
+									{
+										var d = (long)(L + R);
 										core.OF = ((L < 0 && R < 0) && d >= 0) || ((L > 0 && R > 0) && d <= 0);
+										core.SetData(T, d);
+									}
+								}
+								break;
+							case BaseDataType.LU:
+								{
+									byte LR = inst.As<Instruction, byte>(4);
+									ulong R;
+									int T = inst.As<Instruction, byte>(7);
+									ulong L = core.GetData<ulong>(LR);
+									if (IsRegister)
+									{
+										R = core.GetData<ulong>(inst.As<Instruction, byte>(5));
+									}
+									else
+									{
+										R = inst.As<Instruction, ulong>(5);
+									}
+									unchecked
+									{
+										var d = (ulong)(L + R);
+										core.OF = d < L || d < R;
 										core.SetData(T, d);
 									}
 								}
