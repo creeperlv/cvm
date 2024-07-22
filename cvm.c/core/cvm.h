@@ -53,16 +53,19 @@ typedef struct __cvm_instruction {
   UInt64 D0;
   UInt64 D1;
 } cvmInstruction;
-typedef struct __cvm_module {
-  int Length;
+typedef struct __cvm_base_module {
   int DataSegLength;
   void *DataSegment;
+  int InstCount;
+  cvmInstruction *Instructions;
+} cvmBaseModule;
+typedef struct __cvm_module {
+  int Length;
+  cvmBaseModule baseModule;
   int LibCount;
   void *LibTable;
   int SymbolTableCount;
   void *SymbolTable;
-  int InstCount;
-  cvmInstruction *Instructions;
   int ModuleID;
 } cvmModule;
 
