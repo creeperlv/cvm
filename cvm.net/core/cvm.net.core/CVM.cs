@@ -190,6 +190,50 @@ namespace cvm.net.core
 									}
 								}
 								break;
+							case BaseDataType.F:
+								{
+									byte LR = inst.As<Instruction, byte>(4);
+									float R;
+									int T = inst.As<Instruction, byte>(7);
+									float L = core.GetData<float>(LR);
+									if (IsRegister)
+									{
+										R = core.GetData<float>(inst.As<Instruction, byte>(5));
+									}
+									else
+									{
+										R = inst.As<Instruction, float>(5);
+									}
+									unchecked
+									{
+										var d = (float)(L + R);
+										core.OF = ((L < 0 && R < 0) && d >= 0) || ((L > 0 && R > 0) && d <= 0);
+										core.SetData(T, d);
+									}
+								}
+								break;
+							case BaseDataType.D:
+								{
+									byte LR = inst.As<Instruction, byte>(4);
+									double R;
+									int T = inst.As<Instruction, byte>(7);
+									double L = core.GetData<double>(LR);
+									if (IsRegister)
+									{
+										R = core.GetData<double>(inst.As<Instruction, byte>(5));
+									}
+									else
+									{
+										R = inst.As<Instruction, double>(5);
+									}
+									unchecked
+									{
+										var d = (double)(L + R);
+										core.OF = ((L < 0 && R < 0) && d >= 0) || ((L > 0 && R > 0) && d <= 0);
+										core.SetData(T, d);
+									}
+								}
+								break;
 							default:
 								break;
 						}
