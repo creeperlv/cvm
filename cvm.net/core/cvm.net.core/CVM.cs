@@ -31,6 +31,9 @@ namespace cvm.net.core
 				{
 					case InstID.NOP:
 						break;
+					case InstID.EXIT:
+						core.WillRun = false;
+						break;
 					case InstID.ADD:
 						{
 							var type = inst.As<Instruction, byte>(2);
