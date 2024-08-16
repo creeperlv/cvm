@@ -8,8 +8,8 @@ namespace cvm.net.core
 
 		public const ushort NOP = 0x0000;
 		//ADD [TYPE] [VALUE|REG] T L R
-		//00 01 01 01 00 01 02 xx xx 00
-		//00 01 02 03 04 05 06 07 .. 0F
+		//00 01 01 01 00 01 02 __
+		//00 01 02 03 04 05 06 07
 		// ADD S $0 $1 $2
 		//REG is determined by R.
 		public const ushort ADD = 0x0001;
@@ -25,7 +25,8 @@ namespace cvm.net.core
 		//SelfCalc Exp Int32 $8 $0
 		public const ushort SELF_CALC = 0x0007;
 		//SET [TYPE] REG Data
-		//00 09 03 10 FF FF FF FF
+		//00 09 03 10 00 00 00 00
+		//FF FF FF FF FF FF FF FF
 		//SET LONG $X2 0xFF_FF_FF_FF
 		public const ushort SET = 0x0009;
 		//CVT SRC_TYPE TGT_TYPE S T

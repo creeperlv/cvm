@@ -56,6 +56,11 @@ namespace cvm.net.core
 		{
 			frame[0] = Callstack[CallstackIndex];
 		}
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public void SetLastestCallFrame(Callframe frame)
+		{
+			Callstack[CallstackIndex] = frame;
+		}
 		public void Dispose()
 		{
 			free(Registers);
