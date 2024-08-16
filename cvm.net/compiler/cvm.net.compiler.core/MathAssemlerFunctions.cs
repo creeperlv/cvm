@@ -253,11 +253,6 @@ namespace cvm.net.assembler.core
 			}
 			current = st.Current;
 			var R = current;
-			bool IsRegister = false;
-			if (R.content.StartsWith('$'))
-			{
-				IsRegister = true;
-			}
 			byte _T;
 			byte _L;
 			if (!DataConversion.TryParseRegister(T.content, result, out _T))
@@ -270,11 +265,10 @@ namespace cvm.net.assembler.core
 				result.AddError(new TypeMismatchError(L, TypeNames.Register));
 				return false;
 			}
-			InstPtr.Set((byte)(IsRegister ? 1 : 0), 3);
-			InstPtr.Set(_T, 4);
-			InstPtr.Set(_L, 5);
-			if (IsRegister)
+			InstPtr.Set(_T, 3);
+			InstPtr.Set(_L, 4);
 			{
+
 				byte _R;
 
 				if (!DataConversion.TryParseRegister(R.content, result, out _R))
@@ -282,66 +276,7 @@ namespace cvm.net.assembler.core
 					result.AddError(new TypeMismatchError(R, TypeNames.Register));
 					return false;
 				}
-				InstPtr.Set(_R, 6);
-			}
-			else
-			{
-				//nint ptr = (nint)(&InstPtr);
-				switch (type)
-				{
-					case BaseDataType.BU:
-						{
-							InstructionArgumentUtility.ParseAndSetArgument<byte>(R, result, 6, InstPtr, TypeNames.Byte);
-						}
-						break;
-					case BaseDataType.I:
-						{
-							InstructionArgumentUtility.ParseAndSetArgument<int>(R, result, 6, InstPtr, TypeNames.Int);
-						}
-						break;
-					case BaseDataType.BS:
-						{
-							InstructionArgumentUtility.ParseAndSetArgument<sbyte>(R, result, 6, InstPtr, TypeNames.SByte);
-						}
-						break;
-					case BaseDataType.S:
-						{
-							InstructionArgumentUtility.ParseAndSetArgument<short>(R, result, 6, InstPtr, TypeNames.Short);
-						}
-						break;
-					case BaseDataType.SU:
-						{
-							InstructionArgumentUtility.ParseAndSetArgument<ushort>(R, result, 6, InstPtr, TypeNames.UShort);
-						}
-						break;
-					case BaseDataType.L:
-						{
-							InstructionArgumentUtility.ParseAndSetArgument<long>(R, result, 6, InstPtr, TypeNames.Long);
-						}
-						break;
-					case BaseDataType.LU:
-						{
-							InstructionArgumentUtility.ParseAndSetArgument<ulong>(R, result, 6, InstPtr, TypeNames.ULong);
-						}
-						break;
-					case BaseDataType.IU:
-						{
-							InstructionArgumentUtility.ParseAndSetArgument<uint>(R, result, 6, InstPtr, TypeNames.UInt);
-						}
-						break;
-					case BaseDataType.F:
-						{
-							InstructionArgumentUtility.ParseAndSetArgument<float>(R, result, 6, InstPtr, TypeNames.Single);
-						}
-						break;
-					case BaseDataType.D:
-						{
-							InstructionArgumentUtility.ParseAndSetArgument<double>(R, result, 6, InstPtr, TypeNames.Double);
-						}
-						break;
-					default:
-						break;
-				}
+				InstPtr.Set(_R, 5);
 			}
 			//((Instruction*)InstPtr)[0] = InstPtr;
 			return true;
