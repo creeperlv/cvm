@@ -45,14 +45,8 @@ namespace cvm.net.core
 										byte R;
 										byte TR = inst.As<Instruction, byte>(7);
 										byte L = core.GetData<byte>(LR);
-										if (IsRegister)
-										{
-											R = core.GetData<byte>(inst.As<Instruction, byte>(5));
-										}
-										else
-										{
-											R = inst.As<Instruction, byte>(6);
-										}
+										R = core.GetData<byte>(inst.As<Instruction, byte>(5));
+
 										unchecked
 										{
 											var d = (byte)(L + R);
@@ -837,7 +831,7 @@ namespace cvm.net.core
 					case InstID.DIV:
 						{
 							var type = inst.As<Instruction, byte>(2);
-							var IsRegister = inst.As<Instruction, byte>(3) == 1;
+							//var IsRegister = inst.As<Instruction, byte>(3) == 1;
 							switch (type)
 							{
 								case BaseDataType.BU:
@@ -846,14 +840,7 @@ namespace cvm.net.core
 										byte R;
 										byte TR = inst.As<Instruction, byte>(7);
 										byte L = core.GetData<byte>(LR);
-										if (IsRegister)
-										{
-											R = core.GetData<byte>(inst.As<Instruction, byte>(5));
-										}
-										else
-										{
-											R = inst.As<Instruction, byte>(6);
-										}
+										R = core.GetData<byte>(inst.As<Instruction, byte>(5));
 										checked
 										{
 											byte d;
@@ -870,7 +857,7 @@ namespace cvm.net.core
 													d = (byte)(L / R);
 												}
 											}
-											core.SetData(T, d);
+											core.SetData(TR, d);
 										}
 									}
 									break;
@@ -996,7 +983,7 @@ namespace cvm.net.core
 											try
 											{
 												d = (short)(L / R);
-
+											}
 											catch (Exception)
 											{
 												core.OF = true;
@@ -1005,182 +992,182 @@ namespace cvm.net.core
 												}
 												d = (short)(L / R);
 											}
+											core.SetData(T, d);
 										}
-										core.SetData(T, d);
 									}
-							}
-							break;
-								case BaseDataType.SU:
-								{
-									byte LR = inst.As<Instruction, byte>(4);
-									ushort R;
-									int T = inst.As<Instruction, byte>(7);
-									ushort L = core.GetData<ushort>(LR);
-									if (IsRegister)
-									{
-										R = core.GetData<ushort>(inst.As<Instruction, byte>(5));
-									}
-									else
-									{
-										R = inst.As<Instruction, ushort>(5);
-									}
-									checked
-									{
-										ushort d;
-										try
-										{
-											d = (ushort)(L / R);
 
-										}
-										catch (Exception)
+									break;
+								case BaseDataType.SU:
+									{
+										byte LR = inst.As<Instruction, byte>(4);
+										ushort R;
+										int T = inst.As<Instruction, byte>(7);
+										ushort L = core.GetData<ushort>(LR);
+										if (IsRegister)
 										{
-											core.OF = true;
-											unchecked
+											R = core.GetData<ushort>(inst.As<Instruction, byte>(5));
+										}
+										else
+										{
+											R = inst.As<Instruction, ushort>(5);
+										}
+										checked
+										{
+											ushort d;
+											try
 											{
 												d = (ushort)(L / R);
-											}
-										}
-										core.SetData(T, d);
-									}
-								}
-								break;
-							case BaseDataType.L:
-								{
-									byte LR = inst.As<Instruction, byte>(4);
-									long R;
-									int T = inst.As<Instruction, byte>(7);
-									long L = core.GetData<long>(LR);
-									if (IsRegister)
-									{
-										R = core.GetData<long>(inst.As<Instruction, byte>(5));
-									}
-									else
-									{
-										R = inst.As<Instruction, long>(5);
-									}
-									checked
-									{
-										long d;
-										try
-										{
-											d = (long)(L / R);
 
+											}
+											catch (Exception)
+											{
+												core.OF = true;
+												unchecked
+												{
+													d = (ushort)(L / R);
+												}
+											}
+											core.SetData(T, d);
 										}
-										catch (Exception)
+									}
+									break;
+								case BaseDataType.L:
+									{
+										byte LR = inst.As<Instruction, byte>(4);
+										long R;
+										int T = inst.As<Instruction, byte>(7);
+										long L = core.GetData<long>(LR);
+										if (IsRegister)
 										{
-											core.OF = true;
-											unchecked
+											R = core.GetData<long>(inst.As<Instruction, byte>(5));
+										}
+										else
+										{
+											R = inst.As<Instruction, long>(5);
+										}
+										checked
+										{
+											long d;
+											try
 											{
 												d = (long)(L / R);
-											}
-										}
-										core.SetData(T, d);
-									}
-								}
-								break;
-							case BaseDataType.LU:
-								{
-									byte LR = inst.As<Instruction, byte>(4);
-									ulong R;
-									int T = inst.As<Instruction, byte>(7);
-									ulong L = core.GetData<ulong>(LR);
-									if (IsRegister)
-									{
-										R = core.GetData<ulong>(inst.As<Instruction, byte>(5));
-									}
-									else
-									{
-										R = inst.As<Instruction, ulong>(5);
-									}
-									checked
-									{
-										ulong d;
-										try
-										{
-											d = (ulong)(L / R);
 
+											}
+											catch (Exception)
+											{
+												core.OF = true;
+												unchecked
+												{
+													d = (long)(L / R);
+												}
+											}
+											core.SetData(T, d);
 										}
-										catch (Exception)
+									}
+									break;
+								case BaseDataType.LU:
+									{
+										byte LR = inst.As<Instruction, byte>(4);
+										ulong R;
+										int T = inst.As<Instruction, byte>(7);
+										ulong L = core.GetData<ulong>(LR);
+										if (IsRegister)
 										{
-											core.OF = true;
-											unchecked
+											R = core.GetData<ulong>(inst.As<Instruction, byte>(5));
+										}
+										else
+										{
+											R = inst.As<Instruction, ulong>(5);
+										}
+										checked
+										{
+											ulong d;
+											try
 											{
 												d = (ulong)(L / R);
+
 											}
+											catch (Exception)
+											{
+												core.OF = true;
+												unchecked
+												{
+													d = (ulong)(L / R);
+												}
+											}
+											core.SetData(T, d);
 										}
-										core.SetData(T, d);
 									}
-								}
-								break;
-							case BaseDataType.F:
-								{
-									byte LR = inst.As<Instruction, byte>(4);
-									float R;
-									int T = inst.As<Instruction, byte>(7);
-									float L = core.GetData<float>(LR);
-									if (IsRegister)
+									break;
+								case BaseDataType.F:
 									{
-										R = core.GetData<float>(inst.As<Instruction, byte>(5));
-									}
-									else
-									{
-										R = inst.As<Instruction, float>(5);
-									}
-									checked
-									{
-										float d;
-										try
+										byte LR = inst.As<Instruction, byte>(4);
+										float R;
+										int T = inst.As<Instruction, byte>(7);
+										float L = core.GetData<float>(LR);
+										if (IsRegister)
 										{
-											d = (float)(L / R);
+											R = core.GetData<float>(inst.As<Instruction, byte>(5));
 										}
-										catch (Exception)
+										else
 										{
-											core.OF = true;
-											unchecked
+											R = inst.As<Instruction, float>(5);
+										}
+										checked
+										{
+											float d;
+											try
 											{
 												d = (float)(L / R);
 											}
+											catch (Exception)
+											{
+												core.OF = true;
+												unchecked
+												{
+													d = (float)(L / R);
+												}
+											}
+											core.SetData(T, d);
 										}
-										core.SetData(T, d);
 									}
-								}
-								break;
-							case BaseDataType.D:
-								{
-									byte LR = inst.As<Instruction, byte>(4);
-									double R;
-									int T = inst.As<Instruction, byte>(7);
-									double L = core.GetData<double>(LR);
-									if (IsRegister)
+									break;
+								case BaseDataType.D:
 									{
-										R = core.GetData<double>(inst.As<Instruction, byte>(5));
-									}
-									else
-									{
-										R = inst.As<Instruction, double>(5);
-									}
-									checked
-									{
-										double d;
-										try
+										byte LR = inst.As<Instruction, byte>(4);
+										double R;
+										int T = inst.As<Instruction, byte>(7);
+										double L = core.GetData<double>(LR);
+										if (IsRegister)
 										{
-											d = (double)(L / R);
-
+											R = core.GetData<double>(inst.As<Instruction, byte>(5));
 										}
-										catch (Exception)
+										else
 										{
-											core.OF = true;
-											unchecked
+											R = inst.As<Instruction, double>(5);
+										}
+										checked
+										{
+											double d;
+											try
 											{
 												d = (double)(L / R);
+
 											}
+											catch (Exception)
+											{
+												core.OF = true;
+												unchecked
+												{
+													d = (double)(L / R);
+												}
+											}
+											core.SetData(T, d);
 										}
-										core.SetData(T, d);
 									}
-								}
-								break;
-							default:
-								break;
+									break;
+								default:
+									break;
 							}
 						}
 						break;
