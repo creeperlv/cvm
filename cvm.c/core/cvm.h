@@ -1,6 +1,7 @@
 #ifndef __cvm_cvm
 #define __cvm_cvm
 #include "panic.h"
+#include "vm_def.h"
 #include <stdint.h>
 #include <stdlib.h>
 typedef int8_t Int8;
@@ -51,7 +52,6 @@ typedef struct __cvm_list {
 
 typedef struct __cvm_instruction {
   UInt64 D0;
-  UInt64 D1;
 } cvmInstruction;
 typedef struct __cvm_base_module {
   int DataSegLength;
