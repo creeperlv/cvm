@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace cvm.net.core.CoreCompat
+namespace cvm.net.core.CoreCompact
 {
 	public interface INumbericData<T> where T : unmanaged, INumbericData<T>
 	{

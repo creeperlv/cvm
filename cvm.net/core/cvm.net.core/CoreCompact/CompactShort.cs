@@ -1,7 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace cvm.net.core.CoreCompat
+namespace cvm.net.core.CoreCompact
 {
 	[StructLayout(LayoutKind.Sequential)]
 	public struct CompactShort : INumbericData<CompactShort>
@@ -12,7 +12,7 @@ namespace cvm.net.core.CoreCompat
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public CompactShort Add(CompactShort R)
 		{
-			return new CompactShort(Value + R.Value);    
+			return new CompactShort(Value + R.Value);
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -31,5 +31,4 @@ namespace cvm.net.core.CoreCompat
 			return new CompactShort(Value / R.Value);
 		}
 	}
-
 }

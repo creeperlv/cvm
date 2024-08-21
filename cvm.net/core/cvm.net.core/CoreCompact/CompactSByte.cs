@@ -1,7 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace cvm.net.core.CoreCompat
+namespace cvm.net.core.CoreCompact
 {
 	[StructLayout(LayoutKind.Sequential)]
 	public struct CompactSByte : INumbericData<CompactSByte>
