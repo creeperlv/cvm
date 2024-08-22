@@ -11,6 +11,7 @@ namespace cvm.net.core.Functions
 		{
 			var type = inst.As<Instruction, byte>(2);
 			var ofCheck = inst.As<Instruction, byte>(3);
+			bool Checkof = ofCheck == 1;
 			var L = inst.As<Instruction, byte>(4);
 			var R = inst.As<Instruction, byte>(5);
 			var T = inst.As<Instruction, byte>(6);
@@ -18,34 +19,34 @@ namespace cvm.net.core.Functions
 			switch (type)
 			{
 				case BaseDataType.BU:
-					GenericAdd<CompactByte>(context, L, R, T);
+					GenericAdd<CompactByte>(context, L, R, T, Checkof);
 					break;
 				case BaseDataType.BS:
-					GenericAdd<CompactSByte>(context, L, R, T);
+					GenericAdd<CompactSByte>(context, L, R, T, Checkof);
 					break;
 				case BaseDataType.S:
-					GenericAdd<CompactShort>(context, L, R, T);
+					GenericAdd<CompactShort>(context, L, R, T, Checkof);
 					break;
 				case BaseDataType.SU:
-					GenericAdd<CompactUShort>(context, L, R, T);
+					GenericAdd<CompactUShort>(context, L, R, T, Checkof);
 					break;
 				case BaseDataType.I:
-					GenericAdd<CompactInt>(context, L, R, T);
+					GenericAdd<CompactInt>(context, L, R, T, Checkof);
 					break;
 				case BaseDataType.IU:
-					GenericAdd<CompactUInt>(context, L, R, T);
+					GenericAdd<CompactUInt>(context, L, R, T, Checkof);
 					break;
 				case BaseDataType.L:
-					GenericAdd<CompactLong>(context, L, R, T);
+					GenericAdd<CompactLong>(context, L, R, T, Checkof);
 					break;
 				case BaseDataType.LU:
-					GenericAdd<CompactULong>(context, L, R, T);
+					GenericAdd<CompactULong>(context, L, R, T, Checkof);
 					break;
 				case BaseDataType.F:
-					GenericAdd<CompactSingle>(context, L, R, T);
+					GenericAdd<CompactSingle>(context, L, R, T, Checkof);
 					break;
 				case BaseDataType.D:
-					GenericAdd<CompactDouble>(context, L, R, T);
+					GenericAdd<CompactDouble>(context, L, R, T, Checkof);
 					break;
 			}
 		}
@@ -53,6 +54,7 @@ namespace cvm.net.core.Functions
 		{
 			var type = inst.As<Instruction, byte>(2);
 			var ofCheck = inst.As<Instruction, byte>(3);
+			bool Checkof = ofCheck == 1;
 			var L = inst.As<Instruction, byte>(4);
 			var R = inst.As<Instruction, byte>(5);
 			var T = inst.As<Instruction, byte>(6);
@@ -60,34 +62,34 @@ namespace cvm.net.core.Functions
 			switch (type)
 			{
 				case BaseDataType.BU:
-					GenericSub<CompactByte>(context, L, R, T);
+					GenericSub<CompactByte>(context, L, R, T, Checkof);
 					break;
 				case BaseDataType.BS:
-					GenericSub<CompactSByte>(context, L, R, T);
+					GenericSub<CompactSByte>(context, L, R, T, Checkof);
 					break;
 				case BaseDataType.S:
-					GenericSub<CompactShort>(context, L, R, T);
+					GenericSub<CompactShort>(context, L, R, T, Checkof);
 					break;
 				case BaseDataType.SU:
-					GenericSub<CompactUShort>(context, L, R, T);
+					GenericSub<CompactUShort>(context, L, R, T, Checkof);
 					break;
 				case BaseDataType.I:
-					GenericSub<CompactInt>(context, L, R, T);
+					GenericSub<CompactInt>(context, L, R, T, Checkof);
 					break;
 				case BaseDataType.IU:
-					GenericSub<CompactUInt>(context, L, R, T);
+					GenericSub<CompactUInt>(context, L, R, T, Checkof);
 					break;
 				case BaseDataType.L:
-					GenericSub<CompactLong>(context, L, R, T);
+					GenericSub<CompactLong>(context, L, R, T, Checkof);
 					break;
 				case BaseDataType.LU:
-					GenericSub<CompactULong>(context, L, R, T);
+					GenericSub<CompactULong>(context, L, R, T, Checkof);
 					break;
 				case BaseDataType.F:
-					GenericSub<CompactSingle>(context, L, R, T);
+					GenericSub<CompactSingle>(context, L, R, T, Checkof);
 					break;
 				case BaseDataType.D:
-					GenericSub<CompactDouble>(context, L, R, T);
+					GenericSub<CompactDouble>(context, L, R, T, Checkof);
 					break;
 			}
 		}
@@ -95,6 +97,7 @@ namespace cvm.net.core.Functions
 		{
 			var type = inst.As<Instruction, byte>(2);
 			var ofCheck = inst.As<Instruction, byte>(3);
+			bool Checkof = ofCheck == 1;
 			var L = inst.As<Instruction, byte>(4);
 			var R = inst.As<Instruction, byte>(5);
 			var T = inst.As<Instruction, byte>(6);
@@ -102,34 +105,34 @@ namespace cvm.net.core.Functions
 			switch (type)
 			{
 				case BaseDataType.BU:
-					GenericMul<CompactByte>(context, L, R, T);
+					GenericMul<CompactByte>(context, L, R, T, Checkof);
 					break;
 				case BaseDataType.BS:
-					GenericMul<CompactSByte>(context, L, R, T);
+					GenericMul<CompactSByte>(context, L, R, T, Checkof);
 					break;
 				case BaseDataType.S:
-					GenericMul<CompactShort>(context, L, R, T);
+					GenericMul<CompactShort>(context, L, R, T, Checkof);
 					break;
 				case BaseDataType.SU:
-					GenericMul<CompactUShort>(context, L, R, T);
+					GenericMul<CompactUShort>(context, L, R, T, Checkof);
 					break;
 				case BaseDataType.I:
-					GenericMul<CompactInt>(context, L, R, T);
+					GenericMul<CompactInt>(context, L, R, T, Checkof);
 					break;
 				case BaseDataType.IU:
-					GenericMul<CompactUInt>(context, L, R, T);
+					GenericMul<CompactUInt>(context, L, R, T, Checkof);
 					break;
 				case BaseDataType.L:
-					GenericMul<CompactLong>(context, L, R, T);
+					GenericMul<CompactLong>(context, L, R, T, Checkof);
 					break;
 				case BaseDataType.LU:
-					GenericMul<CompactULong>(context, L, R, T);
+					GenericMul<CompactULong>(context, L, R, T, Checkof);
 					break;
 				case BaseDataType.F:
-					GenericMul<CompactSingle>(context, L, R, T);
+					GenericMul<CompactSingle>(context, L, R, T, Checkof);
 					break;
 				case BaseDataType.D:
-					GenericMul<CompactDouble>(context, L, R, T);
+					GenericMul<CompactDouble>(context, L, R, T, Checkof);
 					break;
 			}
 		}
@@ -137,6 +140,7 @@ namespace cvm.net.core.Functions
 		{
 			var type = inst.As<Instruction, byte>(2);
 			var ofCheck = inst.As<Instruction, byte>(3);
+			bool Checkof = ofCheck == 1;
 			var L = inst.As<Instruction, byte>(4);
 			var R = inst.As<Instruction, byte>(5);
 			var T = inst.As<Instruction, byte>(6);
@@ -144,63 +148,103 @@ namespace cvm.net.core.Functions
 			switch (type)
 			{
 				case BaseDataType.BU:
-					GenericDiv<CompactByte>(context, L, R, T);
+					GenericDiv<CompactByte>(context, L, R, T, Checkof);
 					break;
 				case BaseDataType.BS:
-					GenericDiv<CompactSByte>(context, L, R, T);
+					GenericDiv<CompactSByte>(context, L, R, T, Checkof);
 					break;
 				case BaseDataType.S:
-					GenericDiv<CompactShort>(context, L, R, T);
+					GenericDiv<CompactShort>(context, L, R, T, Checkof);
 					break;
 				case BaseDataType.SU:
-					GenericDiv<CompactUShort>(context, L, R, T);
+					GenericDiv<CompactUShort>(context, L, R, T, Checkof);
 					break;
 				case BaseDataType.I:
-					GenericDiv<CompactInt>(context, L, R, T);
+					GenericDiv<CompactInt>(context, L, R, T, Checkof);
 					break;
 				case BaseDataType.IU:
-					GenericDiv<CompactUInt>(context, L, R, T);
+					GenericDiv<CompactUInt>(context, L, R, T, Checkof);
 					break;
 				case BaseDataType.L:
-					GenericDiv<CompactLong>(context, L, R, T);
+					GenericDiv<CompactLong>(context, L, R, T, Checkof);
 					break;
 				case BaseDataType.LU:
-					GenericDiv<CompactULong>(context, L, R, T);
+					GenericDiv<CompactULong>(context, L, R, T, Checkof);
 					break;
 				case BaseDataType.F:
-					GenericDiv<CompactSingle>(context, L, R, T);
+					GenericDiv<CompactSingle>(context, L, R, T, Checkof);
 					break;
 				case BaseDataType.D:
-					GenericDiv<CompactDouble>(context, L, R, T);
+					GenericDiv<CompactDouble>(context, L, R, T, Checkof);
 					break;
 			}
 		}
-		public static void GenericAdd<N>(ExecuteContext context, int L, int R, int T) where N : unmanaged, INumbericData<N>
+		public static void GenericAdd<N>(ExecuteContext context, int L, int R, int T, bool CheckOF) where N : unmanaged, INumbericData<N>
 		{
 			var LN = context.GetData<N>(L);
 			var RN = context.GetData<N>(R);
-			var TN = LN.Add(RN);
+			N TN = default;
+			if (CheckOF)
+			{
+				var result = LN.AddOF(RN);
+				TN = result.Value;
+				context.OF = result.IsSuccess;
+			}
+			else
+			{
+				TN = LN.Add(RN);
+			}
 			context.SetData<N>(T, TN);
 		}
-		public static void GenericSub<N>(ExecuteContext context, int L, int R, int T) where N : unmanaged, INumbericData<N>
+		public static void GenericSub<N>(ExecuteContext context, int L, int R, int T, bool CheckOF) where N : unmanaged, INumbericData<N>
 		{
 			var LN = context.GetData<N>(L);
 			var RN = context.GetData<N>(R);
-			var TN = LN.Sub(RN);
+			N TN = default;
+			if (CheckOF)
+			{
+				var result = LN.SubOF(RN);
+				TN = result.Value;
+				context.OF = result.IsSuccess;
+			}
+			else
+			{
+				TN = LN.Sub(RN);
+			}
 			context.SetData<N>(T, TN);
 		}
-		public static void GenericMul<N>(ExecuteContext context, int L, int R, int T) where N : unmanaged, INumbericData<N>
+		public static void GenericMul<N>(ExecuteContext context, int L, int R, int T, bool CheckOF) where N : unmanaged, INumbericData<N>
 		{
 			var LN = context.GetData<N>(L);
 			var RN = context.GetData<N>(R);
-			var TN = LN.Mul(RN);
+			N TN = default;
+			if (CheckOF)
+			{
+				var result = LN.MulOF(RN);
+				TN = result.Value;
+				context.OF = result.IsSuccess;
+			}
+			else
+			{
+				TN = LN.Mul(RN);
+			}
 			context.SetData<N>(T, TN);
 		}
-		public static void GenericDiv<N>(ExecuteContext context, int L, int R, int T) where N : unmanaged, INumbericData<N>
+		public static void GenericDiv<N>(ExecuteContext context, int L, int R, int T, bool CheckOF) where N : unmanaged, INumbericData<N>
 		{
 			var LN = context.GetData<N>(L);
 			var RN = context.GetData<N>(R);
-			var TN = LN.Div(RN);
+			N TN = default;
+			if (CheckOF)
+			{
+				var result = LN.DivOF(RN);
+				TN = result.Value;
+				context.OF = result.IsSuccess;
+			}
+			else
+			{
+				TN = LN.Div(RN);
+			}
 			context.SetData<N>(T, TN);
 		}
 	}
