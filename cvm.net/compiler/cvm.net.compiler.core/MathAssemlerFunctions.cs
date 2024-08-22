@@ -238,6 +238,17 @@ namespace cvm.net.assembler.core
 				return false;
 			}
 			current = st.Current;
+			bool IsOFCheck = false;
+			if (ISADefinition.CurrentDefinition.CheckedFlag.ContainsKey(current.content.ToLower()))
+			{
+				IsOFCheck = ISADefinition.CurrentDefinition.CheckedFlag[current.content.ToLower()];
+				if (!st.GoNext())
+				{
+					result.AddError(new IncompletInstructionError(st.Current));
+					return false;
+				}
+				current = st.Current;
+			}
 			var T = current;
 			if (!st.GoNext())
 			{
@@ -265,8 +276,9 @@ namespace cvm.net.assembler.core
 				result.AddError(new TypeMismatchError(L, TypeNames.Register));
 				return false;
 			}
-			InstPtr.Set(_T, 3);
-			InstPtr.Set(_L, 4);
+			InstPtr.Set(IsOFCheck, 3);
+			InstPtr.Set(_T, 4);
+			InstPtr.Set(_L, 5);
 			{
 
 				byte _R;
@@ -276,7 +288,7 @@ namespace cvm.net.assembler.core
 					result.AddError(new TypeMismatchError(R, TypeNames.Register));
 					return false;
 				}
-				InstPtr.Set(_R, 5);
+				InstPtr.Set(_R, 6);
 			}
 			//((Instruction*)InstPtr)[0] = InstPtr;
 			return true;

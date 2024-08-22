@@ -179,6 +179,10 @@ namespace cvm.net.compiler.core
 				{"false",0},
 				{"off",0},
 			},
+			CheckedFlag = new()
+			{
+				{"checked", true }
+			},
 			DataProcessMethods = new()
 			{
 				{"cstring", DataProcessMethod.CChar },
@@ -257,6 +261,7 @@ namespace cvm.net.compiler.core
 		public Dictionary<string, byte> JumpOps = [];
 		public Dictionary<string, byte> CompOps = [];
 		public Dictionary<string, byte> Booleans = [];
+		public Dictionary<string, bool> CheckedFlag = [];
 		public Dictionary<string, DataProcessMethod> DataProcessMethods = [];
 		public Dictionary<DataProcessMethod, IDataProcessor> Processors = [];
 	}
