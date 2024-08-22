@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using cvm.net.core.Results;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace cvm.net.core.CoreCompact
@@ -29,6 +30,93 @@ namespace cvm.net.core.CoreCompact
 		public CompactSByte Div(CompactSByte R)
 		{
 			return new CompactSByte(Value / R.Value);
+		}
+		public CVMSimpleResult<CompactSByte> AddOF(CompactSByte R)
+		{
+			CompactSByte result = default;
+			bool IsOF = false;
+			checked
+			{
+				try
+				{
+					result = new CompactSByte(Value + R.Value);
+				}
+				catch (System.Exception)
+				{
+					unchecked
+					{
+						IsOF = true;
+						result = new CompactSByte(Value + R.Value);
+					}
+				}
+			}
+			return new CVMSimpleResult<CompactSByte>(IsOF, result);
+		}
+
+		public CVMSimpleResult<CompactSByte> SubOF(CompactSByte R)
+		{
+			CompactSByte result = default;
+			bool IsOF = false;
+			checked
+			{
+				try
+				{
+					result = new CompactSByte(Value - R.Value);
+				}
+				catch (System.Exception)
+				{
+					unchecked
+					{
+						IsOF = true;
+						result = new CompactSByte(Value - R.Value);
+					}
+				}
+			}
+			return new CVMSimpleResult<CompactSByte>(IsOF, result);
+		}
+
+		public CVMSimpleResult<CompactSByte> DivOF(CompactSByte R)
+		{
+			CompactSByte result = default;
+			bool IsOF = false;
+			checked
+			{
+				try
+				{
+					result = new CompactSByte(Value / R.Value);
+				}
+				catch (System.Exception)
+				{
+					unchecked
+					{
+						IsOF = true;
+						result = new CompactSByte(Value / R.Value);
+					}
+				}
+			}
+			return new CVMSimpleResult<CompactSByte>(IsOF, result);
+		}
+
+		public CVMSimpleResult<CompactSByte> MulOF(CompactSByte R)
+		{
+			CompactSByte result = default;
+			bool IsOF = false;
+			checked
+			{
+				try
+				{
+					result = new CompactSByte(Value * R.Value);
+				}
+				catch (System.Exception)
+				{
+					unchecked
+					{
+						IsOF = true;
+						result = new CompactSByte(Value * R.Value);
+					}
+				}
+			}
+			return new CVMSimpleResult<CompactSByte>(IsOF, result);
 		}
 	}
 

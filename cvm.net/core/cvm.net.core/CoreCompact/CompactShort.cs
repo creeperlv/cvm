@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using cvm.net.core.Results;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace cvm.net.core.CoreCompact
@@ -29,6 +30,93 @@ namespace cvm.net.core.CoreCompact
 		public CompactShort Div(CompactShort R)
 		{
 			return new CompactShort(Value / R.Value);
+		}
+		public CVMSimpleResult<CompactShort> AddOF(CompactShort R)
+		{
+			CompactShort result = default;
+			bool IsOF = false;
+			checked
+			{
+				try
+				{
+					result = new CompactShort(Value + R.Value);
+				}
+				catch (System.Exception)
+				{
+					unchecked
+					{
+						IsOF = true;
+						result = new CompactShort(Value + R.Value);
+					}
+				}
+			}
+			return new CVMSimpleResult<CompactShort>(IsOF, result);
+		}
+
+		public CVMSimpleResult<CompactShort> SubOF(CompactShort R)
+		{
+			CompactShort result = default;
+			bool IsOF = false;
+			checked
+			{
+				try
+				{
+					result = new CompactShort(Value - R.Value);
+				}
+				catch (System.Exception)
+				{
+					unchecked
+					{
+						IsOF = true;
+						result = new CompactShort(Value - R.Value);
+					}
+				}
+			}
+			return new CVMSimpleResult<CompactShort>(IsOF, result);
+		}
+
+		public CVMSimpleResult<CompactShort> DivOF(CompactShort R)
+		{
+			CompactShort result = default;
+			bool IsOF = false;
+			checked
+			{
+				try
+				{
+					result = new CompactShort(Value / R.Value);
+				}
+				catch (System.Exception)
+				{
+					unchecked
+					{
+						IsOF = true;
+						result = new CompactShort(Value / R.Value);
+					}
+				}
+			}
+			return new CVMSimpleResult<CompactShort>(IsOF, result);
+		}
+
+		public CVMSimpleResult<CompactShort> MulOF(CompactShort R)
+		{
+			CompactShort result = default;
+			bool IsOF = false;
+			checked
+			{
+				try
+				{
+					result = new CompactShort(Value * R.Value);
+				}
+				catch (System.Exception)
+				{
+					unchecked
+					{
+						IsOF = true;
+						result = new CompactShort(Value * R.Value);
+					}
+				}
+			}
+			return new CVMSimpleResult<CompactShort>(IsOF, result);
 		}
 	}
 }

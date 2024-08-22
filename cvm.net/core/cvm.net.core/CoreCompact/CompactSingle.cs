@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using cvm.net.core.Results;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace cvm.net.core.CoreCompact
@@ -28,6 +29,93 @@ namespace cvm.net.core.CoreCompact
 		public CompactSingle Div(CompactSingle R)
 		{
 			return new CompactSingle(Value / R.Value);
+		}
+		public CVMSimpleResult<CompactSingle> AddOF(CompactSingle R)
+		{
+			CompactSingle result = default;
+			bool IsOF = false;
+			checked
+			{
+				try
+				{
+					result = new CompactSingle(Value + R.Value);
+				}
+				catch (System.Exception)
+				{
+					unchecked
+					{
+						IsOF = true;
+						result = new CompactSingle(Value + R.Value);
+					}
+				}
+			}
+			return new CVMSimpleResult<CompactSingle>(IsOF, result);
+		}
+
+		public CVMSimpleResult<CompactSingle> SubOF(CompactSingle R)
+		{
+			CompactSingle result = default;
+			bool IsOF = false;
+			checked
+			{
+				try
+				{
+					result = new CompactSingle(Value - R.Value);
+				}
+				catch (System.Exception)
+				{
+					unchecked
+					{
+						IsOF = true;
+						result = new CompactSingle(Value - R.Value);
+					}
+				}
+			}
+			return new CVMSimpleResult<CompactSingle>(IsOF, result);
+		}
+
+		public CVMSimpleResult<CompactSingle> DivOF(CompactSingle R)
+		{
+			CompactSingle result = default;
+			bool IsOF = false;
+			checked
+			{
+				try
+				{
+					result = new CompactSingle(Value / R.Value);
+				}
+				catch (System.Exception)
+				{
+					unchecked
+					{
+						IsOF = true;
+						result = new CompactSingle(Value / R.Value);
+					}
+				}
+			}
+			return new CVMSimpleResult<CompactSingle>(IsOF, result);
+		}
+
+		public CVMSimpleResult<CompactSingle> MulOF(CompactSingle R)
+		{
+			CompactSingle result = default;
+			bool IsOF = false;
+			checked
+			{
+				try
+				{
+					result = new CompactSingle(Value * R.Value);
+				}
+				catch (System.Exception)
+				{
+					unchecked
+					{
+						IsOF = true;
+						result = new CompactSingle(Value * R.Value);
+					}
+				}
+			}
+			return new CVMSimpleResult<CompactSingle>(IsOF, result);
 		}
 	}
 

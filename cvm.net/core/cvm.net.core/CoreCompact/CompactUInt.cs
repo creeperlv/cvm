@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using cvm.net.core.Results;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace cvm.net.core.CoreCompact
@@ -28,6 +29,93 @@ namespace cvm.net.core.CoreCompact
 		public CompactUInt Div(CompactUInt R)
 		{
 			return new CompactUInt(Value / R.Value);
+		}
+		public CVMSimpleResult<CompactUInt> AddOF(CompactUInt R)
+		{
+			CompactUInt result = default;
+			bool IsOF = false;
+			checked
+			{
+				try
+				{
+					result = new CompactUInt(Value + R.Value);
+				}
+				catch (System.Exception)
+				{
+					unchecked
+					{
+						IsOF = true;
+						result = new CompactUInt(Value + R.Value);
+					}
+				}
+			}
+			return new CVMSimpleResult<CompactUInt>(IsOF, result);
+		}
+
+		public CVMSimpleResult<CompactUInt> SubOF(CompactUInt R)
+		{
+			CompactUInt result = default;
+			bool IsOF = false;
+			checked
+			{
+				try
+				{
+					result = new CompactUInt(Value - R.Value);
+				}
+				catch (System.Exception)
+				{
+					unchecked
+					{
+						IsOF = true;
+						result = new CompactUInt(Value - R.Value);
+					}
+				}
+			}
+			return new CVMSimpleResult<CompactUInt>(IsOF, result);
+		}
+
+		public CVMSimpleResult<CompactUInt> DivOF(CompactUInt R)
+		{
+			CompactUInt result = default;
+			bool IsOF = false;
+			checked
+			{
+				try
+				{
+					result = new CompactUInt(Value / R.Value);
+				}
+				catch (System.Exception)
+				{
+					unchecked
+					{
+						IsOF = true;
+						result = new CompactUInt(Value / R.Value);
+					}
+				}
+			}
+			return new CVMSimpleResult<CompactUInt>(IsOF, result);
+		}
+
+		public CVMSimpleResult<CompactUInt> MulOF(CompactUInt R)
+		{
+			CompactUInt result = default;
+			bool IsOF = false;
+			checked
+			{
+				try
+				{
+					result = new CompactUInt(Value * R.Value);
+				}
+				catch (System.Exception)
+				{
+					unchecked
+					{
+						IsOF = true;
+						result = new CompactUInt(Value * R.Value);
+					}
+				}
+			}
+			return new CVMSimpleResult<CompactUInt>(IsOF, result);
 		}
 	}
 

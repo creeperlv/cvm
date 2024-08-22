@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using cvm.net.core.Results;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace cvm.net.core.CoreCompact
@@ -29,6 +30,93 @@ namespace cvm.net.core.CoreCompact
 		public CompactByte Div(CompactByte R)
 		{
 			return new CompactByte(Value / R.Value);
+		}
+		public CVMSimpleResult<CompactByte> AddOF(CompactByte R)
+		{
+			CompactByte result = default;
+			bool IsOF = false;
+			checked
+			{
+				try
+				{
+					result = new CompactByte(Value + R.Value);
+				}
+				catch (System.Exception)
+				{
+					unchecked
+					{
+						IsOF = true;
+						result = new CompactByte(Value + R.Value);
+					}
+				}
+			}
+			return new CVMSimpleResult<CompactByte>(IsOF, result);
+		}
+
+		public CVMSimpleResult<CompactByte> SubOF(CompactByte R)
+		{
+			CompactByte result = default;
+			bool IsOF = false;
+			checked
+			{
+				try
+				{
+					result = new CompactByte(Value - R.Value);
+				}
+				catch (System.Exception)
+				{
+					unchecked
+					{
+						IsOF = true;
+						result = new CompactByte(Value - R.Value);
+					}
+				}
+			}
+			return new CVMSimpleResult<CompactByte>(IsOF, result);
+		}
+
+		public CVMSimpleResult<CompactByte> DivOF(CompactByte R)
+		{
+			CompactByte result = default;
+			bool IsOF = false;
+			checked
+			{
+				try
+				{
+					result = new CompactByte(Value / R.Value);
+				}
+				catch (System.Exception)
+				{
+					unchecked
+					{
+						IsOF = true;
+						result = new CompactByte(Value / R.Value);
+					}
+				}
+			}
+			return new CVMSimpleResult<CompactByte>(IsOF, result);
+		}
+
+		public CVMSimpleResult<CompactByte> MulOF(CompactByte R)
+		{
+			CompactByte result = default;
+			bool IsOF = false;
+			checked
+			{
+				try
+				{
+					result = new CompactByte(Value * R.Value);
+				}
+				catch (System.Exception)
+				{
+					unchecked
+					{
+						IsOF = true;
+						result = new CompactByte(Value * R.Value);
+					}
+				}
+			}
+			return new CVMSimpleResult<CompactByte>(IsOF, result);
 		}
 	}
 
