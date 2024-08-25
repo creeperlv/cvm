@@ -56,7 +56,14 @@ namespace cvm.net.core
 				}
 			}
 		}
-		public Dictionary<uint, Callframe> GlobalInterrupts = new Dictionary<uint, Callframe>();
+		public void RaiseInterrupt(ExecuteContext context, uint Interrupt)
+		{
+			if (this.GlobalInterrupts.TryGetValue(Interrupt, out var frame))
+			{
+
+			}
+		}
+		public Dictionary<uint, GloabalCallframe> GlobalInterrupts = new Dictionary<uint, GloabalCallframe>();
 		public Dictionary<int, FuncCall> Calls = new Dictionary<int, FuncCall>();
 		//public List<ExecuteContext> Contexts = new List<ExecuteContext>();
 	}

@@ -7,4 +7,10 @@ namespace cvm.net.core
 		public int ID;
 		public int PC;
 	}
+	public struct GloabalCallframe
+	{
+		public int ExecutionContextID;
+		public int ID;
+		public int PC;
+	}
 }
