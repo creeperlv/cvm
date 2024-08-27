@@ -116,6 +116,10 @@ namespace cvm.net.core
 		//Resize Stack Memory
 		//RSM [int|reg] <length/$length>
 		public const ushort RSM = 0x0036;
+		//Map memory.
+		//Map memory address from global memory pointer to a local memory pointer.
+		//MMAP $SRC $TGT
+		public const ushort MMAP = 0x0037;
 		//SINT [0|1] TGT PC
 		//00 F0 00 10 00 10
 		//SINT Static SOME_THING LBL (at 10)
