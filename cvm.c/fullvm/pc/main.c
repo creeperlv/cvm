@@ -1,4 +1,4 @@
-#include "fullvm.h"
+#include "pc_impl.h"
 void WriteInt(int d)
 {
     int rev = 0;
