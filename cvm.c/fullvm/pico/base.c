@@ -6,7 +6,7 @@
 
 void *Allocate(int size)
 {
-    return malloc((size_t)size);
+    return (void*)malloc((size_t)size);
 }
 void Free(void *ptr)
 {
@@ -14,7 +14,7 @@ void Free(void *ptr)
 }
 void *Resize(void *ptr, int Size)
 {
-    return realloc(ptr, (size_t)Size);
+    return (void*)realloc(ptr, (size_t)Size);
 }
 void Debug_Log(char *str)
 {
