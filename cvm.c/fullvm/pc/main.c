@@ -13,7 +13,7 @@ void WriteInt(int d)
     while (rev != 0)
     {
         buf[0] = rev % 10 + '0';
-        write(STDOUT_FILENO, buf, 1);
+        write(__cvm__stdout, buf, 1);
         rev /= 10;
     }
 }
@@ -31,7 +31,7 @@ void WriteULong(unsigned long d)
     while (rev != 0)
     {
         buf[0] = rev % 10 + '0';
-        write(STDOUT_FILENO, buf, 1);
+        write(__cvm__stdout, buf, 1);
         rev /= 10;
     }
 }
@@ -47,7 +47,7 @@ int StrLen(char *str)
 }
 void WriteString(char *str)
 {
-    write(STDOUT_FILENO, str, StrLen(str));
+    write(__cvm__stdout, str, StrLen(str));
 }
 void WriteData(char *field, unsigned long v)
 {

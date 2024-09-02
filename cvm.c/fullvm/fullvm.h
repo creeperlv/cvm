@@ -3,7 +3,6 @@
 #include "../core/cvm.h"
 #include "./storage/Storage.h"
 #include <stdio.h>
-#include <unistd.h>
 
 void EnterVideoMode();
 
