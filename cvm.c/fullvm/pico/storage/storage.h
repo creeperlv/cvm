@@ -1,5 +1,5 @@
-#ifndef __cvm_storage__
-#define __cvm_storage__
+#ifndef __fullvm_storage__
+#define __fullvm_storage__
 #include "../../headers/Storage.h"
 
 
