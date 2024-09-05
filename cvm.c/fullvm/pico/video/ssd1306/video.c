@@ -3,6 +3,7 @@
 #include "pico/binary_info.h"
 #include "hardware/i2c.h"
 #include "../video.h"
+#include <stdint.h>
 
 // Borrowed from https://github.com/raspberrypi/pico-examples/blob/master/i2c/ssd1306_i2c/ssd1306_i2c.c
 

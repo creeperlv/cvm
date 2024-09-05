@@ -54,7 +54,7 @@ pico_sdk_init()
 
 # Add executable. Default name is the project name, version 0.1
 
-add_executable(cvm cvm.c base.c)
+add_executable(cvm cvm.c base.c video/ssd1306/video.c)
 
 pico_set_program_name(cvm "cvm")
 pico_set_program_version(cvm "0.1")
