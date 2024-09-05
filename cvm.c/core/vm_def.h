@@ -36,6 +36,12 @@
 #define CVM_I_EXIT 0x0034
 #define CVM_I_START 0x0035
 #define CVM_I_RSM 0x0036
+#define CVM_I_MMAP 0x0037
+#define CVM_I_IN 0x0038
+#define CVM_I_OUT 0x0039
+#define CVM_I_OMAP 0x003A
+#define CVM_I_IMAP 0x003B
+
 #define CVM_I_SINT 0x00F0
 #define CVM_I_RINT 0x00F1
 #define CVM_I_GSINT 0x00F2

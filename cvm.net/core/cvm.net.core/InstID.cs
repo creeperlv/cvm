@@ -120,6 +120,19 @@ namespace cvm.net.core
 		//Map memory address from global memory pointer to a local memory pointer.
 		//MMAP $SRC $TGT
 		public const ushort MMAP = 0x0037;
+		//Read From Port
+		//in $reg port/$port length/$length
+		//0038 0101 30 3A 40
+		public const ushort IN = 0x0038;
+		//Write To Port
+		//out $reg port/$port length/$length
+		public const ushort OUT = 0x0039;
+		//Map Memory for write
+		//OMAP $reg $length
+		public const ushort OMAP =0x003A;
+		//Map Memory for read
+		//IMAP $reg $length
+		public const ushort IMAP =0x003B;
 		//SINT [0|1] TGT PC
 		//00 F0 00 10 00 10
 		//SINT Static SOME_THING LBL (at 10)
