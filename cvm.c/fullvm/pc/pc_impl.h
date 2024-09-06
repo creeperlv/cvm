@@ -14,5 +14,5 @@
 #endif // __WIN32
 
 result EnterVideoMode();
-
+result VideoLoop();
 #endif

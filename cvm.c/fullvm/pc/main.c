@@ -63,5 +63,6 @@ int main()
     WriteData("GPTEntry:\t", sizeof(cvmGPTEntery));
     WriteData("LBABlock:\t", sizeof(cvmLBABlock));
     EnterVideoMode();
+    VideoLoop();
     return 0;
 }

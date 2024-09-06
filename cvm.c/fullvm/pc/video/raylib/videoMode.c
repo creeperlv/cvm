@@ -17,6 +17,11 @@ result EnterVideoMode()
     RBuffer = LoadRenderTexture(800, 600);
     Image img = GenImageColor(800, 600, BLACK);
     Texture2D t2d = LoadTextureFromImage(img);
+    return __cvm_result_ok;
+}
+
+result VideoLoop()
+{
     while (!WindowShouldClose())
     {
         BeginDrawing();
@@ -62,4 +67,5 @@ result EnterVideoMode()
         DrawFPS(10, 5);
         EndDrawing();
     }
+    return __cvm_result_ok;
 }
