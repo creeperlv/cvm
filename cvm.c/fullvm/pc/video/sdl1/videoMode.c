@@ -15,14 +15,15 @@ result EnterVideoMode()
     HEIGHT = 600;
     fullvm_will_close = 0;
     Buffer = calloc(sizeof(UInt8), WIDTH * HEIGHT * 4);
+    int i=0;
     for (size_t x = 0; x < WIDTH; x++)
     {
         for (size_t y = 0; y < HEIGHT; y++)
         {
             size_t index = y * WIDTH + x;
-            Buffer[index * 4] = index % 255;
-            Buffer[index * 4 + 1] = index % 255;
-            Buffer[index * 4 + 2] = index % 255;
+            Buffer[index * 4] = rand() % 255;
+            Buffer[index * 4 + 1] = rand() % 255;
+            Buffer[index * 4 + 2] = rand() % 255;
             Buffer[index * 4 + 3] = 255;
         }
     }
