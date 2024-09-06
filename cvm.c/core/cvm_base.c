@@ -134,3 +134,8 @@ CVMRESULT CVMTableSet(_cvm_table *table, int Key, void *element)
     }
     return __cvm_result_fail;
 }
+
+void InitCVMMachine(_cvm_machine *machine)
+{
+    machine->IsInited = 1;
+}

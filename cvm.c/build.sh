@@ -46,7 +46,7 @@ then
 		*inu*)
 			LIBS="$LIBS -lGL -lm -lpthread -ldl -lrt"
 	esac
-	COMPILE="$CC $C_OPT $SRC/core/*.c $SRC/fullvm/pc/*.c $SRC/fullvm/generic/*.c $SRC/fullvm/pc/*/*.c -o $BIN/fullvm-pc $LIBS"
+	COMPILE="$CC $C_OPT $SRC/core/*.c $SRC/fullvm/pc/*.c $SRC/fullvm/generic/*.c $SRC/fullvm/pc/*/*.c  $SRC/fullvm/pc/video/raylib/*.c -o $BIN/fullvm-pc $LIBS"
 	echo "$COMPILE"
 	$COMPILE
 fi

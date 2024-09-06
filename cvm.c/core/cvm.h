@@ -17,7 +17,7 @@ typedef uint32_t UInt32;
 typedef int64_t Int64;
 typedef uint64_t UInt64;
 typedef uint32_t UInt32;
-typedef UInt32 CVMRESULT;
+typedef result CVMRESULT;
 #define __CVM_SUCCESS 0
 #define __CVM_FAIL -1
 #define __CVM_GUID_VER_MASK 0b0100111111111111
@@ -123,7 +123,10 @@ typedef struct __cvm_table
 } _cvm_table;
 typedef struct __cvm_machine
 {
+  char IsInited;
   _cvm_cpu_core *Cores;
+  _cvm_table IOPorts;
+  _cvm_table FuncCalls;
   UInt32 CoreCount;
 } _cvm_machine;
 void CVMTableInit(_cvm_table *table, size_t ESize);
