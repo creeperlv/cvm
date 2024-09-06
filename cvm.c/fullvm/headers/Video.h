@@ -1,7 +1,7 @@
 #if !defined(__cvm_fullvm_Video)
 #define __cvm_fullvm_Video
-
-void EnterVideoMode(int ScreenMode);
+#include "../../core/base.h"
+result EnterVideoMode(int ScreenMode);
 void ForceUse32Bit();
 void *GetBuffer();
 void SetChar(int W, int H, char C);

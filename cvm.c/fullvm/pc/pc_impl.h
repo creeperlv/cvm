@@ -13,6 +13,6 @@
 #define __cvm__stdout stdout
 #endif // __WIN32
 
-void EnterVideoMode();
+result EnterVideoMode();
 
 #endif

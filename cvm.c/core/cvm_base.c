@@ -18,26 +18,26 @@ void CVMTableInit(_cvm_table *table, size_t ESize)
     table->Count = 0;
     table->ESize = ESize;
     table->Size = CVMLIST_BLOCK;
-    table->Keys = Alloc(sizeof(int) * CVMLIST_BLOCK);
-    table->Usages = Alloc(sizeof(char) * CVMLIST_BLOCK);
-    table->Values = Alloc(ESize * CVMLIST_BLOCK);
+    table->Keys = (int *)Allocate(sizeof(int) * CVMLIST_BLOCK);
+    table->Usages = (char *)Allocate(sizeof(char) * CVMLIST_BLOCK);
+    table->Values = Allocate(ESize * CVMLIST_BLOCK);
     __cvm_table_init(table, 0, CVMLIST_BLOCK);
 }
 CVMRESULT CVMTableExpand(_cvm_table *table)
 {
     size_t OldSize = table->Size;
     table->Size = table->Size + CVMLIST_BLOCK;
-    table->Keys = Realloc(table->Keys, sizeof(int) * table->Size);
+    table->Keys = Resize(table->Keys, sizeof(int) * table->Size);
     if (table->Keys == NULL)
     {
         return __cvm_result_fail_realloc;
     }
-    table->Usages = Realloc(table->Keys, sizeof(char) * table->Size);
+    table->Usages = Resize(table->Keys, sizeof(char) * table->Size);
     if (table->Usages == NULL)
     {
         return __cvm_result_fail_realloc;
     }
-    table->Values = Realloc(table->Keys, table->ESize * table->Size);
+    table->Values = Resize(table->Keys, table->ESize * table->Size);
     if (table->Values == NULL)
     {
         return __cvm_result_fail_realloc;
@@ -75,17 +75,17 @@ CVMRESULT CVMTableTrim(_cvm_table *table)
     if (Blocks > 0)
     {
         table->Size = table->Size - Blocks * CVMLIST_BLOCK;
-        table->Keys = Realloc(table->Keys, sizeof(int) * table->Size);
+        table->Keys = (int *)Resize(table->Keys, sizeof(int) * table->Size);
         if (table->Keys == NULL)
         {
             return __cvm_result_fail_realloc;
         }
-        table->Usages = Realloc(table->Keys, sizeof(char) * table->Size);
+        table->Usages = (char *)Resize(table->Keys, sizeof(char) * table->Size);
         if (table->Usages == NULL)
         {
             return __cvm_result_fail_realloc;
         }
-        table->Values = Realloc(table->Keys, table->ESize * table->Size);
+        table->Values = Resize(table->Keys, table->ESize * table->Size);
         if (table->Values == NULL)
         {
             return __cvm_result_fail_realloc;
@@ -114,7 +114,8 @@ CVMRESULT CVMTableSet(_cvm_table *table, int Key, void *element)
         }
     }
     CVMRESULT result = CVMTableExpand(table);
-    if(result!=__cvm_result_ok){
+    if (result != __cvm_result_ok)
+    {
         return result;
     }
     {

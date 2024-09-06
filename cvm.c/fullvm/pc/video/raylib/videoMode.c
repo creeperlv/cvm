@@ -1,4 +1,4 @@
-#include "../pc_impl.h"
+#include "../../pc_impl.h"
 #include <raylib.h>
 
 UInt8 *Buffer;
@@ -8,7 +8,7 @@ float FMin(float L, float R)
     return L < R ? L : R;
 }
 int Stage = 0;
-void EnterVideoMode()
+result EnterVideoMode()
 {
     Buffer = calloc(sizeof(UInt8), 800 * 600 * 4);
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);
