@@ -7,7 +7,7 @@
 #define __cvm_result_fail_calloc -3
 #define __cvm_result_fail_realloc -4
 typedef int result;
-
+char CompEQBuffer(void *L, int LOffset, void *R, int ROffset, int Length);
 void *Allocate(int size);
 void Free(void *ptr);
 void *Resize(void *ptr, int newSize);

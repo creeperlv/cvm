@@ -7,6 +7,7 @@ float FMin(float L, float R)
 {
     return L < R ? L : R;
 }
+Texture2D t2d;
 int Stage = 0;
 result EnterVideoMode()
 {
@@ -16,7 +17,7 @@ result EnterVideoMode()
 
     RBuffer = LoadRenderTexture(800, 600);
     Image img = GenImageColor(800, 600, BLACK);
-    Texture2D t2d = LoadTextureFromImage(img);
+    t2d = LoadTextureFromImage(img);
     return __cvm_result_ok;
 }
 
@@ -43,15 +44,15 @@ result VideoLoop()
         {
         case 0:
         {
-            int SHI=GetScreenHeight();
+            int SHI = GetScreenHeight();
             DrawText("CVM BOOT", 10, 22, 10, WHITE);
-            DrawText("No Disk Image Loaded.", SW/2-150, SHI/2+50, 10, RED);
-            DrawText("Require a CVM Disk Image.", SW/2-150, SHI/2+65, 10, ORANGE);
-            DrawText("The image have to be parted with GPT.", SW/2-150, SHI/2+80, 10, ORANGE);
-            DrawText("M", SW/2-50, SHI/2-50, 40, GRAY);
-            DrawText("V", SW/2-70, SHI/2-30, 40, GRAY);
-            DrawText("C", SW/2-60, SHI/2-40, 40, WHITE);
-            DrawText("VM", SW/2-15, SHI/2-40, 40, WHITE);
+            DrawText("No Disk Image Loaded.", SW / 2 - 150, SHI / 2 + 50, 10, RED);
+            DrawText("Require a CVM Disk Image.", SW / 2 - 150, SHI / 2 + 65, 10, ORANGE);
+            DrawText("The image have to be parted with GPT.", SW / 2 - 150, SHI / 2 + 80, 10, ORANGE);
+            DrawText("M", SW / 2 - 50, SHI / 2 - 50, 40, GRAY);
+            DrawText("V", SW / 2 - 70, SHI / 2 - 30, 40, GRAY);
+            DrawText("C", SW / 2 - 60, SHI / 2 - 40, 40, WHITE);
+            DrawText("VM", SW / 2 - 15, SHI / 2 - 40, 40, WHITE);
         }
         break;
         case 1:

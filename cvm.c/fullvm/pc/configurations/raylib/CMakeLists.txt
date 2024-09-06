@@ -20,6 +20,7 @@ if (NOT raylib_FOUND) # If there's none, fetch and build raylib
   endif()
 endif()
 
-add_executable(${PROJECT_NAME} ../../main.c ../../win32/minimal_posix.c ../../video/raylib/videoMode.c ../../../generic/base.c)
+add_executable(${PROJECT_NAME} ../../main.c ../../win32/minimal_posix.c ../../video/raylib/videoMode.c
+ ../../../generic/base.c ../../../generic/RLEImage.c ../../../../core/base.c)
 
 target_link_libraries(${PROJECT_NAME} raylib)
