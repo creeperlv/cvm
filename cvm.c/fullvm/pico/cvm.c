@@ -75,6 +75,7 @@ int main()
     // For more examples of clocks use see https://github.com/raspberrypi/pico-examples/tree/master/clocks
     _cvm_machine machine;
     Machine = &machine;
+    machine.WorkingMode = __CVM_MACHINE_MODE_EMBEDED;
     InitCVMMachine(machine);
     multicore_launch_core1(BackgroundServices);
 }

@@ -6,6 +6,7 @@ namespace cvm.net.core
 	public delegate void FuncCall(ExecuteContext core);
 	public class Machine
 	{
+		public MachineMode WorkingMode;
 		public List<RuntimeProgram> Programs = new List<RuntimeProgram>();
 		public IDispatcher dispatcher;
 		public Dictionary<int, int> ModuleCounts = new Dictionary<int, int>();

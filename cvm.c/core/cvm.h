@@ -18,6 +18,9 @@ typedef int64_t Int64;
 typedef uint64_t UInt64;
 typedef uint32_t UInt32;
 typedef result CVMRESULT;
+#define __CVM_MACHINE_MODE_SCRIPTING 0
+#define __CVM_MACHINE_MODE_EMBEDED 1
+#define __CVM_MACHINE_MODE_FULLVM 2
 #define __CVM_SUCCESS 0
 #define __CVM_FAIL -1
 #define __CVM_GUID_VER_MASK 0b0100111111111111
@@ -124,6 +127,7 @@ typedef struct __cvm_table
 typedef struct __cvm_machine
 {
   char IsInited;
+  UInt8 WorkingMode;
   _cvm_cpu_core *Cores;
   _cvm_table IOPorts;
   _cvm_table FuncCalls;
