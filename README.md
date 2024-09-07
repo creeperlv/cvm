@@ -6,7 +6,7 @@ Another Virtual Machine with different instruction design.
 
 ## Instruction
 
-|0..7|8..127|
+|0..7|8..63|
 |--|--|
 |OP Code| Data|
 
