@@ -1,4 +1,5 @@
 ﻿using cvm.net.compiler.core;
+using cvm.net.compiler.core.AssemblerFunctions;
 using cvm.net.core;
 using LibCLCC.NET.Operations;
 using LibCLCC.NET.TextProcessing;
@@ -6,7 +7,7 @@ using LibCLCC.NET.TextProcessing;
 namespace cvm.net.assembler.core
 {
 
-	public static unsafe class AssemlerFunctions
+	public static unsafe class AssemblerFunctionDefinition
 	{
 		public static Dictionary<uint, Func<ushort, Segment, OperationResult<CVMObject>, IntPtr, int, bool>> AssembleFunctions =
 			new(){
@@ -30,6 +31,8 @@ namespace cvm.net.assembler.core
 				{ InstID.JO , JumpAssemlerFunctions.Assemble_JO },
 				{ InstID.CALL , JumpAssemlerFunctions.Assemble_CALL },
 				{ InstID.PJMP , JumpAssemlerFunctions.Assemble_PJMP },
+				{ InstID.IN , IOAssemblerFunctions.Assemble_IO},
+				{ InstID.OUT, IOAssemblerFunctions.Assemble_IO},
 				};
 		public unsafe static bool Assemble_NoArgs(ushort instID, Segment s, OperationResult<CVMObject> result, IntPtr instPtr, int PC)
 		{

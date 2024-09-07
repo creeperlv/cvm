@@ -11,7 +11,6 @@ namespace cvm.net.core
 		//00 01 01 01 01 00 01 02 __
 		//00 01 02 03 04 05 06 07
 		// ADD S checked $0 $1 $2
-		//REG is determined by R.
 		public const ushort ADD = 0x0001;
 		public const ushort SUB = 0x0002;
 		public const ushort MUL = 0x0003;
@@ -122,7 +121,7 @@ namespace cvm.net.core
 		public const ushort MMAP = 0x0037;
 		//Read From Port
 		//in $reg port/$port length/$length
-		//0038 0101 30 3A 40
+		//0038 01 30 3A 40
 		public const ushort IN = 0x0038;
 		//Write To Port
 		//out $reg port/$port length/$length

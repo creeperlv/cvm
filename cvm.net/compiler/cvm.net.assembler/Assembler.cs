@@ -67,7 +67,7 @@ namespace cvm.net.assembler
 					case ASMSections.Code:
 						if (ISADefinition.CurrentDefinition.Names.TryGetValue(HEAD_NAME, out var instID))
 						{
-							if (AssemlerFunctions.AssembleFunctions.TryGetValue(instID, out var assemble))
+							if (AssemblerFunctionDefinition.AssembleFunctions.TryGetValue(instID, out var assemble))
 							{
 								Instruction inst = default;
 								if (assemble(instID, HEAD, OResult, (IntPtr)(&inst), PC))
