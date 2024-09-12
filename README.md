@@ -23,7 +23,7 @@ Another Virtual Machine with different instruction design.
 |4|Data Length of Data N|
 |X|Data N|
 |4|Instruction Count|
-|16|Instruction 0|
-|16|Instruction 1|
+|8|Instruction 0|
+|8|Instruction 1|
 |...|...|
-|16|Instruction N|
+|8|Instruction N|
