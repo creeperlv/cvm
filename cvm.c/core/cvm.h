@@ -5,9 +5,6 @@
 #include "vm_def.h"
 #include <stdint.h>
 #include <stdlib.h>
-#ifndef CVMLIST_BLOCK
-#define CVMLIST_BLOCK 4
-#endif
 typedef int8_t Int8;
 typedef uint8_t UInt8;
 typedef int16_t Int16;

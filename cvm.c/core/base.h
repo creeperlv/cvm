@@ -1,6 +1,10 @@
 #ifndef __cvm_base__
 #define __cvm_base__
 
+#ifndef CVMLIST_BLOCK
+#define CVMLIST_BLOCK 4
+#endif
+
 #define __cvm_result_ok 0
 #define __cvm_result_fail -1
 #define __cvm_result_fail_malloc -2
