@@ -120,10 +120,12 @@ namespace cvm.net.core
 		//MMAP $SRC $TGT
 		public const ushort MMAP = 0x0037;
 		//Read From Port
+		//Pri. 1
 		//in $reg port/$port length/$length
 		//0038 01 30 3A 40
 		public const ushort IN = 0x0038;
 		//Write To Port
+		//Pri. 1
 		//out $reg port/$port length/$length
 		public const ushort OUT = 0x0039;
 		//Map Memory for write
@@ -132,6 +134,11 @@ namespace cvm.net.core
 		//Map Memory for read
 		//IMAP $reg $length
 		public const ushort IMAP =0x003B;
+		//Set Privilege Levl
+		//Pri. 0xFF
+		//SETP $reg $reg
+		//SETP PID LEVEL
+		public const ushort SETP =0x003C;
 		//SINT [0|1] TGT PC
 		//00 F0 00 10 00 10
 		//SINT Static SOME_THING LBL (at 10)

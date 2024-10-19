@@ -17,6 +17,7 @@ namespace cvm.net.core
 		public byte* Registers;
 		public bool OF;
 		public bool JF;
+		public byte PrivilegeMode = 0;
 		public int WaitingInterrupt = -1;
 		public T GetData<T>(int offset) where T : unmanaged
 		{
